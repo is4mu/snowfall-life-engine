@@ -21,6 +21,7 @@ jobs:
         run: |
           python - <<'PY'
           import json
+          import re
           from pathlib import Path
 
           root = Path(".")
@@ -36,6 +37,7 @@ jobs:
               "docs/TEST_LAYOUT_PLAN.md",
               "oss/export-manifest.json",
               "oss/exclusion-manifest.json",
+              "oss/test-migration-manifest.json",
               ".github/workflows/ci.yml",
           ]
           missing = [path for path in required if not (root / path).is_file()]
@@ -44,12 +46,61 @@ jobs:
 
           export = json.loads((root / "oss/export-manifest.json").read_text())
           exclusion = json.loads((root / "oss/exclusion-manifest.json").read_text())
+          migration = json.loads(
+              (root / "oss/test-migration-manifest.json").read_text()
+          )
 
           if export.get("status") not in {
               "phase-0-pre-export",
               "engine-exported",
           }:
               raise SystemExit(f"unexpected export status: {export.get('status')!r}")
+
+          if migration.get("source_file_count") != 146:
+              raise SystemExit("test migration manifest must cover exactly 146 source files")
+          if migration.get("executable_test_file_count") != 138:
+              raise SystemExit("test migration manifest executable-test count must be 138")
+          if migration.get("support_file_count") != 8:
+              raise SystemExit("test migration manifest support-file count must be 8")
+          if not re.fullmatch(r"[0-9a-f]{40}", migration.get("source_baseline", "")):
+              raise SystemExit("test migration source baseline must be a 40-hex SHA")
+
+          entries = migration.get("entries", [])
+          if len(entries) != migration["source_file_count"]:
+              raise SystemExit(
+                  "test migration entry count does not match source_file_count"
+              )
+
+          sources = [entry.get("source") for entry in entries]
+          if len(set(sources)) != len(sources):
+              raise SystemExit("duplicate source path in test migration manifest")
+          if any(
+              not isinstance(source, str)
+              or not source.startswith("tests/life/")
+              or not source.endswith(".py")
+              for source in sources
+          ):
+              raise SystemExit("invalid source path in test migration manifest")
+
+          test_count = sum(
+              Path(source).name.startswith("test_") for source in sources
+          )
+          if test_count != migration["executable_test_file_count"]:
+              raise SystemExit("test migration test/support classification drifted")
+
+          historical_public_tokens = ("test_slice", "test_issue", "rereview")
+          for entry in entries:
+              disposition = entry.get("disposition")
+              destination = entry.get("destination")
+              if not disposition or not destination:
+                  raise SystemExit(
+                      f"incomplete migration entry: {entry.get('source')}"
+                  )
+              if any(token in destination for token in historical_public_tokens):
+                  raise SystemExit(
+                      "historical development naming leaked into destination for "
+                      + entry["source"]
+                  )
 
           forbidden = []
           for name in exclusion["forbidden_top_level_paths"]:
