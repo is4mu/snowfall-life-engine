@@ -41,6 +41,7 @@ Planned initial baseline:
 - maturity: experimental
 - license: Apache-2.0
 - initial import compatibility: `engine.life`
+- initial CI Python: `3.12`
 - future preferred package/CLI identity: `snowfall_life` / `snowfall-life`
 
 The first extraction will use a clean public history and will not expose private project Git history.
@@ -64,7 +65,9 @@ See:
 - [docs/EXPORT_BOUNDARY.md](docs/EXPORT_BOUNDARY.md) for the publication contract;
 - [docs/TESTING.md](docs/TESTING.md) for the normative public test architecture;
 - [docs/TEST_MIGRATION_MATRIX.md](docs/TEST_MIGRATION_MATRIX.md) for historical-suite dispositions;
-- [docs/TEST_LAYOUT_PLAN.md](docs/TEST_LAYOUT_PLAN.md) for the concrete 146-file migration map and target file layout.
+- [docs/TEST_LAYOUT_PLAN.md](docs/TEST_LAYOUT_PLAN.md) for the concrete 146-file migration map and target file layout;
+- [docs/FIXTURES.md](docs/FIXTURES.md) for synthetic fixture ownership and golden-file rules;
+- [docs/CI_TIERS.md](docs/CI_TIERS.md) for Fast, Full, determinism, and coverage tiers.
 
 ## Roadmap
 
@@ -77,6 +80,8 @@ See:
 - [x] add public CI skeleton
 - [x] define public test architecture
 - [x] audit and map the historical Life Engine test suite
+- [x] define fixture architecture
+- [x] define public CI tiers
 - [ ] complete pre-split private validation
 
 ### Phase 1 — clean engine export
