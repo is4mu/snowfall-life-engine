@@ -30,6 +30,7 @@
     "CONTRIBUTING.md",
     "SECURITY.md",
     "docs/EXPORT_BOUNDARY.md",
+    "docs/TESTING.md",
     "oss/export-manifest.json",
     "oss/exclusion-manifest.json",
     ".github/workflows/ci.yml"
