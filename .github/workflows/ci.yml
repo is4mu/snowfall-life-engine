@@ -69,11 +69,12 @@ jobs:
               )
 
           workflow_dir = root / ".github" / "workflows"
+          forbidden_trigger = "pull_request" + "_target"
           for path in workflow_dir.glob("*.y*ml"):
               text = path.read_text(encoding="utf-8")
-              if "pull_request_target" in text:
+              if forbidden_trigger in text:
                   raise SystemExit(
-                      f"unsafe public workflow trigger pull_request_target in {path}"
+                      f"unsafe public workflow trigger {forbidden_trigger} in {path}"
                   )
 
           print("public repository boundary checks passed")
