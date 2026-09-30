@@ -31,6 +31,8 @@
     "SECURITY.md",
     "docs/EXPORT_BOUNDARY.md",
     "docs/TESTING.md",
+    "docs/TEST_MIGRATION_MATRIX.md",
+    "docs/TEST_LAYOUT_PLAN.md",
     "oss/export-manifest.json",
     "oss/exclusion-manifest.json",
     ".github/workflows/ci.yml"
