@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "status": "phase-0-pre-export",
+  "project_name": "Snowfall Life Engine",
+  "repository": "is4mu/snowfall-life-engine",
+  "initial_import_path": "engine.life",
+  "preferred_future_package": "snowfall_life",
+  "preferred_future_cli": "snowfall-life",
+  "release_target": "v0.1.0",
+  "source_gate": "final private pre-split validation and human review must complete before engine code export",
+  "clean_history_required": true,
+  "include_candidates": [
+    "engine/life/**",
+    "schemas/life/**",
+    "tests/life/**",
+    "tests/fixtures/life/**",
+    "scripts/run_checks.py",
+    "scripts/run_fast_checks.py"
+  ],
+  "review_required_before_export": [
+    "tests binding to private workflow YAML",
+    "tests binding to application-specific production SpatialContext artifacts",
+    "private CI/process governance tests",
+    "repository-path allowlist tests",
+    "production integration tests that require non-synthetic application data"
+  ],
+  "public_shell_files": [
+    "README.md",
+    "LICENSE",
+    "CONTRIBUTING.md",
+    "SECURITY.md",
+    "docs/EXPORT_BOUNDARY.md",
+    "oss/export-manifest.json",
+    "oss/exclusion-manifest.json",
+    ".github/workflows/ci.yml"
+  ]
+}
