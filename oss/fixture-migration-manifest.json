@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "status": "phase-0-pre-export",
+  "source_repository": "is4mu/project-snowfall",
+  "source_baseline": "9fe73f78ef8845d8c3b330faa7bf40b2a76c9fb0",
+  "source_file_count": 4,
+  "entries": [
+    {
+      "source": "tests/fixtures/life/behavior_policy_fixture.json",
+      "disposition": "migrate-rename",
+      "destination": "tests/fixtures/policy/v1_test_fixture.json",
+      "privacy": "synthetic-safe"
+    },
+    {
+      "source": "tests/fixtures/life/behavior_policy_v2_candidate_fixture.json",
+      "disposition": "rewrite",
+      "destination": "tests/fixtures/policy/v2_synthetic_candidate.json",
+      "privacy": "contains-private-project-provenance",
+      "remove": [
+        "character/character-bible.md provenance",
+        "private GitHub issue URL provenance",
+        "Yukino-specific wording"
+      ]
+    },
+    {
+      "source": "tests/fixtures/life/bootstrap_proposal_fixture.json",
+      "disposition": "migrate-rename",
+      "destination": "tests/fixtures/bootstrap/proposal.json",
+      "privacy": "synthetic-safe"
+    },
+    {
+      "source": "tests/fixtures/life/camera_roll_viewer_v2_shard.json",
+      "disposition": "split",
+      "destination": "tests/fixtures/golden/camera_roll_v2_shard.json",
+      "privacy": "synthetic-safe-engine-data",
+      "note": "viewer/application wiring is not part of the engine fixture contract"
+    }
+  ]
+}
