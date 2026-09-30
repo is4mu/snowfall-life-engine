@@ -59,7 +59,7 @@ It will **not** contain:
 - application-specific image generation or social-media workflows;
 - private runtime history or production state.
 
-See [docs/EXPORT_BOUNDARY.md](docs/EXPORT_BOUNDARY.md) for the publication contract.
+See [docs/EXPORT_BOUNDARY.md](docs/EXPORT_BOUNDARY.md) for the publication contract and [docs/TESTING.md](docs/TESTING.md) for the public test architecture.
 
 ## Roadmap
 
