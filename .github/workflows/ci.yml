@@ -35,9 +35,12 @@ jobs:
               "docs/TESTING.md",
               "docs/TEST_MIGRATION_MATRIX.md",
               "docs/TEST_LAYOUT_PLAN.md",
+              "docs/FIXTURES.md",
+              "docs/CI_TIERS.md",
               "oss/export-manifest.json",
               "oss/exclusion-manifest.json",
               "oss/test-migration-manifest.json",
+              "oss/fixture-migration-manifest.json",
               ".github/workflows/ci.yml",
           ]
           missing = [path for path in required if not (root / path).is_file()]
@@ -48,6 +51,9 @@ jobs:
           exclusion = json.loads((root / "oss/exclusion-manifest.json").read_text())
           migration = json.loads(
               (root / "oss/test-migration-manifest.json").read_text()
+          )
+          fixtures = json.loads(
+              (root / "oss/fixture-migration-manifest.json").read_text()
           )
 
           if export.get("status") not in {
@@ -100,6 +106,27 @@ jobs:
                   raise SystemExit(
                       "historical development naming leaked into destination for "
                       + entry["source"]
+                  )
+
+          if fixtures.get("source_file_count") != 4:
+              raise SystemExit("fixture migration manifest must cover exactly 4 files")
+          fixture_entries = fixtures.get("entries", [])
+          if len(fixture_entries) != fixtures["source_file_count"]:
+              raise SystemExit("fixture migration entry count mismatch")
+          fixture_sources = [entry.get("source") for entry in fixture_entries]
+          if len(set(fixture_sources)) != len(fixture_sources):
+              raise SystemExit("duplicate fixture source path")
+          if any(
+              not isinstance(source, str)
+              or not source.startswith("tests/fixtures/life/")
+              or not source.endswith(".json")
+              for source in fixture_sources
+          ):
+              raise SystemExit("invalid fixture source path")
+          for entry in fixture_entries:
+              if not entry.get("disposition") or not entry.get("destination"):
+                  raise SystemExit(
+                      f"incomplete fixture migration entry: {entry.get('source')}"
                   )
 
           forbidden = []
