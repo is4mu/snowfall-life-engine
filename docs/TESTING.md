@@ -105,6 +105,17 @@ The initial public suite has three primary horizons:
 
 Feature-specific assertions should be scenario parameters or reusable invariants, not separate copies of the 28d/90d harness.
 
+### Calibration
+
+Deterministic policy-quality checks that assert expected distributions, rates, or behavioral bands for a specific public fixture policy.
+
+Calibration is intentionally separate from hard engine invariants:
+
+- invariant failure means the engine violated a correctness contract;
+- calibration failure means a reviewed fixture policy no longer produces its expected deterministic behavioral envelope.
+
+Calibration tests must use fixed synthetic inputs/seeds and must never be probabilistically flaky.
+
 ### Publication
 
 Repository safety rather than engine behavior:
@@ -137,6 +148,7 @@ tests/
   contracts/
   integration/
   scenarios/
+  calibration/
   soak/
   publication/
 ```
@@ -203,6 +215,7 @@ Semantic markers:
 - `contract`
 - `integration`
 - `scenario`
+- `calibration`
 - `soak`
 - `publication`
 
@@ -225,7 +238,7 @@ Includes:
 
 Required before merging engine behavior changes.
 
-Includes the complete public suite, including scenarios and long-horizon soaks.
+Includes the complete public suite, including scenarios, deterministic calibration, and long-horizon soaks.
 
 ### Main / release matrix
 
