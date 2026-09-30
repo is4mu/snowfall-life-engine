@@ -1,0 +1,80 @@
+name: Public repository checks
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  publication-boundary:
+    name: Publication boundary
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate public shell and manifests
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          root = Path(".")
+
+          required = [
+              "README.md",
+              "LICENSE",
+              "CONTRIBUTING.md",
+              "SECURITY.md",
+              "docs/EXPORT_BOUNDARY.md",
+              "oss/export-manifest.json",
+              "oss/exclusion-manifest.json",
+              ".github/workflows/ci.yml",
+          ]
+          missing = [path for path in required if not (root / path).is_file()]
+          if missing:
+              raise SystemExit(f"missing required public-shell files: {missing}")
+
+          export = json.loads((root / "oss/export-manifest.json").read_text())
+          exclusion = json.loads((root / "oss/exclusion-manifest.json").read_text())
+
+          if export.get("status") not in {
+              "phase-0-pre-export",
+              "engine-exported",
+          }:
+              raise SystemExit(f"unexpected export status: {export.get('status')!r}")
+
+          forbidden = []
+          for name in exclusion["forbidden_top_level_paths"]:
+              if (root / name).exists():
+                  forbidden.append(name)
+
+          for path in exclusion["forbidden_exact_paths"]:
+              if (root / path).exists():
+                  forbidden.append(path)
+
+          for prefix in exclusion["forbidden_prefixes"]:
+              target = root / prefix
+              if target.exists():
+                  forbidden.append(prefix)
+
+          if forbidden:
+              raise SystemExit(
+                  "forbidden private paths are present in public repository: "
+                  + ", ".join(sorted(forbidden))
+              )
+
+          workflow_dir = root / ".github" / "workflows"
+          for path in workflow_dir.glob("*.y*ml"):
+              text = path.read_text(encoding="utf-8")
+              if "pull_request_target" in text:
+                  raise SystemExit(
+                      f"unsafe public workflow trigger pull_request_target in {path}"
+                  )
+
+          print("public repository boundary checks passed")
+          PY
