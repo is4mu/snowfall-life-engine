@@ -33,9 +33,12 @@
     "docs/TESTING.md",
     "docs/TEST_MIGRATION_MATRIX.md",
     "docs/TEST_LAYOUT_PLAN.md",
+    "docs/FIXTURES.md",
+    "docs/CI_TIERS.md",
     "oss/export-manifest.json",
     "oss/exclusion-manifest.json",
     "oss/test-migration-manifest.json",
+    "oss/fixture-migration-manifest.json",
     ".github/workflows/ci.yml"
   ]
 }
