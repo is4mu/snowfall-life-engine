@@ -59,7 +59,12 @@ It will **not** contain:
 - application-specific image generation or social-media workflows;
 - private runtime history or production state.
 
-See [docs/EXPORT_BOUNDARY.md](docs/EXPORT_BOUNDARY.md) for the publication contract and [docs/TESTING.md](docs/TESTING.md) for the public test architecture.
+See:
+
+- [docs/EXPORT_BOUNDARY.md](docs/EXPORT_BOUNDARY.md) for the publication contract;
+- [docs/TESTING.md](docs/TESTING.md) for the normative public test architecture;
+- [docs/TEST_MIGRATION_MATRIX.md](docs/TEST_MIGRATION_MATRIX.md) for historical-suite dispositions;
+- [docs/TEST_LAYOUT_PLAN.md](docs/TEST_LAYOUT_PLAN.md) for the concrete 146-file migration map and target file layout.
 
 ## Roadmap
 
@@ -67,9 +72,11 @@ See [docs/EXPORT_BOUNDARY.md](docs/EXPORT_BOUNDARY.md) for the publication contr
 
 - [x] reserve public repository
 - [x] establish project identity
-- [ ] add public governance and security files
-- [ ] add export / exclusion contract
-- [ ] add public CI skeleton
+- [x] add public governance and security files
+- [x] add export / exclusion contract
+- [x] add public CI skeleton
+- [x] define public test architecture
+- [x] audit and map the historical Life Engine test suite
 - [ ] complete pre-split private validation
 
 ### Phase 1 — clean engine export
