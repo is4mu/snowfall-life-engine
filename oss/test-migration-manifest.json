@@ -1,0 +1,895 @@
+{
+  "schema_version": 1,
+  "status": "phase-0-pre-export",
+  "source_repository": "is4mu/project-snowfall",
+  "source_baseline": "9fe73f78ef8845d8c3b330faa7bf40b2a76c9fb0",
+  "source_scope": "tests/life/*.py",
+  "source_file_count": 146,
+  "executable_test_file_count": 138,
+  "support_file_count": 8,
+  "rules": {
+    "no_test_to_test_imports": true,
+    "no_private_git_sha_dependencies": true,
+    "no_private_workflow_dependencies": true,
+    "synthetic_public_fixtures_only": true,
+    "historical_names_not_public_taxonomy": true
+  },
+  "entries": [
+    {
+      "source": "tests/life/helpers.py",
+      "disposition": "split-support",
+      "destination": "tests/support/builders/workspace.py; tests/support/builders/captures.py; tests/support/assertions/invariants.py; tests/support/constants.py",
+      "notes": "remove private SHA/git-show/source-transform helpers"
+    },
+    {
+      "source": "tests/life/synthetic_adapter_harness.py",
+      "disposition": "support",
+      "destination": "tests/support/harnesses/domain_adapters.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/synthetic_harness.py",
+      "disposition": "support",
+      "destination": "tests/support/harnesses/dynamics.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/synthetic_integrated_behavior_harness.py",
+      "disposition": "support",
+      "destination": "tests/support/harnesses/integrated_behavior.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/synthetic_resolver_harness.py",
+      "disposition": "support",
+      "destination": "tests/support/harnesses/resolver.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/synthetic_routine_harness.py",
+      "disposition": "support",
+      "destination": "tests/support/harnesses/routines.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/synthetic_social_harness.py",
+      "disposition": "support",
+      "destination": "tests/support/harnesses/social_opportunities.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/synthetic_social_response_harness.py",
+      "disposition": "support",
+      "destination": "tests/support/harnesses/social_response.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_advance_and_history.py",
+      "disposition": "merge",
+      "destination": "tests/integration/time_history/test_advance_history.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_bootstrap_and_isolation.py",
+      "disposition": "migrate",
+      "destination": "tests/integration/bootstrap/test_workspace_bootstrap.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_brand_v1_integrity.py",
+      "disposition": "private-only",
+      "destination": "private project-snowfall brand/viewer integrity tests",
+      "notes": "not Life Engine semantics"
+    },
+    {
+      "source": "tests/life/test_cli.py",
+      "disposition": "migrate",
+      "destination": "tests/integration/cli/test_self_check.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_foundation_core.py",
+      "disposition": "split",
+      "destination": "tests/unit/foundation/test_primitives.py; tests/contracts/foundation/test_serialization.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_issue155_resolver_rule_ids.py",
+      "disposition": "merge",
+      "destination": "tests/unit/decisions/test_resolver_provenance.py",
+      "notes": "behavior name replaces issue number"
+    },
+    {
+      "source": "tests/life/test_issue157_active_same_source.py",
+      "disposition": "merge",
+      "destination": "tests/unit/decisions/test_active_continuation.py",
+      "notes": "behavior name replaces issue number"
+    },
+    {
+      "source": "tests/life/test_rereview2.py",
+      "disposition": "merge",
+      "destination": "tests/contracts/invariants/test_time_history_invariants.py; tests/integration/time_history/test_partition_equivalence.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_rereview3.py",
+      "disposition": "merge",
+      "destination": "tests/contracts/serialization/test_timestamp_checkpoint.py; tests/contracts/invariants/test_time_history_invariants.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_rereview4.py",
+      "disposition": "merge",
+      "destination": "tests/contracts/invariants/test_event_queue_provenance.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_rereview5.py",
+      "disposition": "merge",
+      "destination": "tests/contracts/invariants/test_active_activity_temporal.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_rereview6.py",
+      "disposition": "merge",
+      "destination": "tests/contracts/effects/test_effect_contracts.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice2a_contracts.py",
+      "disposition": "merge",
+      "destination": "tests/contracts/core/test_domain_contracts.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice2a_policy.py",
+      "disposition": "rewrite-split",
+      "destination": "tests/contracts/policy/test_policy_schema.py; tests/unit/policy/test_policy_rules.py",
+      "notes": "synthetic public provenance only"
+    },
+    {
+      "source": "tests/life/test_slice2b_derived.py",
+      "disposition": "migrate",
+      "destination": "tests/unit/state/test_derived_state.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice2b_dynamics.py",
+      "disposition": "migrate",
+      "destination": "tests/unit/state/test_dynamics.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice2b_synthetic.py",
+      "disposition": "split",
+      "destination": "tests/scenarios/daily_life/test_human_state_progression.py; tests/calibration/test_human_state_calibration.py",
+      "notes": "long-run calibration separated from correctness"
+    },
+    {
+      "source": "tests/life/test_slice2c_scenarios.py",
+      "disposition": "split",
+      "destination": "tests/scenarios/time_progression/test_wakeup_scenarios.py; tests/soak/test_structural_28d.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice2c_schema.py",
+      "disposition": "merge",
+      "destination": "tests/contracts/wakeups/test_wakeup_contracts.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice2d_candidates.py",
+      "disposition": "migrate",
+      "destination": "tests/unit/decisions/test_candidates.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice2d_resolver.py",
+      "disposition": "split",
+      "destination": "tests/unit/decisions/test_resolver.py; tests/soak/test_invariants_90d.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice2e_commitments.py",
+      "disposition": "migrate",
+      "destination": "tests/unit/schedule/test_commitments.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice2e_routes_integration.py",
+      "disposition": "migrate",
+      "destination": "tests/integration/schedule/test_routes.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice2e_soak.py",
+      "disposition": "consolidate-soak",
+      "destination": "tests/soak/test_structural_28d.py; tests/soak/test_invariants_90d.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice2e_tasks.py",
+      "disposition": "migrate",
+      "destination": "tests/unit/schedule/test_tasks.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice2f_exercise.py",
+      "disposition": "migrate",
+      "destination": "tests/unit/routines/test_exercise.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice2f_household.py",
+      "disposition": "migrate",
+      "destination": "tests/unit/routines/test_household.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice2f_integration.py",
+      "disposition": "migrate",
+      "destination": "tests/integration/decision_runtime/test_routines.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice2f_soak.py",
+      "disposition": "consolidate-soak",
+      "destination": "tests/soak/test_structural_28d.py; tests/soak/test_invariants_90d.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice2g_contact.py",
+      "disposition": "migrate",
+      "destination": "tests/unit/social/test_contact_opportunities.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice2g_invites.py",
+      "disposition": "migrate",
+      "destination": "tests/unit/social/test_invites.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice2g_post_work.py",
+      "disposition": "migrate",
+      "destination": "tests/scenarios/social/test_post_work_contact.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice2g_slots.py",
+      "disposition": "migrate",
+      "destination": "tests/unit/social/test_availability_slots.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice2g_soak.py",
+      "disposition": "consolidate-soak",
+      "destination": "tests/soak/test_structural_28d.py; tests/soak/test_invariants_90d.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice2h_integration.py",
+      "disposition": "rewrite-migrate",
+      "destination": "tests/integration/social/test_social_response_runtime.py",
+      "notes": "synthetic runtime data only"
+    },
+    {
+      "source": "tests/life/test_slice2h_invites.py",
+      "disposition": "migrate",
+      "destination": "tests/unit/social/test_invite_response.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice2h_response.py",
+      "disposition": "migrate",
+      "destination": "tests/unit/social/test_response_rules.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice2h_review1.py",
+      "disposition": "merge",
+      "destination": "tests/unit/social/test_contact_opportunities.py; tests/unit/social/test_response_rules.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice2h_soak.py",
+      "disposition": "consolidate-soak",
+      "destination": "tests/soak/test_structural_28d.py; tests/soak/test_invariants_90d.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice2i_calibration.py",
+      "disposition": "consolidate",
+      "destination": "tests/calibration/test_behavior_policy.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice2i_cross_domain.py",
+      "disposition": "migrate",
+      "destination": "tests/integration/cross_domain/test_behavior_runtime.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice2i_invariants.py",
+      "disposition": "rewrite-merge",
+      "destination": "tests/contracts/invariants/test_behavior_invariants.py; tests/soak/test_invariants_90d.py",
+      "notes": "remove test-to-test import"
+    },
+    {
+      "source": "tests/life/test_slice3a_soak.py",
+      "disposition": "rewrite-consolidate",
+      "destination": "tests/soak/test_structural_28d.py; tests/soak/test_invariants_90d.py",
+      "notes": "synthetic world fixture"
+    },
+    {
+      "source": "tests/life/test_slice3a_world_state.py",
+      "disposition": "rewrite-split",
+      "destination": "tests/unit/state/test_world_state.py; tests/contracts/state/test_world_state_schema.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice3b_relation_reducer.py",
+      "disposition": "rewrite-migrate",
+      "destination": "tests/unit/state/test_relation_reducer.py",
+      "notes": "synthetic entities"
+    },
+    {
+      "source": "tests/life/test_slice3b_soak.py",
+      "disposition": "rewrite-consolidate",
+      "destination": "tests/soak/test_structural_28d.py; tests/soak/test_invariants_90d.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice3c_home_consumables_reducer.py",
+      "disposition": "rewrite-migrate",
+      "destination": "tests/unit/state/test_consumables_reducer.py",
+      "notes": "generic synthetic inventory"
+    },
+    {
+      "source": "tests/life/test_slice3c_soak.py",
+      "disposition": "rewrite-consolidate",
+      "destination": "tests/soak/test_structural_28d.py; tests/soak/test_invariants_90d.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice3d_soak.py",
+      "disposition": "rewrite-consolidate",
+      "destination": "tests/soak/test_structural_28d.py; tests/soak/test_invariants_90d.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice3d_wardrobe_reducer.py",
+      "disposition": "rewrite-migrate",
+      "destination": "tests/unit/state/test_wardrobe_reducer.py",
+      "notes": "synthetic wardrobe catalog"
+    },
+    {
+      "source": "tests/life/test_slice3e_finance_reducer.py",
+      "disposition": "rewrite-migrate",
+      "destination": "tests/unit/state/test_finance_reducer.py",
+      "notes": "synthetic accounts"
+    },
+    {
+      "source": "tests/life/test_slice3e_soak.py",
+      "disposition": "rewrite-consolidate",
+      "destination": "tests/soak/test_structural_28d.py; tests/soak/test_invariants_90d.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice4a_capture_camera_roll.py",
+      "disposition": "split",
+      "destination": "tests/unit/captures/test_camera_roll.py; tests/integration/capture_pipeline/test_camera_roll.py",
+      "notes": "shared builders extracted"
+    },
+    {
+      "source": "tests/life/test_slice4a_soak.py",
+      "disposition": "rewrite-consolidate",
+      "destination": "tests/soak/test_structural_28d.py; tests/soak/test_invariants_90d.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice4a1_capture_subject_kind.py",
+      "disposition": "rewrite-merge",
+      "destination": "tests/contracts/captures/test_subject_contracts.py",
+      "notes": "synthetic subjects"
+    },
+    {
+      "source": "tests/life/test_slice4b1_capture_decisions.py",
+      "disposition": "rewrite-migrate",
+      "destination": "tests/unit/captures/test_capture_decisions.py",
+      "notes": "remove test-module helper imports"
+    },
+    {
+      "source": "tests/life/test_slice4b1_soak.py",
+      "disposition": "consolidate-soak",
+      "destination": "tests/soak/test_structural_28d.py; tests/soak/test_invariants_90d.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice4b2_capture_emitters.py",
+      "disposition": "rewrite-migrate",
+      "destination": "tests/integration/capture_pipeline/test_emitters.py",
+      "notes": "shared builders extracted"
+    },
+    {
+      "source": "tests/life/test_slice4b2_soak.py",
+      "disposition": "consolidate-soak",
+      "destination": "tests/soak/test_structural_28d.py; tests/soak/test_invariants_90d.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice4b3_capture_repeats.py",
+      "disposition": "rewrite-split",
+      "destination": "tests/unit/captures/test_repeat_policy.py; tests/integration/capture_pipeline/test_repeats.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice4b3_soak.py",
+      "disposition": "consolidate-soak",
+      "destination": "tests/soak/test_structural_28d.py; tests/soak/test_invariants_90d.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice4c_viewer_migration.py",
+      "disposition": "split",
+      "destination": "tests/contracts/captures/test_camera_roll_compatibility.py; private viewer wiring tests",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice5a_runtime_bundle.py",
+      "disposition": "rewrite-split",
+      "destination": "tests/contracts/runtime/test_runtime_bundle.py; tests/integration/runtime/test_bundle_loading.py",
+      "notes": "synthetic runtime fixture"
+    },
+    {
+      "source": "tests/life/test_slice5a_schedule_state.py",
+      "disposition": "migrate",
+      "destination": "tests/unit/schedule/test_schedule_state.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice5b1_activity_runtime.py",
+      "disposition": "migrate",
+      "destination": "tests/unit/activities/test_runtime.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice5b1_boundaries.py",
+      "disposition": "replace-split",
+      "destination": "tests/contracts/activities/test_activity_schema.py; private repository source-freeze guard",
+      "notes": "no private SHA in public tests"
+    },
+    {
+      "source": "tests/life/test_slice5b1_runtime_effects.py",
+      "disposition": "migrate",
+      "destination": "tests/integration/activity_lifecycle/test_effect_application.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice5b1_schedule_reducer.py",
+      "disposition": "migrate",
+      "destination": "tests/unit/schedule/test_schedule_reducer.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice5b2a_boundaries.py",
+      "disposition": "replace-split",
+      "destination": "tests/contracts/runtime/test_decision_runtime_boundaries.py; private repository scope guard",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice5b2a_runtime_decision.py",
+      "disposition": "migrate",
+      "destination": "tests/integration/decision_runtime/test_runtime_decision.py",
+      "notes": "shared runtime builders extracted"
+    },
+    {
+      "source": "tests/life/test_slice5b2b_boundaries.py",
+      "disposition": "replace-split",
+      "destination": "tests/contracts/social/test_social_runtime_boundaries.py; private repository scope guard",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice5b2b_social_runtime.py",
+      "disposition": "migrate",
+      "destination": "tests/integration/social/test_social_runtime.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice5b2b_social_state.py",
+      "disposition": "migrate",
+      "destination": "tests/unit/social/test_runtime_state.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice5b2c1_activity_materialization.py",
+      "disposition": "split",
+      "destination": "tests/unit/activities/test_materialization.py; tests/integration/activity_lifecycle/test_materialization.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice5b2c1_boundaries.py",
+      "disposition": "replace-split",
+      "destination": "tests/contracts/activities/test_materialization_contracts.py; private repository scope guard",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice5b2c2a_active_interval.py",
+      "disposition": "migrate",
+      "destination": "tests/integration/activity_lifecycle/test_active_interval.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice5b2c2a_boundaries.py",
+      "disposition": "replace-split",
+      "destination": "tests/contracts/activities/test_lifecycle_boundaries.py; private repository scope guard",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice5b2c2a_wakeups.py",
+      "disposition": "migrate",
+      "destination": "tests/integration/activity_lifecycle/test_wakeups.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice5b2c2b_boundaries.py",
+      "disposition": "replace-split",
+      "destination": "tests/contracts/activities/test_finalization_boundaries.py; private repository scope guard",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice5b2c2b_effects.py",
+      "disposition": "migrate",
+      "destination": "tests/integration/activity_lifecycle/test_finalization_effects.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice5b2c2b_finalization.py",
+      "disposition": "migrate",
+      "destination": "tests/integration/activity_lifecycle/test_finalization.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice5b2c2b_finish_context.py",
+      "disposition": "merge",
+      "destination": "tests/integration/activity_lifecycle/test_finish_context.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice5b2c2c_boundaries.py",
+      "disposition": "replace-split",
+      "destination": "tests/contracts/captures/test_runtime_capture_boundaries.py; private repository scope guard",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice5b2c2c_c2b_integration.py",
+      "disposition": "merge",
+      "destination": "tests/integration/capture_pipeline/test_finalization_capture.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice5b2c2c_camera_roll.py",
+      "disposition": "migrate",
+      "destination": "tests/integration/capture_pipeline/test_runtime_camera_roll.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice5b2c2c_fixtures.py",
+      "disposition": "support",
+      "destination": "tests/support/builders/capture_runtime.py",
+      "notes": "zero-test module becomes support"
+    },
+    {
+      "source": "tests/life/test_slice5b2c2c_mutation.py",
+      "disposition": "merge",
+      "destination": "tests/contracts/captures/test_append_only_capture.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice5b2c2c_primary.py",
+      "disposition": "migrate",
+      "destination": "tests/integration/capture_pipeline/test_runtime_capture.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice5b2c2c_repeat.py",
+      "disposition": "migrate",
+      "destination": "tests/integration/capture_pipeline/test_runtime_repeat.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice5b2c2c_review_fixes.py",
+      "disposition": "merge",
+      "destination": "tests/integration/capture_pipeline/test_runtime_capture.py; tests/integration/capture_pipeline/test_runtime_repeat.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice5b2c2c_runtime_bind.py",
+      "disposition": "migrate",
+      "destination": "tests/integration/capture_pipeline/test_runtime_binding.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice5b2c3_boundaries.py",
+      "disposition": "replace-split",
+      "destination": "tests/contracts/runtime/test_orchestrator_boundaries.py; private repository scope guard",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice5b2c3_capture_repeat.py",
+      "disposition": "merge",
+      "destination": "tests/integration/runtime_orchestrator/test_capture_repeat.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice5b2c3_continue_select_start.py",
+      "disposition": "migrate",
+      "destination": "tests/integration/runtime_orchestrator/test_selection.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice5b2c3_decision_social.py",
+      "disposition": "merge",
+      "destination": "tests/integration/runtime_orchestrator/test_social_decision.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice5b2c3_entry.py",
+      "disposition": "migrate",
+      "destination": "tests/integration/runtime_orchestrator/test_entry.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice5b2c3_fixtures.py",
+      "disposition": "support",
+      "destination": "tests/support/builders/runtime_orchestrator.py",
+      "notes": "zero-test module becomes support"
+    },
+    {
+      "source": "tests/life/test_slice5b2c3_history_budget_stable.py",
+      "disposition": "migrate",
+      "destination": "tests/integration/runtime_orchestrator/test_history_budget.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice5b2c3_immediate.py",
+      "disposition": "migrate",
+      "destination": "tests/integration/runtime_orchestrator/test_immediate_events.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice5b2c3_integration.py",
+      "disposition": "merge",
+      "destination": "tests/integration/runtime_orchestrator/test_end_to_end.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice5b2c3_no_active.py",
+      "disposition": "merge",
+      "destination": "tests/integration/runtime_orchestrator/test_no_active.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice5b2c3_post_finalize.py",
+      "disposition": "migrate",
+      "destination": "tests/integration/runtime_orchestrator/test_post_finalize.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice5b2c3_queue_ordering.py",
+      "disposition": "migrate",
+      "destination": "tests/integration/runtime_orchestrator/test_queue_ordering.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice5c1_baseline_verify.py",
+      "disposition": "replace",
+      "destination": "tests/contracts/persistence/test_persistent_golden.py",
+      "notes": "semantic/versioned golden, not private commit baseline"
+    },
+    {
+      "source": "tests/life/test_slice5c1_boundaries.py",
+      "disposition": "replace-split",
+      "destination": "tests/contracts/persistence/test_persistence_boundaries.py; private process guard",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice5c1_c3_handoff.py",
+      "disposition": "migrate",
+      "destination": "tests/integration/persistence/test_orchestrator_handoff.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice5c1_camera.py",
+      "disposition": "migrate",
+      "destination": "tests/integration/persistence/test_camera_roll.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice5c1_closed_integrity.py",
+      "disposition": "migrate",
+      "destination": "tests/contracts/persistence/test_closed_history_integrity.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice5c1_fixtures.py",
+      "disposition": "support-rewrite",
+      "destination": "tests/support/builders/persistence.py",
+      "notes": "remove private baseline dependency"
+    },
+    {
+      "source": "tests/life/test_slice5c1_isolation.py",
+      "disposition": "migrate",
+      "destination": "tests/integration/persistence/test_isolation.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice5c1_last_run.py",
+      "disposition": "migrate",
+      "destination": "tests/contracts/persistence/test_last_run_metadata.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice5c1_noop_revision.py",
+      "disposition": "migrate",
+      "destination": "tests/integration/persistence/test_noop_revision.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice5c1_review_fixes.py",
+      "disposition": "merge",
+      "destination": "tests/integration/persistence/test_camera_roll.py; tests/integration/persistence/test_isolation.py; tests/contracts/persistence/test_closed_history_integrity.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice5c1_social_persistence.py",
+      "disposition": "migrate",
+      "destination": "tests/integration/persistence/test_social_state.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice5c1_timeline.py",
+      "disposition": "migrate",
+      "destination": "tests/integration/persistence/test_timeline.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice5c2_binding_noop_change.py",
+      "disposition": "migrate",
+      "destination": "tests/integration/git_transactions/test_binding_noop.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice5c2_boundaries.py",
+      "disposition": "replace-split",
+      "destination": "tests/contracts/git_transactions/test_safety_boundaries.py; private source-freeze/path guard",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice5c2_cas_commit.py",
+      "disposition": "migrate",
+      "destination": "tests/integration/git_transactions/test_cas_commit.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice5c2_fixtures.py",
+      "disposition": "support-rewrite",
+      "destination": "tests/support/git/local_repo.py",
+      "notes": "remove private baseline dependency"
+    },
+    {
+      "source": "tests/life/test_slice5c2_repo_tree.py",
+      "disposition": "migrate",
+      "destination": "tests/integration/git_transactions/test_repo_tree.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice5c2_review_fixes.py",
+      "disposition": "merge",
+      "destination": "tests/integration/git_transactions/test_cas_commit.py; tests/integration/git_transactions/test_repo_tree.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice5d1_boundaries.py",
+      "disposition": "rewrite-split",
+      "destination": "tests/contracts/git_transactions/test_remote_publisher_safety.py; private repository source-freeze guard",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice5d1_remote_publisher.py",
+      "disposition": "migrate",
+      "destination": "tests/integration/git_transactions/test_remote_publisher.py",
+      "notes": "local synthetic remote only"
+    },
+    {
+      "source": "tests/life/test_slice5d2a1_fact_provider.py",
+      "disposition": "migrate",
+      "destination": "tests/integration/runtime_sources/test_fact_provider.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice5d2a2a_production_authority.py",
+      "disposition": "rewrite-split",
+      "destination": "tests/contracts/runtime/test_runtime_authority.py; tests/fixtures/bootstrap/synthetic_authority.json",
+      "notes": "no Snowfall authority values"
+    },
+    {
+      "source": "tests/life/test_slice5d2a2b0_fact_sources.py",
+      "disposition": "migrate",
+      "destination": "tests/integration/runtime_sources/test_fact_sources.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice5d2a2b1_production_provider.py",
+      "disposition": "migrate",
+      "destination": "tests/integration/runtime_sources/test_production_provider.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice5d2a2c_production_composition.py",
+      "disposition": "migrate",
+      "destination": "tests/integration/runtime_sources/test_production_composition.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice5d2b_production_handoff.py",
+      "disposition": "split-private",
+      "destination": "tests/integration/runtime/test_production_launcher.py; private workflow-wiring tests",
+      "notes": "no private workflow YAML in public"
+    },
+    {
+      "source": "tests/life/test_slice5e1_operator_ledger.py",
+      "disposition": "split",
+      "destination": "tests/unit/operator/test_ledger.py; tests/contracts/operator/test_history.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice5e2_operator_transaction.py",
+      "disposition": "migrate",
+      "destination": "tests/integration/operator/test_transaction.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice5e3_upgrade_gates.py",
+      "disposition": "rewrite-migrate",
+      "destination": "tests/integration/operator/test_upgrade_gates.py",
+      "notes": "synthetic authority/runtime"
+    },
+    {
+      "source": "tests/life/test_slice5e4_operator_workflow.py",
+      "disposition": "split-private",
+      "destination": "tests/unit/operator/test_request_artifact.py; tests/integration/operator/test_launcher.py; private workflow-wiring tests",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_slice5e5_soak.py",
+      "disposition": "decompose-soak",
+      "destination": "tests/soak/test_restart_equivalence_72h.py; tests/soak/test_structural_28d.py; tests/soak/test_invariants_90d.py",
+      "notes": "private workflow/process assertions stay private"
+    },
+    {
+      "source": "tests/life/test_spatial_bootstrap_binding.py",
+      "disposition": "rewrite-migrate",
+      "destination": "tests/integration/spatial/test_bootstrap_binding.py",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_spatial_context.py",
+      "disposition": "rewrite-split",
+      "destination": "tests/unit/spatial/test_context.py; tests/contracts/spatial/test_context_schema.py",
+      "notes": "remove private baseline coupling"
+    },
+    {
+      "source": "tests/life/test_spatial_production_context.py",
+      "disposition": "private-replace",
+      "destination": "private production-artifact test; tests/contracts/spatial/test_synthetic_context.py; tests/fixtures/spatial/synthetic_city.json",
+      "notes": ""
+    },
+    {
+      "source": "tests/life/test_spatial_runtime_projection.py",
+      "disposition": "rewrite-migrate",
+      "destination": "tests/integration/spatial/test_runtime_projection.py",
+      "notes": ""
+    }
+  ]
+}
