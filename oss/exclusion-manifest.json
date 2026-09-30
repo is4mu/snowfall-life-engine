@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "status": "active",
+  "forbidden_top_level_paths": [
+    "character",
+    "environment"
+  ],
+  "forbidden_exact_paths": [
+    "data/runtime/character.json",
+    "data/runtime/social-graph.json",
+    ".github/workflows/life-production-handoff.yml",
+    ".github/workflows/life-operator-action.yml"
+  ],
+  "forbidden_prefixes": [
+    "data/runtime/life/"
+  ],
+  "forbidden_content_categories": [
+    "private character canon or identity assets",
+    "private environment/home assets",
+    "private runtime Life history/state",
+    "private social graph or personal entity data",
+    "production credentials or secrets",
+    "private production authority/bootstrap/policy approval values",
+    "application-specific image-generation or social-media workflow data",
+    "private Git history"
+  ],
+  "notes": [
+    "Synthetic fixtures belong under tests or other explicitly public paths.",
+    "Generic production-runtime code may be public if it has synthetic/local-only tests.",
+    "Path-level exclusions are enforced by public CI before the first engine code export."
+  ]
+}
