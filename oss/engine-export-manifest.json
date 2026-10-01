@@ -5,9 +5,9 @@
   "source_sha": "458e05673a8d4a8f3b2346825b2eef8419411d64",
   "source_file_count": 77,
   "counts": {
-    "sanitize_then_export": 19,
-    "direct_export": 51,
-    "hold_private_or_generalize": 7
+    "direct_export": 48,
+    "sanitize_then_export": 21,
+    "hold_private_or_generalize": 8
   },
   "rules": {
     "direct_export": "Copy bytes from approved SHA after dependency-closure check.",
@@ -15,6 +15,7 @@
     "hold_private_or_generalize": "Do not export in v0.1.0 baseline unless a separate generalization change removes application/production wiring."
   },
   "held_initial_baseline": [
+    "README.md",
     "runtime_operator_launcher.py",
     "runtime_production_authority.py",
     "runtime_production_composition.py",
@@ -26,7 +27,7 @@
   "entries": [
     {
       "source_path": "engine/life/README.md",
-      "disposition": "sanitize_then_export"
+      "disposition": "hold_private_or_generalize"
     },
     {
       "source_path": "engine/life/__init__.py",
@@ -110,7 +111,7 @@
     },
     {
       "source_path": "engine/life/derived.py",
-      "disposition": "direct_export"
+      "disposition": "sanitize_then_export"
     },
     {
       "source_path": "engine/life/domain_adapters.py",
@@ -170,7 +171,7 @@
     },
     {
       "source_path": "engine/life/operator_git_transaction.py",
-      "disposition": "direct_export"
+      "disposition": "sanitize_then_export"
     },
     {
       "source_path": "engine/life/operator_history.py",
@@ -186,7 +187,7 @@
     },
     {
       "source_path": "engine/life/operator_upgrade.py",
-      "disposition": "direct_export"
+      "disposition": "sanitize_then_export"
     },
     {
       "source_path": "engine/life/policy.py",
