@@ -181,7 +181,7 @@
       "source": "tests/life/test_slice2d_candidates.py",
       "disposition": "migrate",
       "destination": "tests/unit/decisions/test_candidates.py",
-      "notes": ""
+      "notes": "private fixture SHA lock is replaced by public policy/fixture contracts; engine candidate semantics migrate here"
     },
     {
       "source": "tests/life/test_slice2d_resolver.py",

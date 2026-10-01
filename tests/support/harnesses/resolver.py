@@ -186,3 +186,70 @@ def integrate_oneshot_vs_split(
     for part in parts:
         hs_b, rem_b = integrate_v2_interval(hs_b, rem_b, policy, ctx, part)
     return hs_a, hs_b
+
+
+def hard_opp(key: str = "hard:1", pref: int | None = None) -> ResolvedOpportunity:
+    return opportunity(
+        key=key,
+        opp_class="HARD_COMMITMENT",
+        action_kind="HARD_COMMITMENT_ACTIVITY",
+        source_kind="COMMITMENT",
+        source_ref="commit:1",
+        pref=pref,
+    )
+
+
+def deadline_opp(key: str = "deadline:1", pref: int | None = None) -> ResolvedOpportunity:
+    return opportunity(
+        key=key,
+        opp_class="DEADLINE_TASK",
+        action_kind="STUDY",
+        source_kind="TASK",
+        source_ref="task:1",
+        pref=pref,
+    )
+
+
+def social_opp(key: str = "social:1", pref: int | None = None) -> ResolvedOpportunity:
+    return opportunity(
+        key=key,
+        opp_class="SOCIAL_PROMISE",
+        action_kind="SOCIAL_PROMISE",
+        source_kind="SOCIAL",
+        source_ref="social:1",
+        pref=pref,
+    )
+
+
+def routine_opp(key: str = "routine:1", pref: int | None = None) -> ResolvedOpportunity:
+    return opportunity(
+        key=key,
+        opp_class="ROUTINE_HABIT",
+        action_kind="HOUSEHOLD",
+        source_kind="TASK",
+        source_ref="task:hh",
+        pref=pref,
+    )
+
+
+def restorative_opp(key: str = "restorative:1", pref: int | None = None) -> ResolvedOpportunity:
+    return opportunity(
+        key=key,
+        opp_class="RESTORATIVE",
+        action_kind="REST",
+        source_kind="ROUTINE",
+        source_ref="routine:nap-slot",
+        pref=pref,
+    )
+
+
+def leisure_opp(key: str = "leisure:1", pref: int | None = None) -> ResolvedOpportunity:
+    return opportunity(
+        key=key,
+        opp_class="LEISURE_SPONTANEOUS",
+        action_kind="MUSIC",
+        source_kind="LEISURE_WINDOW",
+        source_ref="fw:1",
+        soft=True,
+        pref=pref,
+    )
