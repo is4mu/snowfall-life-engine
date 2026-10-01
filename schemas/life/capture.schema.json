@@ -1,0 +1,124 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://snowfall-life-engine.invalid/schemas/life/capture.schema.json",
+  "title": "Capture",
+  "description": "Slice 4A/4A.1/4B2 strict capture fact: one logical photo occurrence with frozen visual_context, immutable capture_kind/subject_refs, and required per-capture capture_decision_evidence (TAKE only). Not Camera Roll media. Pre-life contract completion; schema_version remains 1.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "capture_id",
+    "occurrence_key",
+    "activity_instance_id",
+    "captured_at",
+    "capture_kind",
+    "subject_refs",
+    "visual_context",
+    "capture_context_hash",
+    "capture_decision_evidence"
+  ],
+  "properties": {
+    "schema_version": { "type": "integer", "const": 1 },
+    "capture_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "stable_id(\"capture\", activity_instance_id, occurrence_key)"
+    },
+    "occurrence_key": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Must equal stable_id(\"capture-occurrence\", activity_instance_id, opportunity_key). Not array index, UUID, or timestamp-only."
+    },
+    "activity_instance_id": { "type": "string", "minLength": 1 },
+    "captured_at": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Authoritative capture time; canonical Asia/Tokyo second precision."
+    },
+    "capture_kind": {
+      "type": "string",
+      "enum": ["SELFIE", "PEOPLE", "FOOD", "SCENERY", "OBJECT", "DAILY_LIFE"],
+      "description": "Factual subject/framing class only. Not quality, attractiveness, post-worthiness, or SNS intent."
+    },
+    "subject_refs": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "uniqueItems": true,
+      "description": "Semantically unordered explicit subject identity refs; Capture-local canonical string sort. Empty allowed except PEOPLE (non-empty) and SELFIE (must include character_id)."
+    },
+    "visual_context": { "$ref": "#/$defs/visual_context" },
+    "capture_context_hash": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "description": "canonical_hash(normalized visual_context) only; does not include capture_kind/subject_refs/evidence. 64 lower-case hex"
+    },
+    "capture_decision_evidence": {
+      "$ref": "capture_decision_evidence.schema.json",
+      "description": "Per-capture TAKE evidence; included in full Capture semantic equality. Not copied to CameraRollRecord."
+    }
+  },
+  "$defs": {
+    "visual_context": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Frozen capture-time visual context. No prompt/provider/seed/file/post fields.",
+      "required": [
+        "character_id",
+        "character_source_sha",
+        "engine_commit_sha",
+        "behavior_policy_version",
+        "location_id",
+        "appearance",
+        "home_revision",
+        "wardrobe_revision",
+        "photographer_ref",
+        "companion_refs",
+        "lighting_context"
+      ],
+      "properties": {
+        "character_id": { "type": "string", "minLength": 1 },
+        "character_source_sha": { "type": "string", "minLength": 1 },
+        "engine_commit_sha": { "type": "string", "minLength": 1 },
+        "behavior_policy_version": { "type": "string", "minLength": 1 },
+        "location_id": { "type": "string", "minLength": 1 },
+        "appearance": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "outfit_state_id",
+            "outfit_item_ids",
+            "makeup_level",
+            "hair_state_id"
+          ],
+          "properties": {
+            "outfit_state_id": { "type": ["string", "null"] },
+            "outfit_item_ids": {
+              "type": "array",
+              "items": { "type": "string", "minLength": 1 },
+              "uniqueItems": true,
+              "description": "Semantically unordered; canonicalized by string sort for hash/persist"
+            },
+            "makeup_level": {
+              "type": ["string", "null"],
+              "enum": ["NONE", "MINIMAL", "NORMAL", "DRESSED_UP", null]
+            },
+            "hair_state_id": { "type": ["string", "null"] }
+          }
+        },
+        "home_revision": { "type": ["string", "null"] },
+        "wardrobe_revision": { "type": ["string", "null"] },
+        "photographer_ref": { "type": ["string", "null"] },
+        "companion_refs": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "uniqueItems": true,
+          "description": "Semantically unordered; canonicalized by string sort for hash/persist"
+        },
+        "lighting_context": {
+          "type": "string",
+          "enum": ["UNKNOWN", "NATURAL", "ARTIFICIAL", "MIXED"]
+        }
+      }
+    }
+  }
+}
