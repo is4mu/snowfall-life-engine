@@ -5,11 +5,12 @@ Approved source: `is4mu/project-snowfall@458e05673a8d4a8f3b2346825b2eef8419411d6
 ## Result
 
 - files under `schemas/life/`: **39**
-- JSON Schema documents: **38**
-- schemas registered by `engine.life.schema.SCHEMA_NAMES`: **38**
+- source JSON Schema documents: **38**
+- public JSON Schema documents: **37**
+- public registry target: **37** schemas
 - missing registry files: **0**
 - extra registry entries: **0**
-- private-only schemas: **0**
+- held private/application schema: **1** (`runtime_production_authority.schema.json`)
 
 ## Required public transform
 
@@ -35,6 +36,6 @@ Relative `$ref` values and all validation semantics remain unchanged.
 
 ## Closure
 
-Every relative schema reference resolves within the 38-document public schema set.
+Every relative schema reference in the exported set resolves within the 37-document public schema set.
 
 The schema registry remains local and deterministic; no schema download is required.
