@@ -7,6 +7,7 @@ from typing import Any
 
 from engine.life.activity_materialization import build_activity_end_event
 from engine.life.derived import default_synthetic_sleep_profile
+from engine.life.events import validate_active_activity
 from engine.life.fixed_point import empty_rate_remainders
 from engine.life.invariants import queue_event_sort_key
 from engine.life.policy import load_policy
