@@ -271,7 +271,7 @@
       "source": "tests/life/test_slice2h_integration.py",
       "disposition": "rewrite-migrate",
       "destination": "tests/integration/social/test_social_response_runtime.py",
-      "notes": "synthetic runtime data only"
+      "notes": "private runtime/social-graph byte guards replaced by public module and fixture immutability boundaries"
     },
     {
       "source": "tests/life/test_slice2h_invites.py",
@@ -288,8 +288,8 @@
     {
       "source": "tests/life/test_slice2h_review1.py",
       "disposition": "merge",
-      "destination": "tests/unit/social/test_contact_opportunities.py; tests/unit/social/test_response_rules.py",
-      "notes": ""
+      "destination": "tests/unit/social/test_response_rules.py",
+      "notes": "semantic validation regressions merged into response rules"
     },
     {
       "source": "tests/life/test_slice2h_soak.py",

@@ -89,7 +89,7 @@ def opportunity(
         future_day_random_key=(
             ("future-" + opportunity_id) if invite_timing_kind == "FUTURE_SOFT" else None
         ),
-        rule_ids=("slice2g.test",),
+        rule_ids=("social.synthetic",),
     )
 
 
