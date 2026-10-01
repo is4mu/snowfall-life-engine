@@ -2,7 +2,7 @@
   "schema_version": 1,
   "status": "phase-0-pre-export",
   "source_repository": "is4mu/project-snowfall",
-  "source_baseline": "9fe73f78ef8845d8c3b330faa7bf40b2a76c9fb0",
+  "source_baseline": "458e05673a8d4a8f3b2346825b2eef8419411d64",
   "source_scope": "tests/life/*.py",
   "source_file_count": 146,
   "executable_test_file_count": 138,
