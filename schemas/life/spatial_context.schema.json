@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://snowfall-life-engine.invalid/schemas/life/spatial_context.schema.json",
   "title": "SpatialContext",
-  "description": "Spatial A — static approved location catalog + RouteProfile set. One hash-bound main-side bootstrap/runtime configuration file. Coordinates are optional non-authoritative metadata (integer microdegrees only). Existing RouteProfile remains the sole v1 travel-duration authority. No production geography inventing; Actual Yukino life remains unstarted.",
+  "description": "Static approved location catalog + RouteProfile set. One hash-bound bootstrap/runtime configuration file. Coordinates are optional non-authoritative metadata (integer microdegrees only). RouteProfile remains the sole v1 travel-duration authority; production geography is never invented.",
   "type": "object",
   "additionalProperties": false,
   "required": [
