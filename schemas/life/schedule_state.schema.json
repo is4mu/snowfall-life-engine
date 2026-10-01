@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://snowfall-life-engine.invalid/schemas/life/schedule_state.schema.json",
   "title": "ScheduleState",
-  "description": "Persisted concrete Commitment + ObligationTask snapshot. Slice 5A read/validate contract only. No standing recurrence-rule object. revision equals state_hash (content-derived). Actual Yukino life remains unstarted.",
+  "description": "Persisted concrete Commitment + ObligationTask snapshot. Read/validate contract only. No standing recurrence-rule object. revision equals state_hash (content-derived).",
   "type": "object",
   "additionalProperties": false,
   "required": [
