@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://snowfall-life-engine.invalid/schemas/life/behavior_policy.schema.json",
+  "title": "BehaviorPolicy",
+  "description": "Public dispatcher: schema_version 1 = Foundation TEST_FIXTURE; schema_version 2 = production-capable policy. File existence alone does not approve.",
+  "oneOf": [
+    { "$ref": "behavior_policy_fixture_v1.schema.json" },
+    { "$ref": "behavior_policy_v2.schema.json" }
+  ]
+}
