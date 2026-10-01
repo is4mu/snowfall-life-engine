@@ -481,7 +481,7 @@
       "source": "tests/life/test_slice5b2a_runtime_decision.py",
       "disposition": "migrate",
       "destination": "tests/integration/decision_runtime/test_runtime_decision.py",
-      "notes": "shared runtime builders extracted"
+      "notes": "shared runtime decision builders extracted to tests/support/builders/runtime_decision.py"
     },
     {
       "source": "tests/life/test_slice5b2b_boundaries.py",
