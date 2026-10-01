@@ -1,0 +1,220 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://snowfall-life-engine.invalid/schemas/life/operator_action.schema.json",
+  "title": "OperatorAction",
+  "description": "Slice 5E3 immutable append-only operator action. CORRECTION, RECOVERY_AUTHORIZATION, ENGINE_UPGRADE, POLICY_UPGRADE only.",
+  "oneOf": [
+    { "$ref": "#/$defs/correction_action" },
+    { "$ref": "#/$defs/recovery_action" },
+    { "$ref": "#/$defs/engine_upgrade_action" },
+    { "$ref": "#/$defs/policy_upgrade_action" }
+  ],
+  "$defs": {
+    "correction_action": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "action_id",
+        "action_type",
+        "previous_action_id",
+        "life_base_sha",
+        "request_id",
+        "request_hash",
+        "approval_ref",
+        "effective_at",
+        "correction"
+      ],
+      "properties": {
+        "schema_version": { "type": "integer", "const": 1 },
+        "action_id": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "action_type": {
+          "type": "string",
+          "const": "CORRECTION"
+        },
+        "previous_action_id": {
+          "oneOf": [
+            { "type": "null" },
+            {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            }
+          ]
+        },
+        "life_base_sha": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{40}$"
+        },
+        "request_id": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "request_hash": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "approval_ref": { "type": "string", "minLength": 1 },
+        "effective_at": { "type": "string", "minLength": 1 },
+        "correction": {
+          "$ref": "operator_request.schema.json#/$defs/correction_payload"
+        }
+      }
+    },
+    "recovery_action": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "action_id",
+        "action_type",
+        "previous_action_id",
+        "life_base_sha",
+        "request_id",
+        "request_hash",
+        "approval_ref",
+        "recovery"
+      ],
+      "properties": {
+        "schema_version": { "type": "integer", "const": 1 },
+        "action_id": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "action_type": {
+          "type": "string",
+          "const": "RECOVERY_AUTHORIZATION"
+        },
+        "previous_action_id": {
+          "oneOf": [
+            { "type": "null" },
+            {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            }
+          ]
+        },
+        "life_base_sha": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{40}$"
+        },
+        "request_id": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "request_hash": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "approval_ref": { "type": "string", "minLength": 1 },
+        "recovery": {
+          "$ref": "operator_request.schema.json#/$defs/recovery_payload"
+        }
+      }
+    },
+    "engine_upgrade_action": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "action_id",
+        "action_type",
+        "previous_action_id",
+        "life_base_sha",
+        "request_id",
+        "request_hash",
+        "approval_ref",
+        "upgrade"
+      ],
+      "properties": {
+        "schema_version": { "type": "integer", "const": 1 },
+        "action_id": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "action_type": {
+          "type": "string",
+          "const": "ENGINE_UPGRADE"
+        },
+        "previous_action_id": {
+          "oneOf": [
+            { "type": "null" },
+            {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            }
+          ]
+        },
+        "life_base_sha": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{40}$"
+        },
+        "request_id": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "request_hash": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "approval_ref": { "type": "string", "minLength": 1 },
+        "upgrade": {
+          "$ref": "operator_request.schema.json#/$defs/upgrade_payload"
+        }
+      }
+    },
+    "policy_upgrade_action": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "action_id",
+        "action_type",
+        "previous_action_id",
+        "life_base_sha",
+        "request_id",
+        "request_hash",
+        "approval_ref",
+        "upgrade"
+      ],
+      "properties": {
+        "schema_version": { "type": "integer", "const": 1 },
+        "action_id": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "action_type": {
+          "type": "string",
+          "const": "POLICY_UPGRADE"
+        },
+        "previous_action_id": {
+          "oneOf": [
+            { "type": "null" },
+            {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            }
+          ]
+        },
+        "life_base_sha": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{40}$"
+        },
+        "request_id": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "request_hash": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "approval_ref": { "type": "string", "minLength": 1 },
+        "upgrade": {
+          "$ref": "operator_request.schema.json#/$defs/upgrade_payload"
+        }
+      }
+    }
+  }
+}
