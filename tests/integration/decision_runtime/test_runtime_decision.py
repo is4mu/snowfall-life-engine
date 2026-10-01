@@ -61,6 +61,7 @@ from tests.support.builders.runtime_decision import (
     _route,
     _routine_phys,
     _started_active,
+    _structural_phys,
     _threshold_wakeup,
     _v2_wakeup,
 )
