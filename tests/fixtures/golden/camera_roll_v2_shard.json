@@ -1,0 +1,147 @@
+{
+  "schema_version": 1,
+  "month": "2099-01",
+  "closed_at": null,
+  "records": [
+    {
+      "schema_version": 1,
+      "record_id": "camera-roll-record:c68cba9d1cb07f40ba99b6014b6b6c02",
+      "capture_id": "cap-synth-viewer-selfie-001",
+      "event_id": "event-synth-viewer-001",
+      "activity_instance_id": "activity:synth-viewer-leisure-001",
+      "captured_at": "2099-01-15T10:00:00+09:00",
+      "capture_kind": "SELFIE",
+      "subject_refs": [
+        "char-synthetic-viewer-fixture"
+      ],
+      "visual_context": {
+        "character_id": "char-synthetic-viewer-fixture",
+        "character_source_sha": "synthetic-char-sha-not-real",
+        "engine_commit_sha": "synthetic-engine-sha-not-real",
+        "behavior_policy_version": "fixture-viewer-v2-synthetic",
+        "location_id": "loc-synthetic-studio-a",
+        "appearance": {
+          "outfit_state_id": "outfit-synth-1",
+          "outfit_item_ids": [
+            "item-synth-a",
+            "item-synth-b"
+          ],
+          "makeup_level": "MINIMAL",
+          "hair_state_id": "hair-synth-1"
+        },
+        "home_revision": "home-rev-synth",
+        "wardrobe_revision": "wardrobe-rev-synth",
+        "photographer_ref": "char-synthetic-viewer-fixture",
+        "companion_refs": [],
+        "lighting_context": "NATURAL"
+      },
+      "capture_context_hash": "dd0d6d6a349203fb836d0e5264855177379614ad2ca398b78c8dc985f292a63e"
+    },
+    {
+      "schema_version": 1,
+      "record_id": "camera-roll-record:72c5f6d6dddf9946f7010ac16a3d0db2",
+      "capture_id": "cap-synth-viewer-people-001",
+      "event_id": "event-synth-viewer-002",
+      "activity_instance_id": "activity:synth-viewer-social-001",
+      "captured_at": "2099-01-15T11:30:00+09:00",
+      "capture_kind": "PEOPLE",
+      "subject_refs": [
+        "friend-synth-a"
+      ],
+      "visual_context": {
+        "character_id": "char-synthetic-viewer-fixture",
+        "character_source_sha": "synthetic-char-sha-not-real",
+        "engine_commit_sha": "synthetic-engine-sha-not-real",
+        "behavior_policy_version": "fixture-viewer-v2-synthetic",
+        "location_id": "loc-synthetic-cafe-b",
+        "appearance": {
+          "outfit_state_id": "outfit-synth-1",
+          "outfit_item_ids": [
+            "item-synth-a",
+            "item-synth-b"
+          ],
+          "makeup_level": "MINIMAL",
+          "hair_state_id": "hair-synth-1"
+        },
+        "home_revision": "home-rev-synth",
+        "wardrobe_revision": "wardrobe-rev-synth",
+        "photographer_ref": "friend-synth-photog",
+        "companion_refs": [
+          "friend-synth-a"
+        ],
+        "lighting_context": "MIXED"
+      },
+      "capture_context_hash": "e1fb2d9b5e9851ed1e2e782e075c6564ef186d6170ff180dcdbf6b030341efc4"
+    },
+    {
+      "schema_version": 1,
+      "record_id": "camera-roll-record:7138387b96f9b1be804737005f1b9681",
+      "capture_id": "cap-synth-viewer-same-sec-b",
+      "event_id": "event-synth-viewer-003",
+      "activity_instance_id": "activity:synth-viewer-leisure-002",
+      "captured_at": "2099-01-15T14:00:00+09:00",
+      "capture_kind": "DAILY_LIFE",
+      "subject_refs": [],
+      "visual_context": {
+        "character_id": "char-synthetic-viewer-fixture",
+        "character_source_sha": "synthetic-char-sha-not-real",
+        "engine_commit_sha": "synthetic-engine-sha-not-real",
+        "behavior_policy_version": "fixture-viewer-v2-synthetic",
+        "location_id": "loc-synthetic-park-c",
+        "appearance": {
+          "outfit_state_id": "outfit-synth-1",
+          "outfit_item_ids": [
+            "item-synth-a",
+            "item-synth-b"
+          ],
+          "makeup_level": "MINIMAL",
+          "hair_state_id": "hair-synth-1"
+        },
+        "home_revision": "home-rev-synth",
+        "wardrobe_revision": "wardrobe-rev-synth",
+        "photographer_ref": "friend-synth-b",
+        "companion_refs": [
+          "friend-synth-c",
+          "friend-synth-d"
+        ],
+        "lighting_context": "ARTIFICIAL"
+      },
+      "capture_context_hash": "654f418f28f162fe1604bdec41afb1aef2cd6cd51e0f7b672de99644078d04be"
+    },
+    {
+      "schema_version": 1,
+      "record_id": "camera-roll-record:94bb1a91fe442b8e37e17b5107a7f687",
+      "capture_id": "cap-synth-viewer-same-sec-a",
+      "event_id": "event-synth-viewer-003",
+      "activity_instance_id": "activity:synth-viewer-leisure-002",
+      "captured_at": "2099-01-15T14:00:00+09:00",
+      "capture_kind": "DAILY_LIFE",
+      "subject_refs": [],
+      "visual_context": {
+        "character_id": "char-synthetic-viewer-fixture",
+        "character_source_sha": "synthetic-char-sha-not-real",
+        "engine_commit_sha": "synthetic-engine-sha-not-real",
+        "behavior_policy_version": "fixture-viewer-v2-synthetic",
+        "location_id": "loc-synthetic-park-c",
+        "appearance": {
+          "outfit_state_id": "outfit-synth-1",
+          "outfit_item_ids": [
+            "item-synth-a",
+            "item-synth-b"
+          ],
+          "makeup_level": "MINIMAL",
+          "hair_state_id": "hair-synth-1"
+        },
+        "home_revision": "home-rev-synth",
+        "wardrobe_revision": "wardrobe-rev-synth",
+        "photographer_ref": "friend-synth-b",
+        "companion_refs": [
+          "friend-synth-c",
+          "friend-synth-d"
+        ],
+        "lighting_context": "ARTIFICIAL"
+      },
+      "capture_context_hash": "654f418f28f162fe1604bdec41afb1aef2cd6cd51e0f7b672de99644078d04be"
+    }
+  ]
+}
