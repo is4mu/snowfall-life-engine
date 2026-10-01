@@ -529,7 +529,7 @@
       "source": "tests/life/test_slice5b2c2a_wakeups.py",
       "disposition": "migrate",
       "destination": "tests/integration/activity_lifecycle/test_wakeups.py",
-      "notes": ""
+      "notes": "shared wakeup builders extracted for runtime orchestrator reuse"
     },
     {
       "source": "tests/life/test_slice5b2c2b_boundaries.py",
