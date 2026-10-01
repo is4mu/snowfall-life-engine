@@ -5,8 +5,8 @@
 It is designed to advance persistent character state through time using explicit policies, schedules, tasks, social opportunities, append-only events, deterministic randomness, and restart-safe serialization — without requiring an LLM, a live API, or an always-on server.
 
 > [!IMPORTANT]
-> This repository is currently in **Phase 0: public repository preparation**.
-> The engine source has **not been exported yet**. The first code export is intentionally gated on completion of the final private pre-split 72-hour validation and human review.
+> This repository has completed **Phase 0: public repository preparation** and the pre-split validation gate is satisfied.
+> The first clean engine export is now being prepared from the approved private source baseline `458e05673a8d4a8f3b2346825b2eef8419411d64`. No private Git history is imported.
 
 ## Project goals
 
@@ -33,7 +33,7 @@ Snowfall Life Engine is intended to provide a reusable core for:
 
 ## Repository status
 
-Current public status: **pre-code OSS shell**.
+Current public status: **clean export authorized; source migration in progress**.
 
 Planned initial baseline:
 
@@ -82,11 +82,11 @@ See:
 - [x] audit and map the historical Life Engine test suite
 - [x] define fixture architecture
 - [x] define public CI tiers
-- [ ] complete pre-split private validation
+- [x] complete pre-split private validation
 
 ### Phase 1 — clean engine export
 
-After the pre-split validation is complete:
+Approved extraction baseline: `is4mu/project-snowfall@458e05673a8d4a8f3b2346825b2eef8419411d64`.
 
 - export only approved engine/schema/test paths;
 - preserve engine semantics during extraction;
