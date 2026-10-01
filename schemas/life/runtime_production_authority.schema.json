@@ -1,0 +1,108 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://snowfall-life-engine.invalid/schemas/life/runtime_production_authority.schema.json",
+  "title": "RuntimeProductionAuthority",
+  "description": "Slice 5D2A2a pinned main-side static runtime authority. Contract only; no Yukino production values are supplied by this schema.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "character_id",
+    "authority_version",
+    "behavior_policy_version",
+    "event_budget",
+    "character_source_sha",
+    "runtime_reference_sets",
+    "sleep_profiles",
+    "social_archetype_assignments",
+    "external_context_ref",
+    "capture_source_ref",
+    "authority_hash"
+  ],
+  "properties": {
+    "schema_version": { "type": "integer", "const": 1 },
+    "character_id": { "type": "string", "minLength": 1 },
+    "authority_version": { "type": "string", "minLength": 1 },
+    "behavior_policy_version": { "type": "string", "minLength": 1 },
+    "event_budget": { "type": "integer", "minimum": 0 },
+    "character_source_sha": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "runtime_reference_sets": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "known_person_ids",
+        "known_home_entity_ids",
+        "approved_wardrobe_item_ids",
+        "approved_consumable_ids"
+      ],
+      "properties": {
+        "known_person_ids": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "uniqueItems": true
+        },
+        "known_home_entity_ids": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "uniqueItems": true
+        },
+        "approved_wardrobe_item_ids": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "uniqueItems": true
+        },
+        "approved_consumable_ids": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "uniqueItems": true
+        }
+      }
+    },
+    "sleep_profiles": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/sleep_profile" }
+    },
+    "social_archetype_assignments": {
+      "type": "array",
+      "items": { "$ref": "social_archetype_assignment.schema.json" }
+    },
+    "external_context_ref": {
+      "type": ["string", "null"],
+      "minLength": 1
+    },
+    "capture_source_ref": {
+      "type": ["string", "null"],
+      "minLength": 1
+    },
+    "authority_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    }
+  },
+  "$defs": {
+    "sleep_profile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "circadian_profile_ref",
+        "sleep_need_min",
+        "preferred_sleep_window_start_minute_local",
+        "preferred_sleep_window_end_minute_local",
+        "preferred_wake_window_start_minute_local",
+        "preferred_wake_window_end_minute_local"
+      ],
+      "properties": {
+        "circadian_profile_ref": { "type": "string", "minLength": 1 },
+        "sleep_need_min": { "type": "integer", "minimum": 420, "maximum": 540 },
+        "preferred_sleep_window_start_minute_local": { "type": "integer", "minimum": 0, "maximum": 1439 },
+        "preferred_sleep_window_end_minute_local": { "type": "integer", "minimum": 0, "maximum": 1439 },
+        "preferred_wake_window_start_minute_local": { "type": "integer", "minimum": 0, "maximum": 1439 },
+        "preferred_wake_window_end_minute_local": { "type": "integer", "minimum": 0, "maximum": 1439 }
+      }
+    }
+  }
+}
