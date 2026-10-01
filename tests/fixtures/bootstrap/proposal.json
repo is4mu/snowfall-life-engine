@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "status": "PROPOSED",
+  "proposed_at": "2026-01-01T00:00:00+09:00",
+  "character_id": "fixture-character",
+  "timezone": "Asia/Tokyo",
+  "life_epoch": "2026-01-01T00:00:00+09:00",
+  "world_seed": "fixture-world-seed",
+  "engine_version": "0.1.0-foundation",
+  "behavior_policy_version": "fixture-policy-1",
+  "initial_location_id": "fixture-home",
+  "circadian_profile_ref": "fixture:circadian-synthetic",
+  "notes": "SYNTHETIC_FIXTURE_ONLY",
+  "initial_human_state": {
+    "sleep_debt_min": 0,
+    "hunger": 100,
+    "physical_fatigue": 100,
+    "affect_valence": 0,
+    "stress": 100,
+    "social_battery": 800
+  }
+}
