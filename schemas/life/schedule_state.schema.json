@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://snowfall-life-engine.invalid/schemas/life/schedule_state.schema.json",
+  "title": "ScheduleState",
+  "description": "Persisted concrete Commitment + ObligationTask snapshot. Slice 5A read/validate contract only. No standing recurrence-rule object. revision equals state_hash (content-derived). Actual Yukino life remains unstarted.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "character_id",
+    "as_of",
+    "revision",
+    "state_hash",
+    "commitments",
+    "obligation_tasks"
+  ],
+  "properties": {
+    "schema_version": { "type": "integer", "const": 1 },
+    "character_id": { "type": "string", "minLength": 1 },
+    "as_of": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Snapshot boundary. Semantic layer requires canonical Asia/Tokyo RFC3339."
+    },
+    "revision": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$",
+      "description": "Content-derived identity; equals state_hash for ScheduleState v1"
+    },
+    "state_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "commitments": {
+      "type": "array",
+      "description": "Concrete Commitment records. Canonical sort by commitment_id. Empty valid.",
+      "items": { "$ref": "commitment.schema.json" }
+    },
+    "obligation_tasks": {
+      "type": "array",
+      "description": "Concrete ObligationTask records. Canonical sort by task_id. Empty valid.",
+      "items": { "$ref": "obligation_task.schema.json" }
+    }
+  }
+}
