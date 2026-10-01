@@ -59,10 +59,12 @@ from tests.support.builders.runtime_decision import (
     _load_bundle,
     _refs,
     _route,
+    _routine_phys,
     _started_active,
     _threshold_wakeup,
     _v2_wakeup,
 )
+from tests.support.builders.runtime_bundle import build_synthetic_bundle_root
 from tests.support.builders.schedule import commitment as _commitment, task as _task
 from tests.support.constants import POLICY_PATH, POLICY_V2_CANDIDATE_PATH
 
