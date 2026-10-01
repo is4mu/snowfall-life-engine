@@ -439,7 +439,7 @@
       "source": "tests/life/test_slice5a_runtime_bundle.py",
       "disposition": "rewrite-split",
       "destination": "tests/contracts/runtime/test_runtime_bundle.py; tests/integration/runtime/test_bundle_loading.py",
-      "notes": "synthetic runtime fixture"
+      "notes": "private Canon/scope assertions replaced by public RuntimeBundle publication boundaries; synthetic builder extracted"
     },
     {
       "source": "tests/life/test_slice5a_schedule_state.py",
