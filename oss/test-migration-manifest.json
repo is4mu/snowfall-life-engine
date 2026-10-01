@@ -547,7 +547,7 @@
       "source": "tests/life/test_slice5b2c2b_finalization.py",
       "disposition": "migrate",
       "destination": "tests/integration/activity_lifecycle/test_finalization.py",
-      "notes": ""
+      "notes": "shared finalization builders extracted for orchestrator/capture reuse"
     },
     {
       "source": "tests/life/test_slice5b2c2b_finish_context.py",
