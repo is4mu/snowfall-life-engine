@@ -252,8 +252,8 @@
     {
       "source": "tests/life/test_slice2g_post_work.py",
       "disposition": "migrate",
-      "destination": "tests/scenarios/social/test_post_work_contact.py",
-      "notes": ""
+      "destination": "tests/scenarios/social/test_post_work_contact.py; tests/unit/social/test_generation_boundaries.py",
+      "notes": "private social-graph immutability guard remains private; generic generator strictness/dependency boundaries migrate publicly"
     },
     {
       "source": "tests/life/test_slice2g_slots.py",
