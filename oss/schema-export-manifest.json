@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
-  "status": "audited-pre-copy",
+  "status": "public-schema-set-exported",
   "source_repository": "is4mu/project-snowfall",
   "source_baseline": "458e05673a8d4a8f3b2346825b2eef8419411d64",
   "source_scope": "schemas/life/*",
   "source_file_count": 39,
-  "json_schema_count": 38,
-  "registry_registered_schema_count": 38,
+  "json_schema_count": 37,
+  "registry_registered_schema_count": 37,
   "registry_closure_complete": true,
   "old_schema_id_prefix": "https://my-insta-girl.local/schemas/life/",
   "public_schema_id_prefix": "https://snowfall-life-engine.invalid/schemas/life/",
-  "private_only_count": 0,
+  "private_only_count": 1,
   "entries": [
     {
       "source": "schemas/life/active_activity.schema.json",
@@ -239,9 +239,9 @@
     {
       "source": "schemas/life/runtime_production_authority.schema.json",
       "source_size_bytes": 3622,
-      "destination": "schemas/life/runtime_production_authority.schema.json",
-      "disposition": "publish-schema-id-rewrite",
-      "transform": "replace $id prefix https://my-insta-girl.local/schemas/life/ with https://snowfall-life-engine.invalid/schemas/life/; preserve all validation keywords and relative $ref values"
+      "destination": null,
+      "disposition": "hold-private-or-generalize",
+      "transform": "Not exported in the v0.1.0 baseline; application production-authority contract remains private."
     },
     {
       "source": "schemas/life/schedule_state.schema.json",
@@ -285,5 +285,7 @@
       "disposition": "publish-schema-id-rewrite",
       "transform": "replace $id prefix https://my-insta-girl.local/schemas/life/ with https://snowfall-life-engine.invalid/schemas/life/; preserve all validation keywords and relative $ref values"
     }
-  ]
+  ],
+  "source_json_schema_count": 38,
+  "public_json_schema_count": 37
 }
