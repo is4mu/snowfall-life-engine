@@ -58,6 +58,7 @@ jobs:
 
           if export.get("status") not in {
               "phase-0-pre-export",
+              "phase-1-export-authorized",
               "engine-exported",
           }:
               raise SystemExit(f"unexpected export status: {export.get('status')!r}")
