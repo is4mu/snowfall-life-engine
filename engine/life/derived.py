@@ -150,7 +150,7 @@ def validate_synthetic_sleep_profile(profile: Mapping[str, Any] | SyntheticSleep
 
 
 def default_synthetic_sleep_profile() -> SyntheticSleepProfile:
-    """Test-only synthetic profile (NOT Yukino): onset 23:00–01:00, wake 07:00–09:00, need 480."""
+    """Test-only synthetic profile (not a production character): onset 23:00–01:00, wake 07:00–09:00, need 480."""
     return SyntheticSleepProfile(
         sleep_need_min=480,
         preferred_sleep_window_start_minute_local=23 * 60,
