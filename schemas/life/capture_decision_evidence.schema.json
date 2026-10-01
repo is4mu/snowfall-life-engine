@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://snowfall-life-engine.invalid/schemas/life/capture_decision_evidence.schema.json",
+  "title": "CaptureDecisionEvidence",
+  "description": "Slice 4B2 per-capture CaptureDecisionEvidence v1. Immutable Capture fact metadata for a TAKE_CAPTURE only. Not copied into CameraRollRecord. Does not overload ActualEvent.decision_evidence.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "decision_type",
+    "policy_version",
+    "source_key",
+    "opportunity_key",
+    "activation_permille",
+    "rule_ids",
+    "input_state_refs",
+    "random_key",
+    "selected_result"
+  ],
+  "properties": {
+    "schema_version": { "type": "integer", "const": 1 },
+    "decision_type": { "type": "string", "const": "CAPTURE_OPPORTUNITY" },
+    "policy_version": { "type": "string", "minLength": 1 },
+    "source_key": {
+      "type": "string",
+      "minLength": 1,
+      "description": "stable_id(\"capture-source\", emitter_rule_id, semantic_source_ref, moment_ref) or equivalent stable source identity"
+    },
+    "opportunity_key": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Must equal stable_id(\"capture-opportunity\", activity_instance_id, source_key)"
+    },
+    "activation_permille": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1000,
+      "description": "Strict int 0..1000; no bool/float/string coercion"
+    },
+    "rule_ids": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "uniqueItems": true,
+      "description": "Semantically unordered; locally canonical sorted."
+    },
+    "input_state_refs": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "uniqueItems": true,
+      "description": "Semantically unordered; locally canonical sorted."
+    },
+    "random_key": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "description": "Required 64 lower-case hex for stochastic TAKE."
+    },
+    "selected_result": {
+      "type": "string",
+      "const": "TAKE_CAPTURE",
+      "description": "Only TAKE evidence may exist inside a Capture; SKIP cannot appear."
+    }
+  }
+}
