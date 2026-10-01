@@ -46,12 +46,12 @@ HORIZON = POLICY["social_policy"]["archetypes"]["LOCAL_CLOSE_INVITER"]["invite"]
     "future_horizon_max_days"
 ]
 
-SEED_CONTACT = "slice5b2b-probe-1"
-SEED_PRIOR_WEEK_INVITE = "slice5b2b-probe-5"
-SEED_SAME_DAY_INVITE = "slice5b2b-probe-4"
-SEED_BOTH = "slice5b2b-probe-13"
-SEED_POST_WORK = "slice5b2b-pw-3"
-SEED_MULTI_INVITE = "slice5b2b-mi-20"
+SEED_CONTACT = "public-social-contact-27"
+SEED_PRIOR_WEEK_INVITE = "public-social-invite-1"
+SEED_SAME_DAY_INVITE = "public-social-invite-42"
+SEED_BOTH = "public-social-both-38"
+SEED_POST_WORK = "public-social-post-work-21"
+SEED_MULTI_INVITE = "public-social-multi-53"
 
 
 def _successful_start_from_result(result) -> SuccessfulImmediateSocialStart:
