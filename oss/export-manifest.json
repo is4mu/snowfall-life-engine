@@ -1,13 +1,22 @@
 {
   "schema_version": 1,
-  "status": "phase-0-pre-export",
+  "status": "phase-1-export-authorized",
   "project_name": "Snowfall Life Engine",
   "repository": "is4mu/snowfall-life-engine",
   "initial_import_path": "engine.life",
   "preferred_future_package": "snowfall_life",
   "preferred_future_cli": "snowfall-life",
   "release_target": "v0.1.0",
-  "source_gate": "final private pre-split validation and human review must complete before engine code export",
+  "source_gate": "satisfied",
+  "approved_source_repository": "is4mu/project-snowfall",
+  "approved_source_main_sha": "458e05673a8d4a8f3b2346825b2eef8419411d64",
+  "source_validation": {
+    "issue": 152,
+    "pull_request": 154,
+    "fast_run": 242,
+    "full_run": 244,
+    "full_life_test_count": 2598
+  },
   "clean_history_required": true,
   "include_candidates": [
     "engine/life/**",
