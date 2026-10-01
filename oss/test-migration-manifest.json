@@ -493,7 +493,7 @@
       "source": "tests/life/test_slice5b2b_social_runtime.py",
       "disposition": "migrate",
       "destination": "tests/integration/social/test_social_runtime.py",
-      "notes": ""
+      "notes": "shared social runtime builders extracted; public synthetic social fixtures only"
     },
     {
       "source": "tests/life/test_slice5b2b_social_state.py",
