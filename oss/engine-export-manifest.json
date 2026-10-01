@@ -1,0 +1,591 @@
+{
+  "schema_version": 1,
+  "status": "audited-pre-copy",
+  "source_repository": "is4mu/project-snowfall",
+  "source_baseline": "458e05673a8d4a8f3b2346825b2eef8419411d64",
+  "source_scope": "engine/life/*",
+  "source_file_count": 77,
+  "classification_counts": {
+    "publish-as-is": 55,
+    "publish-doc-cleanup": 16,
+    "publish-generalized": 6
+  },
+  "private_only_count": 0,
+  "dependency_audit": {
+    "python_runtime": "3.12",
+    "third_party_runtime": [
+      "jsonschema>=4,<5"
+    ],
+    "transitive_runtime_used": [
+      "referencing (via jsonschema stack)"
+    ],
+    "system_tools_for_git_features": [
+      "git"
+    ],
+    "live_network_required_for_core": false,
+    "notes": [
+      "Core deterministic simulation modules do not import network client libraries.",
+      "Git transaction/publisher/operator modules use subprocess Git and optional caller-supplied bearer-token environment names; public tests must use local repositories/remotes.",
+      "refs/heads/life is retained as the generic runtime-ref convention, not private runtime data."
+    ]
+  },
+  "secret_scan": {
+    "status": "clean",
+    "scanned_markers": [
+      "ghp_",
+      "ghs_",
+      "github_pat_",
+      "AKIA",
+      "BEGIN PRIVATE KEY",
+      "password",
+      "token literal"
+    ],
+    "note": "No credential value or private key material found in engine/life at approved source baseline."
+  },
+  "approved_transform_rules": [
+    "Doc/comment cleanup may remove application-specific historical wording without changing executable behavior.",
+    "Repository-specific path/identity strings are generalized only where listed per file.",
+    "No behavior-policy tuning, state-transition change, schema weakening, deterministic-equivalence weakening, or package rename is allowed during export."
+  ],
+  "entries": [
+    {
+      "source": "engine/life/__init__.py",
+      "source_size_bytes": 574,
+      "destination": "engine/life/__init__.py",
+      "disposition": "publish-as-is",
+      "transform": null
+    },
+    {
+      "source": "engine/life/__main__.py",
+      "source_size_bytes": 92,
+      "destination": "engine/life/__main__.py",
+      "disposition": "publish-as-is",
+      "transform": null
+    },
+    {
+      "source": "engine/life/activity_finalization.py",
+      "source_size_bytes": 39741,
+      "destination": "engine/life/activity_finalization.py",
+      "disposition": "publish-doc-cleanup",
+      "transform": "remove application-specific Yukino/activation wording only; no executable semantic change"
+    },
+    {
+      "source": "engine/life/activity_lifecycle.py",
+      "source_size_bytes": 39208,
+      "destination": "engine/life/activity_lifecycle.py",
+      "disposition": "publish-doc-cleanup",
+      "transform": "remove application-specific Yukino/activation wording only; no executable semantic change"
+    },
+    {
+      "source": "engine/life/activity_materialization.py",
+      "source_size_bytes": 67714,
+      "destination": "engine/life/activity_materialization.py",
+      "disposition": "publish-doc-cleanup",
+      "transform": "remove application-specific Yukino/activation wording only; no executable semantic change"
+    },
+    {
+      "source": "engine/life/activity_runtime.py",
+      "source_size_bytes": 28683,
+      "destination": "engine/life/activity_runtime.py",
+      "disposition": "publish-doc-cleanup",
+      "transform": "remove application-specific Yukino/activation wording only; no executable semantic change"
+    },
+    {
+      "source": "engine/life/bootstrap.py",
+      "source_size_bytes": 4535,
+      "destination": "engine/life/bootstrap.py",
+      "disposition": "publish-doc-cleanup",
+      "transform": "remove application-specific Yukino/activation wording only; no executable semantic change"
+    },
+    {
+      "source": "engine/life/camera_roll.py",
+      "source_size_bytes": 10499,
+      "destination": "engine/life/camera_roll.py",
+      "disposition": "publish-as-is",
+      "transform": null
+    },
+    {
+      "source": "engine/life/canonical.py",
+      "source_size_bytes": 5085,
+      "destination": "engine/life/canonical.py",
+      "disposition": "publish-as-is",
+      "transform": null
+    },
+    {
+      "source": "engine/life/capture_decisions.py",
+      "source_size_bytes": 19539,
+      "destination": "engine/life/capture_decisions.py",
+      "disposition": "publish-doc-cleanup",
+      "transform": "remove application-specific Yukino/activation wording only; no executable semantic change"
+    },
+    {
+      "source": "engine/life/capture_emitters.py",
+      "source_size_bytes": 21121,
+      "destination": "engine/life/capture_emitters.py",
+      "disposition": "publish-as-is",
+      "transform": null
+    },
+    {
+      "source": "engine/life/capture_pipeline.py",
+      "source_size_bytes": 4746,
+      "destination": "engine/life/capture_pipeline.py",
+      "disposition": "publish-as-is",
+      "transform": null
+    },
+    {
+      "source": "engine/life/capture_repeats.py",
+      "source_size_bytes": 9720,
+      "destination": "engine/life/capture_repeats.py",
+      "disposition": "publish-as-is",
+      "transform": null
+    },
+    {
+      "source": "engine/life/captures.py",
+      "source_size_bytes": 29618,
+      "destination": "engine/life/captures.py",
+      "disposition": "publish-as-is",
+      "transform": null
+    },
+    {
+      "source": "engine/life/checkpoint.py",
+      "source_size_bytes": 5002,
+      "destination": "engine/life/checkpoint.py",
+      "disposition": "publish-as-is",
+      "transform": null
+    },
+    {
+      "source": "engine/life/cli.py",
+      "source_size_bytes": 8727,
+      "destination": "engine/life/cli.py",
+      "disposition": "publish-doc-cleanup",
+      "transform": "remove application-specific Yukino/activation wording only; no executable semantic change"
+    },
+    {
+      "source": "engine/life/clock.py",
+      "source_size_bytes": 20927,
+      "destination": "engine/life/clock.py",
+      "disposition": "publish-as-is",
+      "transform": null
+    },
+    {
+      "source": "engine/life/contracts.py",
+      "source_size_bytes": 7214,
+      "destination": "engine/life/contracts.py",
+      "disposition": "publish-as-is",
+      "transform": null
+    },
+    {
+      "source": "engine/life/correction.py",
+      "source_size_bytes": 11201,
+      "destination": "engine/life/correction.py",
+      "disposition": "publish-as-is",
+      "transform": null
+    },
+    {
+      "source": "engine/life/decisions.py",
+      "source_size_bytes": 65825,
+      "destination": "engine/life/decisions.py",
+      "disposition": "publish-as-is",
+      "transform": null
+    },
+    {
+      "source": "engine/life/derived.py",
+      "source_size_bytes": 19395,
+      "destination": "engine/life/derived.py",
+      "disposition": "publish-doc-cleanup",
+      "transform": "remove application-specific Yukino/activation wording only; no executable semantic change"
+    },
+    {
+      "source": "engine/life/domain_adapters.py",
+      "source_size_bytes": 33527,
+      "destination": "engine/life/domain_adapters.py",
+      "disposition": "publish-as-is",
+      "transform": null
+    },
+    {
+      "source": "engine/life/dynamics.py",
+      "source_size_bytes": 12637,
+      "destination": "engine/life/dynamics.py",
+      "disposition": "publish-as-is",
+      "transform": null
+    },
+    {
+      "source": "engine/life/effects.py",
+      "source_size_bytes": 2181,
+      "destination": "engine/life/effects.py",
+      "disposition": "publish-as-is",
+      "transform": null
+    },
+    {
+      "source": "engine/life/errors.py",
+      "source_size_bytes": 1393,
+      "destination": "engine/life/errors.py",
+      "disposition": "publish-as-is",
+      "transform": null
+    },
+    {
+      "source": "engine/life/events.py",
+      "source_size_bytes": 8872,
+      "destination": "engine/life/events.py",
+      "disposition": "publish-as-is",
+      "transform": null
+    },
+    {
+      "source": "engine/life/finance_reducer.py",
+      "source_size_bytes": 6936,
+      "destination": "engine/life/finance_reducer.py",
+      "disposition": "publish-as-is",
+      "transform": null
+    },
+    {
+      "source": "engine/life/fixed_point.py",
+      "source_size_bytes": 12955,
+      "destination": "engine/life/fixed_point.py",
+      "disposition": "publish-as-is",
+      "transform": null
+    },
+    {
+      "source": "engine/life/history.py",
+      "source_size_bytes": 2130,
+      "destination": "engine/life/history.py",
+      "disposition": "publish-as-is",
+      "transform": null
+    },
+    {
+      "source": "engine/life/home_reducer.py",
+      "source_size_bytes": 8501,
+      "destination": "engine/life/home_reducer.py",
+      "disposition": "publish-as-is",
+      "transform": null
+    },
+    {
+      "source": "engine/life/ids.py",
+      "source_size_bytes": 1408,
+      "destination": "engine/life/ids.py",
+      "disposition": "publish-as-is",
+      "transform": null
+    },
+    {
+      "source": "engine/life/invariants.py",
+      "source_size_bytes": 15590,
+      "destination": "engine/life/invariants.py",
+      "disposition": "publish-as-is",
+      "transform": null
+    },
+    {
+      "source": "engine/life/last_operator_action.py",
+      "source_size_bytes": 9993,
+      "destination": "engine/life/last_operator_action.py",
+      "disposition": "publish-as-is",
+      "transform": null
+    },
+    {
+      "source": "engine/life/operator_action.py",
+      "source_size_bytes": 14847,
+      "destination": "engine/life/operator_action.py",
+      "disposition": "publish-as-is",
+      "transform": null
+    },
+    {
+      "source": "engine/life/operator_candidate.py",
+      "source_size_bytes": 12445,
+      "destination": "engine/life/operator_candidate.py",
+      "disposition": "publish-as-is",
+      "transform": null
+    },
+    {
+      "source": "engine/life/operator_git_transaction.py",
+      "source_size_bytes": 30237,
+      "destination": "engine/life/operator_git_transaction.py",
+      "disposition": "publish-as-is",
+      "transform": null
+    },
+    {
+      "source": "engine/life/operator_history.py",
+      "source_size_bytes": 4233,
+      "destination": "engine/life/operator_history.py",
+      "disposition": "publish-as-is",
+      "transform": null
+    },
+    {
+      "source": "engine/life/operator_recovery.py",
+      "source_size_bytes": 15000,
+      "destination": "engine/life/operator_recovery.py",
+      "disposition": "publish-as-is",
+      "transform": null
+    },
+    {
+      "source": "engine/life/operator_request.py",
+      "source_size_bytes": 11189,
+      "destination": "engine/life/operator_request.py",
+      "disposition": "publish-as-is",
+      "transform": null
+    },
+    {
+      "source": "engine/life/operator_upgrade.py",
+      "source_size_bytes": 30557,
+      "destination": "engine/life/operator_upgrade.py",
+      "disposition": "publish-as-is",
+      "transform": null
+    },
+    {
+      "source": "engine/life/policy_invariants.py",
+      "source_size_bytes": 16623,
+      "destination": "engine/life/policy_invariants.py",
+      "disposition": "publish-generalized",
+      "transform": "remove historical private-character field token from generic person-specific-field guard"
+    },
+    {
+      "source": "engine/life/policy.py",
+      "source_size_bytes": 4830,
+      "destination": "engine/life/policy.py",
+      "disposition": "publish-as-is",
+      "transform": null
+    },
+    {
+      "source": "engine/life/README.md",
+      "source_size_bytes": 53538,
+      "destination": "engine/life/README.md",
+      "disposition": "publish-generalized",
+      "transform": "rewrite generic engine documentation; remove private workflow/Yukino/private-path history"
+    },
+    {
+      "source": "engine/life/relation_reducer.py",
+      "source_size_bytes": 5770,
+      "destination": "engine/life/relation_reducer.py",
+      "disposition": "publish-as-is",
+      "transform": null
+    },
+    {
+      "source": "engine/life/requirements.txt",
+      "source_size_bytes": 17,
+      "destination": "engine/life/requirements.txt",
+      "disposition": "publish-as-is",
+      "transform": null
+    },
+    {
+      "source": "engine/life/rng.py",
+      "source_size_bytes": 1742,
+      "destination": "engine/life/rng.py",
+      "disposition": "publish-as-is",
+      "transform": null
+    },
+    {
+      "source": "engine/life/routine_adapters.py",
+      "source_size_bytes": 31060,
+      "destination": "engine/life/routine_adapters.py",
+      "disposition": "publish-as-is",
+      "transform": null
+    },
+    {
+      "source": "engine/life/runtime_bundle.py",
+      "source_size_bytes": 13634,
+      "destination": "engine/life/runtime_bundle.py",
+      "disposition": "publish-generalized",
+      "transform": "remove Snowfall legacy runtime path references and unused legacy-path constant"
+    },
+    {
+      "source": "engine/life/runtime_capture.py",
+      "source_size_bytes": 36269,
+      "destination": "engine/life/runtime_capture.py",
+      "disposition": "publish-doc-cleanup",
+      "transform": "remove application-specific Yukino/activation wording only; no executable semantic change"
+    },
+    {
+      "source": "engine/life/runtime_decision.py",
+      "source_size_bytes": 52042,
+      "destination": "engine/life/runtime_decision.py",
+      "disposition": "publish-as-is",
+      "transform": null
+    },
+    {
+      "source": "engine/life/runtime_effects.py",
+      "source_size_bytes": 9286,
+      "destination": "engine/life/runtime_effects.py",
+      "disposition": "publish-as-is",
+      "transform": null
+    },
+    {
+      "source": "engine/life/runtime_fact_provider.py",
+      "source_size_bytes": 8157,
+      "destination": "engine/life/runtime_fact_provider.py",
+      "disposition": "publish-doc-cleanup",
+      "transform": "remove application-specific Yukino/activation wording only; no executable semantic change"
+    },
+    {
+      "source": "engine/life/runtime_git_transaction.py",
+      "source_size_bytes": 51420,
+      "destination": "engine/life/runtime_git_transaction.py",
+      "disposition": "publish-generalized",
+      "transform": "replace private-repository invalid commit email; remove private activation wording"
+    },
+    {
+      "source": "engine/life/runtime_operator_launcher.py",
+      "source_size_bytes": 52336,
+      "destination": "engine/life/runtime_operator_launcher.py",
+      "disposition": "publish-as-is",
+      "transform": null
+    },
+    {
+      "source": "engine/life/runtime_orchestrator.py",
+      "source_size_bytes": 76424,
+      "destination": "engine/life/runtime_orchestrator.py",
+      "disposition": "publish-doc-cleanup",
+      "transform": "remove application-specific Yukino/activation wording only; no executable semantic change"
+    },
+    {
+      "source": "engine/life/runtime_persistence.py",
+      "source_size_bytes": 67095,
+      "destination": "engine/life/runtime_persistence.py",
+      "disposition": "publish-generalized",
+      "transform": "remove Snowfall legacy data/runtime special-case/comment; preserve authoritative namespace behavior"
+    },
+    {
+      "source": "engine/life/runtime_production_authority.py",
+      "source_size_bytes": 16742,
+      "destination": "engine/life/runtime_production_authority.py",
+      "disposition": "publish-generalized",
+      "transform": "replace Snowfall fixed data/runtime/life authority layout with public generic authority layout"
+    },
+    {
+      "source": "engine/life/runtime_production_composition.py",
+      "source_size_bytes": 11221,
+      "destination": "engine/life/runtime_production_composition.py",
+      "disposition": "publish-as-is",
+      "transform": null
+    },
+    {
+      "source": "engine/life/runtime_production_fact_provider.py",
+      "source_size_bytes": 31275,
+      "destination": "engine/life/runtime_production_fact_provider.py",
+      "disposition": "publish-as-is",
+      "transform": null
+    },
+    {
+      "source": "engine/life/runtime_production_fact_sources.py",
+      "source_size_bytes": 36108,
+      "destination": "engine/life/runtime_production_fact_sources.py",
+      "disposition": "publish-as-is",
+      "transform": null
+    },
+    {
+      "source": "engine/life/runtime_production_launcher.py",
+      "source_size_bytes": 46096,
+      "destination": "engine/life/runtime_production_launcher.py",
+      "disposition": "publish-as-is",
+      "transform": null
+    },
+    {
+      "source": "engine/life/runtime_remote_publisher.py",
+      "source_size_bytes": 59869,
+      "destination": "engine/life/runtime_remote_publisher.py",
+      "disposition": "publish-doc-cleanup",
+      "transform": "remove application-specific Yukino/activation wording only; no executable semantic change"
+    },
+    {
+      "source": "engine/life/runtime_spatial.py",
+      "source_size_bytes": 7035,
+      "destination": "engine/life/runtime_spatial.py",
+      "disposition": "publish-doc-cleanup",
+      "transform": "remove application-specific Yukino/activation wording only; no executable semantic change"
+    },
+    {
+      "source": "engine/life/schedule_reducer.py",
+      "source_size_bytes": 10376,
+      "destination": "engine/life/schedule_reducer.py",
+      "disposition": "publish-as-is",
+      "transform": null
+    },
+    {
+      "source": "engine/life/schedule_state.py",
+      "source_size_bytes": 9113,
+      "destination": "engine/life/schedule_state.py",
+      "disposition": "publish-doc-cleanup",
+      "transform": "remove application-specific Yukino/activation wording only; no executable semantic change"
+    },
+    {
+      "source": "engine/life/schema.py",
+      "source_size_bytes": 4883,
+      "destination": "engine/life/schema.py",
+      "disposition": "publish-as-is",
+      "transform": null
+    },
+    {
+      "source": "engine/life/social_opportunities.py",
+      "source_size_bytes": 49653,
+      "destination": "engine/life/social_opportunities.py",
+      "disposition": "publish-as-is",
+      "transform": null
+    },
+    {
+      "source": "engine/life/social_response.py",
+      "source_size_bytes": 52614,
+      "destination": "engine/life/social_response.py",
+      "disposition": "publish-doc-cleanup",
+      "transform": "remove application-specific Yukino/activation wording only; no executable semantic change"
+    },
+    {
+      "source": "engine/life/social_runtime.py",
+      "source_size_bytes": 63991,
+      "destination": "engine/life/social_runtime.py",
+      "disposition": "publish-as-is",
+      "transform": null
+    },
+    {
+      "source": "engine/life/spatial_context.py",
+      "source_size_bytes": 15744,
+      "destination": "engine/life/spatial_context.py",
+      "disposition": "publish-doc-cleanup",
+      "transform": "remove application-specific Yukino/activation wording only; no executable semantic change"
+    },
+    {
+      "source": "engine/life/timeline.py",
+      "source_size_bytes": 3761,
+      "destination": "engine/life/timeline.py",
+      "disposition": "publish-as-is",
+      "transform": null
+    },
+    {
+      "source": "engine/life/timeutil.py",
+      "source_size_bytes": 5807,
+      "destination": "engine/life/timeutil.py",
+      "disposition": "publish-as-is",
+      "transform": null
+    },
+    {
+      "source": "engine/life/versioning.py",
+      "source_size_bytes": 1526,
+      "destination": "engine/life/versioning.py",
+      "disposition": "publish-as-is",
+      "transform": null
+    },
+    {
+      "source": "engine/life/wakeups.py",
+      "source_size_bytes": 45108,
+      "destination": "engine/life/wakeups.py",
+      "disposition": "publish-as-is",
+      "transform": null
+    },
+    {
+      "source": "engine/life/wardrobe_reducer.py",
+      "source_size_bytes": 7107,
+      "destination": "engine/life/wardrobe_reducer.py",
+      "disposition": "publish-as-is",
+      "transform": null
+    },
+    {
+      "source": "engine/life/workspace.py",
+      "source_size_bytes": 2124,
+      "destination": "engine/life/workspace.py",
+      "disposition": "publish-as-is",
+      "transform": null
+    },
+    {
+      "source": "engine/life/world_state.py",
+      "source_size_bytes": 26685,
+      "destination": "engine/life/world_state.py",
+      "disposition": "publish-as-is",
+      "transform": null
+    }
+  ]
+}
