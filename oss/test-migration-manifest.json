@@ -445,7 +445,7 @@
       "source": "tests/life/test_slice5a_schedule_state.py",
       "disposition": "migrate",
       "destination": "tests/unit/schedule/test_schedule_state.py",
-      "notes": ""
+      "notes": "synthetic commitment/task builders extracted for runtime and persistence test reuse"
     },
     {
       "source": "tests/life/test_slice5b1_activity_runtime.py",
