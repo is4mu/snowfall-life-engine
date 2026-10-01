@@ -1,0 +1,271 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://snowfall-life-engine.invalid/schemas/life/queued_internal_event.schema.json",
+  "title": "QueuedInternalEvent",
+  "oneOf": [
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_version", "event_id", "event_kind", "due_at", "priority", "payload"],
+      "properties": {
+        "schema_version": { "type": "integer", "const": 1 },
+        "event_id": { "type": "string", "minLength": 1 },
+        "event_kind": { "const": "ACTIVITY_END" },
+        "due_at": { "type": "string", "minLength": 1 },
+        "priority": { "type": "integer" },
+        "payload": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["activity_instance_id"],
+          "properties": {
+            "activity_instance_id": { "type": "string", "minLength": 1 }
+          }
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_version", "event_id", "event_kind", "due_at", "priority", "payload"],
+      "properties": {
+        "schema_version": { "type": "integer", "const": 1 },
+        "event_id": { "type": "string", "minLength": 1 },
+        "event_kind": { "const": "DECISION_WAKEUP" },
+        "due_at": { "type": "string", "minLength": 1 },
+        "priority": { "type": "integer" },
+        "payload": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["reason", "decision_key"],
+          "properties": {
+            "reason": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Stable wakeup reason (threshold:*, commitment_departure, planned_window, obligation_deadline, exogenous, day_boundary, …)."
+            },
+            "decision_key": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Stable identity for this wakeup instance within the scheduler."
+            },
+            "field": {
+              "type": ["string", "null"],
+              "enum": [
+                "hunger",
+                "physical_fatigue",
+                "stress",
+                "affect_valence",
+                "social_battery",
+                null
+              ],
+              "description": "Human-state field; required when reason starts with threshold:"
+            },
+            "source_kind": {
+              "type": ["string", "null"],
+              "description": "Optional source category (commitment, task, calendar, …). Slice 2+."
+            },
+            "source_ref": {
+              "type": ["string", "null"],
+              "description": "Optional stable ref to commitment/task/event. Slice 2+."
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "reason": { "type": "string", "pattern": "^threshold:" }
+                },
+                "required": ["reason"]
+              },
+              "then": {
+                "required": ["field"],
+                "properties": {
+                  "field": {
+                    "type": "string",
+                    "enum": [
+                      "hunger",
+                      "physical_fatigue",
+                      "stress",
+                      "affect_valence",
+                      "social_battery"
+                    ]
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_version", "event_id", "event_kind", "due_at", "priority", "payload"],
+      "properties": {
+        "schema_version": { "type": "integer", "const": 1 },
+        "event_id": { "type": "string", "minLength": 1 },
+        "event_kind": { "const": "IDLE_REASSESSMENT" },
+        "due_at": { "type": "string", "minLength": 1 },
+        "priority": { "type": "integer" },
+        "payload": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["interval_min"],
+          "properties": {
+            "interval_min": { "type": "integer", "minimum": 1, "maximum": 10080 }
+          }
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_version", "event_id", "event_kind", "due_at", "priority", "payload"],
+      "properties": {
+        "schema_version": { "type": "integer", "const": 2 },
+        "event_id": { "type": "string", "minLength": 1 },
+        "event_kind": { "const": "DECISION_WAKEUP" },
+        "due_at": { "type": "string", "minLength": 1 },
+        "priority": { "type": "integer" },
+        "payload": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "trigger_kind",
+            "decision_key",
+            "reason_code",
+            "metric",
+            "target_band",
+            "direction",
+            "source_kind",
+            "source_ref"
+          ],
+          "properties": {
+            "trigger_kind": {
+              "type": "string",
+              "enum": [
+                "THRESHOLD",
+                "ACTIVE_REASSESSMENT",
+                "COMMITMENT_DEPARTURE",
+                "PLANNED_WINDOW",
+                "OBLIGATION",
+                "EXOGENOUS",
+                "DAY_PLANNING",
+                "CIRCADIAN_REASSESSMENT",
+                "IDLE",
+                "POST_FINALIZE",
+                "IMMEDIATE_REASSESSMENT"
+              ]
+            },
+            "decision_key": { "type": "string", "minLength": 1 },
+            "reason_code": { "type": "string", "minLength": 1 },
+            "metric": {
+              "type": ["string", "null"],
+              "enum": [
+                "HUNGER",
+                "PHYSICAL_FATIGUE",
+                "STRESS",
+                "SOCIAL_BATTERY",
+                "SLEEP_PRESSURE",
+                null
+              ]
+            },
+            "target_band": {
+              "type": ["string", "null"],
+              "minLength": 1
+            },
+            "direction": {
+              "type": ["string", "null"],
+              "enum": ["UP", "DOWN", null]
+            },
+            "source_kind": { "type": ["string", "null"] },
+            "source_ref": { "type": ["string", "null"] }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": { "trigger_kind": { "const": "THRESHOLD" } },
+                "required": ["trigger_kind"]
+              },
+              "then": {
+                "required": ["metric", "target_band", "direction"],
+                "oneOf": [
+                  {
+                    "properties": {
+                      "metric": { "const": "HUNGER" },
+                      "target_band": { "const": "MEAL_NEEDED" },
+                      "direction": { "const": "UP" }
+                    }
+                  },
+                  {
+                    "properties": {
+                      "metric": { "const": "HUNGER" },
+                      "target_band": { "const": "URGENT" },
+                      "direction": { "const": "UP" }
+                    }
+                  },
+                  {
+                    "properties": {
+                      "metric": { "const": "PHYSICAL_FATIGUE" },
+                      "target_band": { "const": "HIGH" },
+                      "direction": { "const": "UP" }
+                    }
+                  },
+                  {
+                    "properties": {
+                      "metric": { "const": "PHYSICAL_FATIGUE" },
+                      "target_band": { "const": "VERY_HIGH" },
+                      "direction": { "const": "UP" }
+                    }
+                  },
+                  {
+                    "properties": {
+                      "metric": { "const": "STRESS" },
+                      "target_band": { "const": "HIGH" },
+                      "direction": { "const": "UP" }
+                    }
+                  },
+                  {
+                    "properties": {
+                      "metric": { "const": "STRESS" },
+                      "target_band": { "const": "VERY_HIGH" },
+                      "direction": { "const": "UP" }
+                    }
+                  },
+                  {
+                    "properties": {
+                      "metric": { "const": "SOCIAL_BATTERY" },
+                      "target_band": { "const": "LOW" },
+                      "direction": { "const": "DOWN" }
+                    }
+                  },
+                  {
+                    "properties": {
+                      "metric": { "const": "SLEEP_PRESSURE" },
+                      "target_band": { "const": "HIGH" },
+                      "direction": { "const": "UP" }
+                    }
+                  },
+                  {
+                    "properties": {
+                      "metric": { "const": "SLEEP_PRESSURE" },
+                      "target_band": { "const": "CRITICAL" },
+                      "direction": { "const": "UP" }
+                    }
+                  }
+                ]
+              },
+              "else": {
+                "properties": {
+                  "metric": { "type": "null" },
+                  "target_band": { "type": "null" },
+                  "direction": { "type": "null" }
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}
