@@ -505,7 +505,7 @@
       "source": "tests/life/test_slice5b2c1_activity_materialization.py",
       "disposition": "split",
       "destination": "tests/unit/activities/test_materialization.py; tests/integration/activity_lifecycle/test_materialization.py",
-      "notes": ""
+      "notes": "shared activity materialization builders extracted; pure semantics split from bundle-backed lifecycle integration"
     },
     {
       "source": "tests/life/test_slice5b2c1_boundaries.py",
