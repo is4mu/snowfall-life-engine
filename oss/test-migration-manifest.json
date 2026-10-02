@@ -325,13 +325,13 @@
       "source": "tests/life/test_slice3a_world_state.py",
       "disposition": "rewrite-split",
       "destination": "tests/unit/state/test_world_state.py; tests/contracts/state/test_world_state_schema.py",
-      "notes": ""
+      "notes": "private baseline/canon byte guards removed; public schema, projection, canonicalization, fail-closed and no-I/O contracts retained"
     },
     {
       "source": "tests/life/test_slice3b_relation_reducer.py",
       "disposition": "rewrite-migrate",
       "destination": "tests/unit/state/test_relation_reducer.py",
-      "notes": "synthetic entities"
+      "notes": "private baseline/canon guards removed; strict relation semantics, replay/idempotence and reducer no-I/O retained"
     },
     {
       "source": "tests/life/test_slice3b_soak.py",
@@ -343,7 +343,7 @@
       "source": "tests/life/test_slice3c_home_consumables_reducer.py",
       "disposition": "rewrite-migrate",
       "destination": "tests/unit/state/test_consumables_reducer.py",
-      "notes": "generic synthetic inventory"
+      "notes": "private baseline/canon guards removed; home/consumables strict semantics, replay/idempotence and no-I/O retained"
     },
     {
       "source": "tests/life/test_slice3c_soak.py",
@@ -361,13 +361,13 @@
       "source": "tests/life/test_slice3d_wardrobe_reducer.py",
       "disposition": "rewrite-migrate",
       "destination": "tests/unit/state/test_wardrobe_reducer.py",
-      "notes": "synthetic wardrobe catalog"
+      "notes": "private canon/baseline guards removed; strict wardrobe transition semantics and no-I/O retained"
     },
     {
       "source": "tests/life/test_slice3e_finance_reducer.py",
       "disposition": "rewrite-migrate",
       "destination": "tests/unit/state/test_finance_reducer.py",
-      "notes": "synthetic accounts"
+      "notes": "private canon/baseline guards removed; integer finance semantics, replay/idempotence and no-I/O retained"
     },
     {
       "source": "tests/life/test_slice3e_soak.py",
