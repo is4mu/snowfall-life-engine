@@ -301,19 +301,19 @@
       "source": "tests/life/test_slice2i_calibration.py",
       "disposition": "consolidate",
       "destination": "tests/calibration/test_behavior_policy.py",
-      "notes": ""
+      "notes": "day-snapshot builder extracted to tests/support/harnesses/behavior_scenarios.py; public calibration uses synthetic policy only"
     },
     {
       "source": "tests/life/test_slice2i_cross_domain.py",
       "disposition": "migrate",
       "destination": "tests/integration/cross_domain/test_behavior_runtime.py",
-      "notes": ""
+      "notes": "private fixed policy SHA/module path guard replaced by public fixture immutability and semantic composition checks"
     },
     {
       "source": "tests/life/test_slice2i_invariants.py",
       "disposition": "rewrite-merge",
       "destination": "tests/contracts/invariants/test_behavior_invariants.py; tests/soak/test_invariants_90d.py",
-      "notes": "remove test-to-test import"
+      "notes": "test-to-test import removed via shared scenario harness; private Canon/social-graph guards remain private; public engine/fixture immutability retained"
     },
     {
       "source": "tests/life/test_slice3a_soak.py",
