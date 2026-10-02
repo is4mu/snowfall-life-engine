@@ -379,7 +379,7 @@
       "source": "tests/life/test_slice4a_capture_camera_roll.py",
       "disposition": "split",
       "destination": "tests/unit/captures/test_camera_roll.py; tests/integration/capture_pipeline/test_camera_roll.py",
-      "notes": "shared builders extracted"
+      "notes": "split into pure Camera Roll contracts and capture/finalization integration; private legacy-file freezes removed; no-capture hashes retained as public semantic goldens"
     },
     {
       "source": "tests/life/test_slice4a_soak.py",
@@ -391,7 +391,7 @@
       "source": "tests/life/test_slice4a1_capture_subject_kind.py",
       "disposition": "rewrite-merge",
       "destination": "tests/contracts/captures/test_subject_contracts.py",
-      "notes": "synthetic subjects"
+      "notes": "capture kind/subject semantics migrate as public contract; private legacy/canon freeze guards remain private"
     },
     {
       "source": "tests/life/test_slice4b1_capture_decisions.py",

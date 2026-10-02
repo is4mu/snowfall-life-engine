@@ -74,3 +74,13 @@ def build_test_capture_fact(
         visual_context=vc,
         capture_decision_evidence=evidence,
     )
+
+
+# Versioned semantic goldens for a finalized event with no captures.
+# These freeze public persisted-object compatibility, not private repository history.
+PUBLIC_NO_CAPTURE_EVENT_HASH = (
+    "b18e5a76889088d2e3f8b598ad147f9786d741d638e9ebd1ff7e52209feff406"
+)
+PUBLIC_NO_CAPTURE_HISTORY_HASH = (
+    "ce0a6e4aa4a7c26834c9a70934c1544a61b0858cea69c5ee3112d59c6484b98f"
+)
