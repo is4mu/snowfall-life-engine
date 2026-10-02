@@ -31,7 +31,7 @@ class CurrentStateRuntimeContractTests(unittest.TestCase):
 
     def test_16_empty_checkpoint_initializes_null(self) -> None:
         state = empty_checkpoint(
-            character_id=CHAR,
+            character_id=CHARACTER_ID,
             life_epoch="2026-04-01T00:00:00+09:00",
             world_seed="seed",
             behavior_policy_version="fixture-policy-1",
