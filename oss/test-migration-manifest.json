@@ -685,7 +685,7 @@
       "source": "tests/life/test_slice5c1_baseline_verify.py",
       "disposition": "replace",
       "destination": "tests/contracts/persistence/test_persistent_golden.py",
-      "notes": "semantic/versioned golden, not private commit baseline"
+      "notes": "semantic persistent-snapshot golden; private repository baseline byte comparison is not exported"
     },
     {
       "source": "tests/life/test_slice5c1_boundaries.py",
@@ -715,7 +715,7 @@
       "source": "tests/life/test_slice5c1_fixtures.py",
       "disposition": "support-rewrite",
       "destination": "tests/support/builders/persistence.py",
-      "notes": "remove private baseline dependency"
+      "notes": "public synthetic persistence builder composed from public runtime/capture/orchestrator builders; no private baseline SHA helpers"
     },
     {
       "source": "tests/life/test_slice5c1_isolation.py",
