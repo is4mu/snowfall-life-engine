@@ -17,6 +17,7 @@ from tests.support.harnesses.integrated_behavior import (
     fingerprint,
     household,
     human_state,
+    load_candidate_policy,
     obligation,
     resolver_boundary,
     reverse_snapshot_inputs,
