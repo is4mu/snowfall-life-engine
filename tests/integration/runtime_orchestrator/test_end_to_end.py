@@ -100,7 +100,7 @@ class RuntimeOrchestratorIntegrationTests(unittest.TestCase):
             )
             from engine.life.runtime_bundle import RuntimeBundle
             from engine.life.checkpoint import validate_checkpoint
-            from tests.support.builders.schedule import _commitment
+            from tests.support.builders.schedule import commitment as _commitment
 
             bundle = _load_c3_bundle(
                 tmp + "/integ",

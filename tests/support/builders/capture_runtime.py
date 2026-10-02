@@ -26,7 +26,7 @@ from tests.support.builders.runtime_bundle import (
     build_synthetic_bundle_root,
     reference_sets as _refs,
 )
-from tests.support.builders.schedule import _commitment, _task
+from tests.support.builders.schedule import commitment as _commitment, task as _task
 from tests.support.builders.runtime_decision import AS_OF, HOME
 from tests.support.builders.activity_materialization import DECISION_KEY
 from tests.support.builders.finalization import (
