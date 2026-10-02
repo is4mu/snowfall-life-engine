@@ -397,7 +397,7 @@
       "source": "tests/life/test_slice4b1_capture_decisions.py",
       "disposition": "rewrite-migrate",
       "destination": "tests/unit/captures/test_capture_decisions.py",
-      "notes": "remove test-module helper imports"
+      "notes": "private issue/SHA provenance and canon/runtime byte guards removed; public synthetic capture-policy contract, deterministic resolver, evidence, and no-I/O isolation retained"
     },
     {
       "source": "tests/life/test_slice4b1_soak.py",
