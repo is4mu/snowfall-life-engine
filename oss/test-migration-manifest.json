@@ -378,7 +378,7 @@
     {
       "source": "tests/life/test_slice4a_capture_camera_roll.py",
       "disposition": "split",
-      "destination": "tests/unit/captures/test_camera_roll.py; tests/integration/capture_pipeline/test_camera_roll.py",
+      "destination": "tests/unit/captures/test_camera_roll.py; tests/integration/capture_pipeline/test_capture_finalization.py",
       "notes": "split into pure Camera Roll contracts and capture/finalization integration; private legacy-file freezes removed; no-capture hashes retained as public semantic goldens"
     },
     {
