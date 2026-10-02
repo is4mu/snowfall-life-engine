@@ -1,19 +1,21 @@
-"""Synthetic schedule fixtures shared by public runtime tests."""
+"""Synthetic schedule-state builders shared by runtime and persistence tests."""
 
 from __future__ import annotations
 
+from typing import Any
+
 AS_OF = "2026-04-01T12:00:00+09:00"
-CHAR = "fixture-character"
+CHARACTER_ID = "fixture-character"
 
 
-def provenance(**overrides) -> dict:
-    base = {"origin": "SIMULATION_BOOTSTRAP", "notes": "slice5a-synthetic"}
+def provenance(**overrides: Any) -> dict[str, Any]:
+    base = {"origin": "SIMULATION_BOOTSTRAP", "notes": "public-synthetic-schedule"}
     base.update(overrides)
     return base
 
 
-def commitment(**overrides) -> dict:
-    base = {
+def commitment(**overrides: Any) -> dict[str, Any]:
+    base: dict[str, Any] = {
         "schema_version": 1,
         "commitment_id": "cmt-a",
         "kind": "WORK",
@@ -25,7 +27,7 @@ def commitment(**overrides) -> dict:
             "planned_end": "2026-04-02T18:00:00+09:00",
         },
         "location_id": "fixture-campus",
-        "participants": [CHAR],
+        "participants": [CHARACTER_ID],
         "source_kind": "INTERNAL",
         "provenance": provenance(),
         "recurrence_id": None,
@@ -50,8 +52,8 @@ def commitment(**overrides) -> dict:
     return base
 
 
-def task(**overrides) -> dict:
-    base = {
+def obligation_task(**overrides: Any) -> dict[str, Any]:
+    base: dict[str, Any] = {
         "schema_version": 1,
         "task_id": "task-a",
         "domain": "ACADEMIC",
@@ -70,5 +72,3 @@ def task(**overrides) -> dict:
     }
     base.update(overrides)
     return base
-
-

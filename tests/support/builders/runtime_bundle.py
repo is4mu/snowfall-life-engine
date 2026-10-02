@@ -1,4 +1,4 @@
-"""Synthetic RuntimeBundle builder and reference sets for public tests."""
+"""Synthetic RuntimeBundle filesystem builder for public tests."""
 
 from __future__ import annotations
 
@@ -8,9 +8,7 @@ import shutil
 from pathlib import Path
 from typing import Any
 
-
 from engine.life.checkpoint import empty_checkpoint
-from engine.life.history import EMPTY_HISTORY_HASH
 from engine.life.runtime_bundle import RuntimeReferenceSets
 from engine.life.schedule_state import build_schedule_state
 from engine.life.world_state import (
@@ -22,16 +20,16 @@ from engine.life.world_state import (
 )
 
 AS_OF = "2026-04-01T12:00:00+09:00"
-CHAR = "fixture-character"
+CHARACTER_ID = "fixture-character"
 ENGINE_SHA = "a" * 40
-PERSON = "person-a"
-HOME_ENTITY = "entity-lamp"
-WARDROBE_ITEM = "item-tee"
-CONSUMABLE = "food-staple"
+PERSON_ID = "person-a"
+HOME_ENTITY_ID = "entity-lamp"
+WARDROBE_ITEM_ID = "item-tee"
+CONSUMABLE_ID = "food-staple"
 
 
-def provenance(**overrides) -> dict:
-    base = {"origin": "SIMULATION_BOOTSTRAP", "notes": "slice5a-bundle"}
+def provenance(**overrides: Any) -> dict[str, Any]:
+    base = {"origin": "SIMULATION_BOOTSTRAP", "notes": "public-synthetic-runtime-bundle"}
     base.update(overrides)
     return base
 
@@ -44,18 +42,21 @@ def reference_sets(
     consumables: frozenset[str] | None = None,
 ) -> RuntimeReferenceSets:
     return RuntimeReferenceSets(
-        known_person_ids=persons if persons is not None else frozenset({PERSON}),
-        known_home_entity_ids=homes if homes is not None else frozenset({HOME_ENTITY}),
+        known_person_ids=persons if persons is not None else frozenset({PERSON_ID}),
+        known_home_entity_ids=homes if homes is not None else frozenset({HOME_ENTITY_ID}),
         approved_wardrobe_item_ids=(
-            wardrobe if wardrobe is not None else frozenset({WARDROBE_ITEM})
+            wardrobe if wardrobe is not None else frozenset({WARDROBE_ITEM_ID})
         ),
         approved_consumable_ids=(
-            consumables if consumables is not None else frozenset({CONSUMABLE})
+            consumables if consumables is not None else frozenset({CONSUMABLE_ID})
         ),
     )
 
 
-def world_states(character_id: str = CHAR, as_of: str = AS_OF) -> dict[str, dict]:
+def world_states(
+    character_id: str = CHARACTER_ID,
+    as_of: str = AS_OF,
+) -> dict[str, dict[str, Any]]:
     refs = reference_sets()
     return {
         "relation": project_initial_relation_state(
@@ -63,21 +64,21 @@ def world_states(character_id: str = CHAR, as_of: str = AS_OF) -> dict[str, dict
             as_of=as_of,
             provenance=provenance(),
             known_person_ids=refs.known_person_ids,
-            people=[{"person_id": PERSON, "open_promises": []}],
+            people=[{"person_id": PERSON_ID, "open_promises": []}],
         ),
         "home": project_initial_home_state(
             character_id=character_id,
             as_of=as_of,
             provenance=provenance(),
             known_entity_ids=refs.known_home_entity_ids,
-            entities=[{"entity_id": HOME_ENTITY, "status": "NORMAL"}],
+            entities=[{"entity_id": HOME_ENTITY_ID, "status": "NORMAL"}],
         ),
         "consumables": project_initial_consumables_state(
             character_id=character_id,
             as_of=as_of,
             provenance=provenance(),
             approved_consumable_ids=refs.approved_consumable_ids,
-            stocks=[{"consumable_id": CONSUMABLE, "status": "AVAILABLE"}],
+            stocks=[{"consumable_id": CONSUMABLE_ID, "status": "AVAILABLE"}],
         ),
         "wardrobe": project_initial_wardrobe_state(
             character_id=character_id,
@@ -86,7 +87,7 @@ def world_states(character_id: str = CHAR, as_of: str = AS_OF) -> dict[str, dict
             approved_item_ids=refs.approved_wardrobe_item_ids,
             items=[
                 {
-                    "item_id": WARDROBE_ITEM,
+                    "item_id": WARDROBE_ITEM_ID,
                     "lifecycle_state": "CLEAN_AVAILABLE",
                     "wear_count_since_clean": 0,
                 }
@@ -101,32 +102,33 @@ def world_states(character_id: str = CHAR, as_of: str = AS_OF) -> dict[str, dict
     }
 
 
-def write_json(path: Path, data: dict) -> None:
+def write_json(path: Path, data: dict[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    path.write_text(
+        json.dumps(data, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
 
 
 def snapshot_tree(root: Path) -> dict[str, str]:
     out: dict[str, str] = {}
     for path in sorted(root.rglob("*")):
         if path.is_file():
-            rel = str(path.relative_to(root))
-            digest = hashlib.sha256(path.read_bytes()).hexdigest()
-            out[rel] = digest
+            out[str(path.relative_to(root))] = hashlib.sha256(path.read_bytes()).hexdigest()
     return out
 
 
-def build_synthetic_bundle_root(
+def build_runtime_bundle_root(
     tmp: Path,
     *,
-    character_id: str = CHAR,
+    character_id: str = CHARACTER_ID,
     as_of: str = AS_OF,
     processed_through: str | None = None,
     engine_commit_sha: str = ENGINE_SHA,
     include_timeline: bool = False,
     mutate_current: Any = None,
     mutate_schedule: Any = None,
-    world_overrides: dict[str, dict] | None = None,
+    world_overrides: dict[str, dict[str, Any]] | None = None,
 ) -> Path:
     root = tmp / "bundle"
     if root.exists():
@@ -141,12 +143,11 @@ def build_synthetic_bundle_root(
     if mutate_schedule is not None:
         schedule = mutate_schedule(schedule)
 
-    processed = processed_through or as_of
     current = empty_checkpoint(
         character_id=character_id,
         life_epoch="2026-04-01T00:00:00+09:00",
-        world_seed="fixture-world-seed-5a",
-        behavior_policy_version="fixture-policy-1",
+        world_seed="public-runtime-world-seed",
+        behavior_policy_version="public-fixture-runtime-1",
         engine_commit_sha=engine_commit_sha,
         location_id="fixture-home",
         human_state={
@@ -158,7 +159,7 @@ def build_synthetic_bundle_root(
             "social_battery": 800,
         },
     )
-    current["processed_through"] = processed
+    current["processed_through"] = processed_through or as_of
     current["domain_refs"] = {
         "home_revision": worlds["home"]["revision"],
         "social_graph_revision": None,
@@ -183,6 +184,5 @@ def build_synthetic_bundle_root(
 
     if include_timeline:
         (root / "timeline").mkdir()
+
     return root
-
-

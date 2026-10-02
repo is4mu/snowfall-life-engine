@@ -1,4 +1,4 @@
-"""Schedule-state schema, normalization, hashing, and validation contracts."""
+"""ScheduleState schema, normalization, hashing, validation, and build contracts."""
 
 from __future__ import annotations
 
@@ -6,6 +6,7 @@ import copy
 import unittest
 
 import pytest
+
 from jsonschema import Draft202012Validator
 from jsonschema.exceptions import SchemaError
 
@@ -17,12 +18,19 @@ from engine.life.schedule_state import (
     normalize_schedule_state,
     validate_schedule_state,
 )
-from tests.support.builders.schedule import AS_OF, CHAR, commitment, task
+
+from tests.support.builders.schedule import (
+    AS_OF,
+    CHARACTER_ID as CHAR,
+    commitment as _commitment,
+    obligation_task as _task,
+)
+
 
 pytestmark = pytest.mark.unit
 
 
-class ScheduleStateSchemaTests(unittest.TestCase):
+class ScheduleSchemaTests(unittest.TestCase):
     def test_schedule_state_schema_registered_and_meta_valid(self) -> None:
         self.assertIn("schedule_state", SCHEMA_NAMES)
         self.assertTrue((SCHEMA_DIR / SCHEMA_NAMES["schedule_state"]).is_file())
@@ -46,22 +54,22 @@ class ScheduleStateTests(unittest.TestCase):
         a = build_schedule_state(
             character_id=CHAR,
             as_of=AS_OF,
-            commitments=[commitment()],
-            obligation_tasks=[task()],
+            commitments=[_commitment()],
+            obligation_tasks=[_task()],
         )
         b = build_schedule_state(
             character_id=CHAR,
             as_of=AS_OF,
-            commitments=[commitment()],
-            obligation_tasks=[task()],
+            commitments=[_commitment()],
+            obligation_tasks=[_task()],
         )
         self.assertEqual(a["state_hash"], b["state_hash"])
         self.assertEqual(a["revision"], a["state_hash"])
         self.assertEqual(compute_schedule_state_hash(a), a["state_hash"])
 
     def test_03_commitment_reorder_invariant(self) -> None:
-        c1 = commitment(commitment_id="cmt-z")
-        c2 = commitment(commitment_id="cmt-a")
+        c1 = _commitment(commitment_id="cmt-z")
+        c2 = _commitment(commitment_id="cmt-a")
         forward = build_schedule_state(
             character_id=CHAR, as_of=AS_OF, commitments=[c1, c2]
         )
@@ -75,8 +83,8 @@ class ScheduleStateTests(unittest.TestCase):
         )
 
     def test_04_task_reorder_invariant(self) -> None:
-        t1 = task(task_id="task-z")
-        t2 = task(task_id="task-a")
+        t1 = _task(task_id="task-z")
+        t2 = _task(task_id="task-a")
         forward = build_schedule_state(
             character_id=CHAR, as_of=AS_OF, obligation_tasks=[t1, t2]
         )
@@ -95,8 +103,8 @@ class ScheduleStateTests(unittest.TestCase):
                 character_id=CHAR,
                 as_of=AS_OF,
                 commitments=[
-                    commitment(commitment_id="dup"),
-                    commitment(commitment_id="dup"),
+                    _commitment(commitment_id="dup"),
+                    _commitment(commitment_id="dup"),
                 ],
             )
         self.assertEqual(ctx.exception.code, ErrorCode.INVALID_STATE)
@@ -107,8 +115,8 @@ class ScheduleStateTests(unittest.TestCase):
                 character_id=CHAR,
                 as_of=AS_OF,
                 obligation_tasks=[
-                    task(task_id="dup"),
-                    task(task_id="dup"),
+                    _task(task_id="dup"),
+                    _task(task_id="dup"),
                 ],
             )
         self.assertEqual(ctx.exception.code, ErrorCode.INVALID_STATE)
@@ -119,7 +127,7 @@ class ScheduleStateTests(unittest.TestCase):
                 character_id=CHAR,
                 as_of=AS_OF,
                 commitments=[
-                    commitment(
+                    _commitment(
                         created_at="2026-04-01T13:00:00+09:00",
                         status_history=[
                             {
@@ -142,7 +150,7 @@ class ScheduleStateTests(unittest.TestCase):
                 character_id=CHAR,
                 as_of=AS_OF,
                 commitments=[
-                    commitment(
+                    _commitment(
                         created_at="2026-04-01T08:00:00+09:00",
                         status="CANCELLED",
                         status_history=[
@@ -172,7 +180,7 @@ class ScheduleStateTests(unittest.TestCase):
             build_schedule_state(
                 character_id=CHAR,
                 as_of=AS_OF,
-                obligation_tasks=[task(created_at="2026-04-01T18:00:00+09:00")],
+                obligation_tasks=[_task(created_at="2026-04-01T18:00:00+09:00")],
             )
         self.assertEqual(ctx.exception.code, ErrorCode.INVALID_STATE)
         self.assertIn("after as_of", ctx.exception.detail)
@@ -198,7 +206,7 @@ class ScheduleStateTests(unittest.TestCase):
             "as_of": AS_OF,
             "revision": "0" * 64,
             "state_hash": "0" * 64,
-            "commitments": [commitment(commitment_id="cmt-z"), commitment(commitment_id="cmt-a")],
+            "commitments": [_commitment(commitment_id="cmt-z"), _commitment(commitment_id="cmt-a")],
             "obligation_tasks": [],
         }
         digest = compute_schedule_state_hash(raw)
@@ -211,10 +219,10 @@ class ScheduleStateTests(unittest.TestCase):
 
     def test_13_semantic_change_changes_hash(self) -> None:
         a = build_schedule_state(
-            character_id=CHAR, as_of=AS_OF, commitments=[commitment(commitment_id="c1")]
+            character_id=CHAR, as_of=AS_OF, commitments=[_commitment(commitment_id="c1")]
         )
         b = build_schedule_state(
-            character_id=CHAR, as_of=AS_OF, commitments=[commitment(commitment_id="c2")]
+            character_id=CHAR, as_of=AS_OF, commitments=[_commitment(commitment_id="c2")]
         )
         self.assertNotEqual(a["state_hash"], b["state_hash"])
 
@@ -222,7 +230,7 @@ class ScheduleStateTests(unittest.TestCase):
         state = build_schedule_state(
             character_id=CHAR,
             as_of=AS_OF,
-            commitments=[commitment(recurrence_id="opaque-recurrence-1")],
+            commitments=[_commitment(recurrence_id="opaque-recurrence-1")],
         )
         self.assertEqual(len(state["commitments"]), 1)
         self.assertEqual(state["commitments"][0]["recurrence_id"], "opaque-recurrence-1")
@@ -240,7 +248,7 @@ class ScheduleStateTests(unittest.TestCase):
             "as_of": AS_OF,
             "revision": "0" * 64,
             "state_hash": "0" * 64,
-            "commitments": [commitment(commitment_id=42)],  # type: ignore[arg-type]
+            "commitments": [_commitment(commitment_id=42)],  # type: ignore[arg-type]
             "obligation_tasks": [],
         }
         with self.assertRaises(LifeEngineError) as ctx:
@@ -258,7 +266,7 @@ class ScheduleStateTests(unittest.TestCase):
             "revision": "0" * 64,
             "state_hash": "0" * 64,
             "commitments": [],
-            "obligation_tasks": [task(task_id=["not-a-string"])],  # type: ignore[arg-type]
+            "obligation_tasks": [_task(task_id=["not-a-string"])],  # type: ignore[arg-type]
         }
         with self.assertRaises(LifeEngineError) as ctx:
             normalize_schedule_state(bad)
@@ -270,8 +278,8 @@ class ScheduleStateTests(unittest.TestCase):
         state = build_schedule_state(
             character_id=CHAR,
             as_of=AS_OF,
-            commitments=[commitment()],
-            obligation_tasks=[task()],
+            commitments=[_commitment()],
+            obligation_tasks=[_task()],
         )
         self.assertGreater(
             state["commitments"][0]["timing"]["planned_start"],

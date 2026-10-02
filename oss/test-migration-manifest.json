@@ -439,13 +439,13 @@
       "source": "tests/life/test_slice5a_runtime_bundle.py",
       "disposition": "rewrite-split",
       "destination": "tests/contracts/runtime/test_runtime_bundle.py; tests/integration/runtime/test_bundle_loading.py",
-      "notes": "private Canon/scope assertions replaced by public RuntimeBundle publication boundaries; synthetic builder extracted"
+      "notes": "private Canon/scope assertions replaced by public RuntimeBundle contracts and synthetic filesystem builder"
     },
     {
       "source": "tests/life/test_slice5a_schedule_state.py",
       "disposition": "migrate",
       "destination": "tests/unit/schedule/test_schedule_state.py",
-      "notes": "synthetic commitment/task builders extracted for runtime and persistence test reuse"
+      "notes": "synthetic commitment/task builders extracted to tests/support/builders/schedule.py for runtime and persistence reuse"
     },
     {
       "source": "tests/life/test_slice5b1_activity_runtime.py",
