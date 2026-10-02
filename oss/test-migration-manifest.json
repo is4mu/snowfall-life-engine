@@ -409,7 +409,7 @@
       "source": "tests/life/test_slice4b2_capture_emitters.py",
       "disposition": "rewrite-migrate",
       "destination": "tests/integration/capture_pipeline/test_emitters.py",
-      "notes": "shared builders extracted"
+      "notes": "private issue/SHA approval and canon/runtime snapshots removed; emitter/source-moment/stress/TAKE bridge semantics and public no-capture compatibility retained"
     },
     {
       "source": "tests/life/test_slice4b2_soak.py",
