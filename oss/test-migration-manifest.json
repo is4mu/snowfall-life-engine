@@ -421,7 +421,7 @@
       "source": "tests/life/test_slice4b3_capture_repeats.py",
       "disposition": "rewrite-split",
       "destination": "tests/unit/captures/test_repeat_policy.py; tests/integration/capture_pipeline/test_repeats.py",
-      "notes": ""
+      "notes": "repeat identity/eligibility/source-boundary split from resolver/evidence chain; private baseline/canon/approval guards removed; public no-capture compatibility retained"
     },
     {
       "source": "tests/life/test_slice4b3_soak.py",
