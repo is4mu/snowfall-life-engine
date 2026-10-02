@@ -577,7 +577,7 @@
       "source": "tests/life/test_slice5b2c2c_fixtures.py",
       "disposition": "support",
       "destination": "tests/support/builders/capture_runtime.py",
-      "notes": "zero-test module becomes support"
+      "notes": "public synthetic capture-runtime builder; no private source approvals or repository snapshots"
     },
     {
       "source": "tests/life/test_slice5b2c2c_mutation.py",
@@ -643,7 +643,7 @@
       "source": "tests/life/test_slice5b2c3_fixtures.py",
       "disposition": "support",
       "destination": "tests/support/builders/runtime_orchestrator.py",
-      "notes": "zero-test module becomes support"
+      "notes": "shared public orchestrator builder composed only from public synthetic builders"
     },
     {
       "source": "tests/life/test_slice5b2c3_history_budget_stable.py",
