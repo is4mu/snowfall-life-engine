@@ -6,6 +6,7 @@ from typing import Any
 
 AS_OF = "2026-04-01T12:00:00+09:00"
 CHARACTER_ID = "fixture-character"
+CHAR = CHARACTER_ID
 
 
 def provenance(**overrides: Any) -> dict[str, Any]:
@@ -72,3 +73,8 @@ def obligation_task(**overrides: Any) -> dict[str, Any]:
     }
     base.update(overrides)
     return base
+
+
+def task(**overrides: Any) -> dict[str, Any]:
+    """Compatibility alias for obligation_task used by runtime builders."""
+    return obligation_task(**overrides)

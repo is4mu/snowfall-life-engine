@@ -27,6 +27,13 @@ HOME_ENTITY_ID = "entity-lamp"
 WARDROBE_ITEM_ID = "item-tee"
 CONSUMABLE_ID = "food-staple"
 
+# Stable compatibility names used by runtime-test builders.
+CHAR = CHARACTER_ID
+PERSON = PERSON_ID
+HOME_ENTITY = HOME_ENTITY_ID
+WARDROBE_ITEM = WARDROBE_ITEM_ID
+CONSUMABLE = CONSUMABLE_ID
+
 
 def provenance(**overrides: Any) -> dict[str, Any]:
     base = {"origin": "SIMULATION_BOOTSTRAP", "notes": "public-synthetic-runtime-bundle"}
@@ -186,3 +193,8 @@ def build_runtime_bundle_root(
         (root / "timeline").mkdir()
 
     return root
+
+
+def build_synthetic_bundle_root(*args: Any, **kwargs: Any) -> Path:
+    """Compatibility wrapper for shared runtime builders."""
+    return build_runtime_bundle_root(*args, **kwargs)
