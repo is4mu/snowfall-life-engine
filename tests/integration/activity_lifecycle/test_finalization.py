@@ -34,6 +34,7 @@ from engine.life.wakeups import (
 )
 from tests.support.builders.finalization import (
     AS_OF,
+    DECISION_KEY,
     CHAR,
     HOME,
     PERSON,
