@@ -613,7 +613,7 @@
       "source": "tests/life/test_slice5b2c3_boundaries.py",
       "disposition": "replace-split",
       "destination": "tests/contracts/runtime/test_orchestrator_boundaries.py; private repository scope guard",
-      "notes": ""
+      "notes": "private repository diff/freeze checks remain private; public contract pins pure ownership, dependency isolation, and closed input/trigger surfaces"
     },
     {
       "source": "tests/life/test_slice5b2c3_capture_repeat.py",
