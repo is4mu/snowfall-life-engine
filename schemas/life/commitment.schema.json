@@ -1,0 +1,133 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://snowfall-life-engine.invalid/schemas/life/commitment.schema.json",
+  "title": "Commitment",
+  "description": "Planned commitment record. planned ≠ actual. Runtime source_kind is #4 exogenous/runtime causality; provenance is a separate medium/trace envelope.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "commitment_id",
+    "kind",
+    "hardness",
+    "created_at",
+    "timing",
+    "location_id",
+    "participants",
+    "source_kind",
+    "provenance",
+    "recurrence_id",
+    "status",
+    "status_history"
+  ],
+  "properties": {
+    "schema_version": { "type": "integer", "const": 1 },
+    "commitment_id": { "type": "string", "minLength": 1 },
+    "kind": {
+      "type": "string",
+      "enum": ["CLASS", "WORK", "EXERCISE", "SOCIAL", "APPOINTMENT", "ERRAND", "SELF_TASK"]
+    },
+    "hardness": { "type": "string", "enum": ["HARD", "SOFT"] },
+    "created_at": { "type": "string", "minLength": 1 },
+    "timing": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["timing_kind", "planned_start", "planned_end"],
+          "properties": {
+            "timing_kind": { "type": "string", "const": "EXACT" },
+            "planned_start": { "type": "string", "minLength": 1 },
+            "planned_end": { "type": "string", "minLength": 1 }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "timing_kind",
+            "earliest_start",
+            "latest_start",
+            "duration_min",
+            "duration_max"
+          ],
+          "properties": {
+            "timing_kind": { "type": "string", "const": "WINDOW" },
+            "earliest_start": { "type": "string", "minLength": 1 },
+            "latest_start": { "type": "string", "minLength": 1 },
+            "duration_min": { "type": "integer", "minimum": 1 },
+            "duration_max": { "type": "integer", "minimum": 1 }
+          }
+        }
+      ]
+    },
+    "location_id": {
+      "oneOf": [
+        { "type": "string", "minLength": 1 },
+        { "type": "null" }
+      ]
+    },
+    "participants": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "description": "Semantically unordered; sorted before persist/hash"
+    },
+    "source_kind": {
+      "type": "string",
+      "enum": [
+        "INTERNAL",
+        "COMMITMENT",
+        "EXOGENOUS_SOCIAL",
+        "EXTERNAL_CONTEXT",
+        "OPERATOR"
+      ],
+      "description": "#4 runtime/exogenous causality. Provenance medium is separate."
+    },
+    "provenance": { "$ref": "provenance.schema.json" },
+    "recurrence_id": {
+      "oneOf": [
+        { "type": "string", "minLength": 1 },
+        { "type": "null" }
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": ["PLANNED", "CANCELLED", "COMPLETED", "MISSED", "DEFERRED"]
+    },
+    "status_history": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["changed_at", "from", "to", "reason", "source_ref"],
+        "properties": {
+          "changed_at": { "type": "string", "minLength": 1 },
+          "from": {
+            "oneOf": [
+              {
+                "type": "string",
+                "enum": ["PLANNED", "CANCELLED", "COMPLETED", "MISSED", "DEFERRED"]
+              },
+              { "type": "null" }
+            ]
+          },
+          "to": {
+            "type": "string",
+            "enum": ["PLANNED", "CANCELLED", "COMPLETED", "MISSED", "DEFERRED"]
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Structured history fact; never parse as runtime decision authority"
+          },
+          "source_ref": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Structured history fact; never parse as runtime decision authority"
+          }
+        }
+      }
+    }
+  }
+}

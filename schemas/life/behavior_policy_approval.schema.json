@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://snowfall-life-engine.invalid/schemas/life/behavior_policy_approval.schema.json",
+  "title": "BehaviorPolicyApproval",
+  "description": "Separate approval artifact binding to a Behavior Policy hash. Policy files must not self-declare approved.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "behavior_policy_version",
+    "policy_hash",
+    "approved_at",
+    "approved_by",
+    "review_ref"
+  ],
+  "properties": {
+    "schema_version": { "type": "integer", "const": 1 },
+    "behavior_policy_version": { "type": "string", "minLength": 1 },
+    "policy_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "approved_at": { "type": "string", "minLength": 1 },
+    "approved_by": { "type": "string", "minLength": 1 },
+    "review_ref": { "type": "string", "minLength": 1 },
+    "notes": { "type": "string" }
+  }
+}

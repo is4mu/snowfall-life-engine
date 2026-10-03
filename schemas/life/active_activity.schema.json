@@ -1,0 +1,189 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://snowfall-life-engine.invalid/schemas/life/active_activity.schema.json",
+  "title": "ActiveActivity",
+  "description": "In-progress activity. Slice 5B1 adds optional runtime provenance fields (runtime_context / causes / details / decision_evidence) for Foundation compatibility; 5B1 runtime-started activities must always include all four. Slice 5B2C1 adds optional dynamics_context (required on C1 runtime-started activities). Slice 5B2C2B adds optional runtime_finish_context (required on C1 runtime-started activities after 5B2C2B; start-time factual inputs for end-effect derivation).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "activity_instance_id",
+    "activity_type",
+    "actual_start"
+  ],
+  "properties": {
+    "schema_version": { "type": "integer", "const": 1 },
+    "activity_instance_id": { "type": "string", "minLength": 1 },
+    "activity_type": { "type": "string", "minLength": 1 },
+    "actual_start": { "type": "string", "minLength": 1 },
+    "planned_end": {
+      "type": ["string", "null"],
+      "description": "Optional exact plan; not required. Prefer expected_end / expected_end_window."
+    },
+    "expected_end": { "type": ["string", "null"] },
+    "expected_end_window": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "properties": {
+        "earliest": { "type": ["string", "null"] },
+        "latest": { "type": ["string", "null"] }
+      }
+    },
+    "location_id": { "type": "string" },
+    "summary": { "type": "string" },
+    "commitment_id": { "type": ["string", "null"] },
+    "companions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["entity_id"],
+        "properties": {
+          "entity_id": { "type": "string", "minLength": 1 },
+          "role": { "type": "string" }
+        }
+      }
+    },
+    "effects_on_end": {
+      "type": "array",
+      "items": { "$ref": "effect.schema.json" }
+    },
+    "pending_captures": {
+      "type": "array",
+      "description": "Optional temporary capture facts while activity is active. Not Camera Roll media. Missing means none.",
+      "items": { "$ref": "capture.schema.json" }
+    },
+    "runtime_context": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Slice 5B1 action-selection provenance retained until finalization. Optional at schema level for Foundation fixtures; required on 5B1 runtime-started activities. Does not persist continuation_feasible.",
+      "required": [
+        "schema_version",
+        "decision_key",
+        "selected_candidate_id",
+        "selected_candidate_key",
+        "action_kind",
+        "priority_tier",
+        "source_kind",
+        "source_ref",
+        "interruptibility",
+        "local_preference_permille",
+        "rule_ids"
+      ],
+      "properties": {
+        "schema_version": { "type": "integer", "const": 1 },
+        "decision_key": { "type": "string", "minLength": 1 },
+        "selected_candidate_id": { "type": "string", "minLength": 1 },
+        "selected_candidate_key": { "type": "string", "minLength": 1 },
+        "action_kind": {
+          "type": "string",
+          "enum": [
+            "HARD_COMMITMENT_ACTIVITY",
+            "TRAVEL_TO_COMMITMENT",
+            "MEAL",
+            "SLEEP_MAIN",
+            "REST",
+            "STUDY",
+            "WORK",
+            "KICKBOXING",
+            "HOUSEHOLD",
+            "ERRAND",
+            "SOCIAL_PROMISE",
+            "SOCIAL_CONTACT",
+            "PASSIVE_HOME_MEDIA",
+            "MUSIC",
+            "MOVIE",
+            "LOCAL_WALK",
+            "VINTAGE_BROWSING",
+            "UNSTRUCTURED_REST"
+          ],
+          "description": "Slice 2D ActionKind except CONTINUE_CURRENT."
+        },
+        "priority_tier": {
+          "type": "string",
+          "enum": [
+            "HARD_COMMITMENT",
+            "URGENT_BIOLOGICAL",
+            "DEADLINE_TASK",
+            "SOCIAL_PROMISE",
+            "ROUTINE_HABIT",
+            "RESTORATIVE",
+            "LEISURE_SPONTANEOUS"
+          ]
+        },
+        "source_kind": {
+          "type": "string",
+          "enum": [
+            "BIOLOGICAL",
+            "COMMITMENT",
+            "TASK",
+            "SOCIAL",
+            "ROUTINE",
+            "LEISURE_WINDOW"
+          ],
+          "description": "Causal source of the selected candidate. CURRENT_ACTIVITY is not persisted as underlying source."
+        },
+        "source_ref": { "type": "string", "minLength": 1 },
+        "interruptibility": {
+          "type": "string",
+          "enum": ["NON_INTERRUPTIBLE", "REASSESSABLE"]
+        },
+        "local_preference_permille": {
+          "oneOf": [
+            { "type": "null" },
+            { "type": "integer", "minimum": 0, "maximum": 1000 }
+          ]
+        },
+        "rule_ids": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "uniqueItems": true,
+          "description": "Unique non-empty strings; canonical sorted semantically."
+        }
+      }
+    },
+    "causes": {
+      "$ref": "actual_event.schema.json#/properties/causes",
+      "description": "Exact ActualEvent.causes subcontract. Optional for Foundation; required on 5B1 runtime-started activities."
+    },
+    "details": {
+      "$ref": "actual_event.schema.json#/properties/details",
+      "description": "Exact ActualEvent.details subcontract. Optional for Foundation; runtime-started activities must satisfy ActualEvent activity_type conditioning."
+    },
+    "decision_evidence": {
+      "$ref": "actual_event.schema.json#/properties/decision_evidence",
+      "description": "Exact ActualEvent.decision_evidence subcontract. Optional for Foundation; required and non-null on 5B1 runtime-started activities."
+    },
+    "dynamics_context": {
+      "$ref": "actual_event.schema.json#/$defs/dynamics_context",
+      "description": "Slice 5B2C1 Slice-2B rate context. Optional at schema level for Foundation fixtures; required on 5B2C1 runtime-started activities."
+    },
+    "runtime_finish_context": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Slice 5B2C2B start-time factual inputs frozen for end-effect derivation. Optional at schema level for Foundation/legacy fixtures; required on C1 runtime-started activities after 5B2C2B. Not copied wholesale into ActualEvent. Action-specific gating is enforced by C1 population and C2B validation.",
+      "required": [
+        "schema_version",
+        "sleep_need_min",
+        "travel_destination_location_id",
+        "task_effort_remaining_at_start_min"
+      ],
+      "properties": {
+        "schema_version": { "type": "integer", "const": 1 },
+        "sleep_need_min": {
+          "type": ["integer", "null"],
+          "description": "Frozen SLEEP_MAIN sleep_need_min at start; null for other action kinds."
+        },
+        "travel_destination_location_id": {
+          "type": ["string", "null"],
+          "minLength": 1,
+          "description": "Frozen TRAVEL_TO_COMMITMENT destination location_id at start; null for other action kinds."
+        },
+        "task_effort_remaining_at_start_min": {
+          "type": ["integer", "null"],
+          "description": "Frozen STUDY/ERRAND TASK effort_remaining_min at start; null for other action kinds."
+        }
+      }
+    }
+  }
+}

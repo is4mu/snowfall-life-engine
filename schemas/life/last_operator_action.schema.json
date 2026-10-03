@@ -1,0 +1,159 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://snowfall-life-engine.invalid/schemas/life/last_operator_action.schema.json",
+  "title": "LastOperatorAction",
+  "description": "Slice 5E3 SUCCESS-only bounded operator observability. Excluded from semantic tree hash. No full state, request dump, token, rationale, world seed, fact tape, decision frames, or resulting commit SHA. Upgrade types require before/after engine/policy hash bindings.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "result",
+    "action_id",
+    "request_id",
+    "action_type",
+    "life_base_sha",
+    "engine_commit_sha",
+    "behavior_policy_version",
+    "state_revision_before",
+    "state_revision_after",
+    "state_before_hash",
+    "state_after_hash",
+    "operator_history_hash_before",
+    "operator_history_hash_after",
+    "processed_through_before",
+    "processed_through_after",
+    "files_changed"
+  ],
+  "properties": {
+    "schema_version": { "type": "integer", "const": 1 },
+    "result": { "type": "string", "const": "SUCCESS" },
+    "action_id": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "request_id": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "action_type": {
+      "type": "string",
+      "enum": [
+        "CORRECTION",
+        "RECOVERY_AUTHORIZATION",
+        "ENGINE_UPGRADE",
+        "POLICY_UPGRADE"
+      ]
+    },
+    "life_base_sha": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{40}$"
+    },
+    "engine_commit_sha": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{40}$"
+    },
+    "behavior_policy_version": { "type": "string", "minLength": 1 },
+    "engine_commit_sha_before": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{40}$",
+      "description": "ENGINE_UPGRADE/POLICY_UPGRADE only: pre-action engine pin"
+    },
+    "behavior_policy_version_before": {
+      "type": "string",
+      "minLength": 1,
+      "description": "ENGINE_UPGRADE/POLICY_UPGRADE only: pre-action policy version"
+    },
+    "policy_hash_before": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$",
+      "description": "ENGINE_UPGRADE/POLICY_UPGRADE only: approved current policy hash"
+    },
+    "policy_hash_after": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$",
+      "description": "ENGINE_UPGRADE/POLICY_UPGRADE only: approved target policy hash"
+    },
+    "state_revision_before": { "type": "integer", "minimum": 0 },
+    "state_revision_after": { "type": "integer", "minimum": 0 },
+    "state_before_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "state_after_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "operator_history_hash_before": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "operator_history_hash_after": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "processed_through_before": { "type": "string", "minLength": 1 },
+    "processed_through_after": { "type": "string", "minLength": 1 },
+    "files_changed": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "description": "Sorted exact candidate-vs-baseline changed relative paths"
+    },
+    "recovery_from": {
+      "type": "string",
+      "minLength": 1,
+      "description": "RECOVERY_AUTHORIZATION only: exact from_processed_through"
+    },
+    "recovery_through": {
+      "type": "string",
+      "minLength": 1,
+      "description": "RECOVERY_AUTHORIZATION only: exact recover_through"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": { "action_type": { "const": "RECOVERY_AUTHORIZATION" } },
+        "required": ["action_type"]
+      },
+      "then": {
+        "required": ["recovery_from", "recovery_through"]
+      },
+      "else": {
+        "not": {
+          "anyOf": [
+            { "required": ["recovery_from"] },
+            { "required": ["recovery_through"] }
+          ]
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "action_type": {
+            "enum": ["ENGINE_UPGRADE", "POLICY_UPGRADE"]
+          }
+        },
+        "required": ["action_type"]
+      },
+      "then": {
+        "required": [
+          "engine_commit_sha_before",
+          "behavior_policy_version_before",
+          "policy_hash_before",
+          "policy_hash_after"
+        ]
+      },
+      "else": {
+        "not": {
+          "anyOf": [
+            { "required": ["engine_commit_sha_before"] },
+            { "required": ["behavior_policy_version_before"] },
+            { "required": ["policy_hash_before"] },
+            { "required": ["policy_hash_after"] }
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://snowfall-life-engine.invalid/schemas/life/route_profile.schema.json",
+  "title": "RouteProfile",
+  "description": "Abstract travel duration profile between location IDs. No GPS/address. Do not commit real route instances in Slice 2A.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "route_profile_id",
+    "origin_location_id",
+    "destination_location_id",
+    "mode",
+    "duration_min",
+    "duration_max",
+    "effort_class",
+    "provenance"
+  ],
+  "properties": {
+    "schema_version": { "type": "integer", "const": 1 },
+    "route_profile_id": { "type": "string", "minLength": 1 },
+    "origin_location_id": { "type": "string", "minLength": 1 },
+    "destination_location_id": { "type": "string", "minLength": 1 },
+    "mode": {
+      "type": "string",
+      "enum": ["WALK", "PUBLIC_TRANSIT", "MIXED", "OTHER"]
+    },
+    "duration_min": { "type": "integer", "minimum": 1 },
+    "duration_max": { "type": "integer", "minimum": 1 },
+    "effort_class": {
+      "type": "string",
+      "enum": ["REST_AWAKE", "LIGHT_ACTIVE"]
+    },
+    "provenance": { "$ref": "provenance.schema.json" }
+  }
+}

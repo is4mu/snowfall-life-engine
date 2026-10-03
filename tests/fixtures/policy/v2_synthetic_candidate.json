@@ -1,0 +1,573 @@
+{
+  "schema_version": 2,
+  "behavior_policy_version": "public-fixture-v2-candidate-1",
+  "policy_mode": "PRODUCTION",
+  "character_id": "fixture-character",
+  "timezone": "Asia/Tokyo",
+  "time_resolution": {
+    "human_quantum_min": 5
+  },
+  "engine_safety": {
+    "max_events_per_advance": 10000
+  },
+  "state_dynamics": {
+    "base_activity_rates": {
+      "SLEEP": {
+        "hunger_per_hour": 15,
+        "physical_fatigue_per_hour": -65,
+        "stress_per_hour": -30
+      },
+      "REST_AWAKE": {
+        "hunger_per_hour": 60,
+        "physical_fatigue_per_hour": -20,
+        "stress_per_hour": -20
+      },
+      "SEDENTARY_FOCUSED": {
+        "hunger_per_hour": 65,
+        "physical_fatigue_per_hour": 5,
+        "stress_per_hour": -5
+      },
+      "LIGHT_ACTIVE": {
+        "hunger_per_hour": 75,
+        "physical_fatigue_per_hour": 25,
+        "stress_per_hour": -5
+      },
+      "PHYSICALLY_ACTIVE": {
+        "hunger_per_hour": 90,
+        "physical_fatigue_per_hour": 100,
+        "stress_per_hour": -5
+      }
+    },
+    "affect_return_to_baseline": {
+      "bands": [
+        {
+          "abs_valence_lo": 0,
+          "abs_valence_hi": 149,
+          "rate_toward_zero_per_hour": 15
+        },
+        {
+          "abs_valence_lo": 150,
+          "abs_valence_hi": 399,
+          "rate_toward_zero_per_hour": 35
+        },
+        {
+          "abs_valence_lo": 400,
+          "abs_valence_hi": 1000,
+          "rate_toward_zero_per_hour": 70
+        }
+      ]
+    },
+    "affect_impulses": {
+      "SMALL": 80,
+      "MEDIUM": 180,
+      "LARGE": 350
+    },
+    "stress_impulses": {
+      "MINOR": 50,
+      "MODERATE": 120,
+      "MAJOR": 250,
+      "RELIEF_MINOR": -40,
+      "RELIEF_MODERATE": -90
+    },
+    "social_exposure_rates": {
+      "SLEEP": 50,
+      "NONE": 40,
+      "PASSIVE": -10,
+      "ACTIVE": -55
+    }
+  },
+  "derived_bands": {
+    "hunger": {
+      "NOTICEABLE": 250,
+      "MEAL_NEEDED": 450,
+      "URGENT": 700
+    },
+    "physical_fatigue": {
+      "MODERATE": 200,
+      "HIGH": 450,
+      "VERY_HIGH": 700
+    },
+    "stress": {
+      "MODERATE": 300,
+      "HIGH": 550,
+      "VERY_HIGH": 800
+    },
+    "social_battery": {
+      "MODERATE": 250,
+      "HIGH": 600
+    },
+    "sleep_pressure": {
+      "MODERATE": 350,
+      "HIGH": 700,
+      "CRITICAL": 950
+    }
+  },
+  "sleep_policy": {
+    "homeostatic_awake_fraction_knots": [
+      {
+        "x": 0,
+        "y": 0
+      },
+      {
+        "x": 500,
+        "y": 100
+      },
+      {
+        "x": 750,
+        "y": 250
+      },
+      {
+        "x": 900,
+        "y": 500
+      },
+      {
+        "x": 1000,
+        "y": 700
+      },
+      {
+        "x": 1100,
+        "y": 900
+      },
+      {
+        "x": 1200,
+        "y": 1000
+      }
+    ],
+    "sleep_debt_knots": [
+      {
+        "x": 0,
+        "y": 0
+      },
+      {
+        "x": 60,
+        "y": 40
+      },
+      {
+        "x": 180,
+        "y": 120
+      },
+      {
+        "x": 360,
+        "y": 220
+      },
+      {
+        "x": 720,
+        "y": 320
+      }
+    ],
+    "fatigue_contribution_knots": [
+      {
+        "x": 0,
+        "y": 0
+      },
+      {
+        "x": 250,
+        "y": 30
+      },
+      {
+        "x": 500,
+        "y": 80
+      },
+      {
+        "x": 750,
+        "y": 130
+      },
+      {
+        "x": 1000,
+        "y": 180
+      }
+    ],
+    "circadian_bias_mechanics": {
+      "wake_window_bias": -180,
+      "daytime_floor_bias": -60,
+      "pre_sleep_ramp_min": 120,
+      "pre_sleep_target_bias": 120,
+      "sleep_window_bias": 180,
+      "late_awake_cap_bias": 220
+    },
+    "stress_onset_friction": {
+      "high_threshold": 550,
+      "high_penalty": 40,
+      "very_high_threshold": 800,
+      "very_high_penalty": 80
+    },
+    "main_settlement": {
+      "max_surplus_repayment_min": 120,
+      "deficit_credit": {
+        "numerator": 1,
+        "denominator": 1
+      },
+      "surplus_repayment": {
+        "numerator": 1,
+        "denominator": 1
+      }
+    },
+    "nap": {
+      "duration_min": 20,
+      "duration_max": 40,
+      "recent_guard_min": 180,
+      "awake_load_credit": {
+        "numerator": 3,
+        "denominator": 4
+      },
+      "awake_load_credit_cap_min": 45,
+      "debt_credit": {
+        "numerator": 1,
+        "denominator": 2
+      },
+      "debt_credit_cap_min": 30
+    },
+    "wake_variation": {
+      "early_min": 10,
+      "late_min": 15
+    }
+  },
+  "meal_policy": {
+    "post_meal_target": {
+      "LIGHT": 250,
+      "STANDARD": 100
+    },
+    "recent_guard_min": {
+      "LIGHT": 45,
+      "STANDARD": 90
+    },
+    "duration_families": {
+      "LIGHT": {
+        "duration_min": 10,
+        "duration_max": 25
+      },
+      "QUICK_STANDARD": {
+        "duration_min": 15,
+        "duration_max": 30
+      },
+      "HOME_COOKED_STANDARD": {
+        "duration_min": 30,
+        "duration_max": 60
+      },
+      "OUTSIDE_STANDARD": {
+        "duration_min": 30,
+        "duration_max": 75
+      },
+      "SOCIAL_MEAL_STANDARD": {
+        "duration_min": 60,
+        "duration_max": 120
+      }
+    },
+    "anticipatory": {
+      "minimum_current_band": "NOTICEABLE",
+      "projected_trigger_band": "MEAL_NEEDED"
+    }
+  },
+  "decision_thresholds": {
+    "awake_idle_reassessment_max_min": 90,
+    "soft_reconsider_guard_min": 30,
+    "reassessable_min_dwell_min": 15,
+    "near_equal_margin_permille": 50
+  },
+  "planning_policy": {
+    "work_horizon_min_days": 7,
+    "work_horizon_target_days": 14,
+    "weekly_personal_horizon_days": 7,
+    "soft_start_window_default_min": 60,
+    "prep_buffer_min": 10,
+    "prep_buffer_max": 25,
+    "departure_early_margin_max_min": 15,
+    "optional_extension_max_min": 30,
+    "short_gap_max_min": 14,
+    "short_candidate_gap_max_min": 44,
+    "max_new_same_domain_soft_windows_per_day": 1
+  },
+  "schedule_generation": {
+    "work": {
+      "ordinary_days_per_week_min": 2,
+      "ordinary_days_per_week_max": 3
+    }
+  },
+  "domain_policy": {
+    "study": {
+      "chunk_min": 30,
+      "chunk_max": 90,
+      "requires_open_academic_task": true
+    },
+    "exercise_kickboxing": {
+      "history_window_days": 7,
+      "opportunity_by_count_in_window": {
+        "0": "HIGH",
+        "1": "NORMAL",
+        "2_or_more": "LOW"
+      },
+      "duration_min": 60,
+      "duration_max": 90,
+      "max_self_generated_per_day": 1,
+      "max_equivalent_pending_plans": 1,
+      "block_self_generated_at_fatigue_band": "VERY_HIGH"
+    },
+    "household_age": {
+      "aging_start_min": 1440,
+      "duration_min": 15,
+      "duration_max": 60,
+      "overdue_uses_exact_age_tiebreak": true,
+      "requires_external_task_source": true,
+      "pressing_start_min": 2880,
+      "overdue_start_min": 4320
+    },
+    "errand": {
+      "duration_min": 20,
+      "duration_max": 60,
+      "requires_open_task": true
+    },
+    "leisure_categories": [
+      "PASSIVE_HOME_MEDIA",
+      "MUSIC",
+      "MOVIE",
+      "LOCAL_WALK",
+      "VINTAGE_BROWSING",
+      "UNSTRUCTURED_REST"
+    ]
+  },
+  "social_policy": {
+    "archetypes": {
+      "REMOTE_CLOSE_BURSTY": {
+        "slots_per_week": 2,
+        "base_activation_permille": 450,
+        "activation_cap_permille": 800,
+        "recency_multipliers": [
+          {
+            "min_hours_inclusive": 0,
+            "max_hours_exclusive": 24,
+            "multiplier_permille": 250
+          },
+          {
+            "min_hours_inclusive": 24,
+            "max_hours_exclusive": 72,
+            "multiplier_permille": 600
+          },
+          {
+            "min_hours_inclusive": 72,
+            "max_hours_exclusive": 168,
+            "multiplier_permille": 1000
+          },
+          {
+            "min_hours_inclusive": 168,
+            "max_hours_exclusive": 336,
+            "multiplier_permille": 1200
+          },
+          {
+            "min_hours_inclusive": 336,
+            "max_hours_exclusive": null,
+            "multiplier_permille": 1350
+          }
+        ]
+      },
+      "LOCAL_CLOSE_INVITER": {
+        "slots_per_week": 3,
+        "base_activation_permille": 500,
+        "activation_cap_permille": 850,
+        "recency_multipliers": [
+          {
+            "min_hours_inclusive": 0,
+            "max_hours_exclusive": 24,
+            "multiplier_permille": 300
+          },
+          {
+            "min_hours_inclusive": 24,
+            "max_hours_exclusive": 72,
+            "multiplier_permille": 700
+          },
+          {
+            "min_hours_inclusive": 72,
+            "max_hours_exclusive": 168,
+            "multiplier_permille": 1000
+          },
+          {
+            "min_hours_inclusive": 168,
+            "max_hours_exclusive": null,
+            "multiplier_permille": 1150
+          }
+        ],
+        "invite": {
+          "slots_per_week": 2,
+          "base_activation_permille": 400,
+          "same_day_split_permille": 350,
+          "future_split_permille": 650,
+          "future_horizon_min_days": 1,
+          "future_horizon_max_days": 7
+        }
+      },
+      "WORK_CONTEXTUAL": {
+        "free_running_slots_per_week": 0,
+        "post_work_activation_permille": 250
+      }
+    },
+    "contact_mode_durations": {
+      "LIGHTWEIGHT": {},
+      "CALL": {
+        "duration_min": 15,
+        "duration_max": 45
+      },
+      "LONG_CATCHUP_CALL": {
+        "duration_min": 30,
+        "duration_max": 90
+      },
+      "LOCAL_OUTING": {
+        "duration_min": 60,
+        "duration_max": 180
+      },
+      "POST_WORK": {
+        "duration_min": 30,
+        "duration_max": 90
+      }
+    }
+  },
+  "behavior_modes": {
+    "social_initiation": "LOW_TO_MEDIUM",
+    "invitation_receptivity": "MODERATE_TO_HIGH_IF_CAPACITY",
+    "conflict_style": "AVOID_UNNECESSARY_FRICTION",
+    "boundary_style": "ACCOMMODATING_UNTIL_THRESHOLD_THEN_FIRM",
+    "spontaneity": "MODERATE",
+    "self_presentation": "MODERATE_CONTEXTUAL",
+    "personal_spending": "FRUGAL_SELECTIVE",
+    "social_spending": "GENEROUS_WITH_REASON",
+    "housekeeping": "TOLERATES_SHORT_TERM_MESS_NOT_PERSISTENT",
+    "exercise_adherence": "MODERATE"
+  },
+  "capture_policy": {
+    "activation_permille_by_kind": {
+      "SELFIE": 500,
+      "PEOPLE": 600,
+      "FOOD": 300,
+      "SCENERY": 650,
+      "OBJECT": 300,
+      "DAILY_LIFE": 400
+    }
+  },
+  "provenance_index": [
+    {
+      "path": "behavior_modes",
+      "origin": "ENGINE_DEFAULT",
+      "source_kind": "ENGINE_RULE",
+      "source_ref": "public-synthetic-policy-defaults",
+      "semantic_anchor": "behavior_modes",
+      "source_commit_sha": null,
+      "rationale": "Synthetic public-test default for behavior_modes; non-authoritative."
+    },
+    {
+      "path": "capture_policy",
+      "origin": "ENGINE_DEFAULT",
+      "source_kind": "ENGINE_RULE",
+      "source_ref": "public-synthetic-policy-defaults",
+      "semantic_anchor": "capture_policy",
+      "source_commit_sha": null,
+      "rationale": "Synthetic public-test default for capture_policy; non-authoritative."
+    },
+    {
+      "path": "decision_thresholds",
+      "origin": "ENGINE_DEFAULT",
+      "source_kind": "ENGINE_RULE",
+      "source_ref": "public-synthetic-policy-defaults",
+      "semantic_anchor": "decision_thresholds",
+      "source_commit_sha": null,
+      "rationale": "Synthetic public-test default for decision_thresholds; non-authoritative."
+    },
+    {
+      "path": "derived_bands",
+      "origin": "ENGINE_DEFAULT",
+      "source_kind": "ENGINE_RULE",
+      "source_ref": "public-synthetic-policy-defaults",
+      "semantic_anchor": "derived_bands",
+      "source_commit_sha": null,
+      "rationale": "Synthetic public-test default for derived_bands; non-authoritative."
+    },
+    {
+      "path": "domain_policy",
+      "origin": "ENGINE_DEFAULT",
+      "source_kind": "ENGINE_RULE",
+      "source_ref": "public-synthetic-policy-defaults",
+      "semantic_anchor": "domain_policy",
+      "source_commit_sha": null,
+      "rationale": "Synthetic public-test default for domain_policy; non-authoritative."
+    },
+    {
+      "path": "engine_safety",
+      "origin": "ENGINE_DEFAULT",
+      "source_kind": "ENGINE_RULE",
+      "source_ref": "public-synthetic-policy-defaults",
+      "semantic_anchor": "engine_safety",
+      "source_commit_sha": null,
+      "rationale": "Synthetic public-test default for engine_safety; non-authoritative."
+    },
+    {
+      "path": "meal_policy",
+      "origin": "ENGINE_DEFAULT",
+      "source_kind": "ENGINE_RULE",
+      "source_ref": "public-synthetic-policy-defaults",
+      "semantic_anchor": "meal_policy",
+      "source_commit_sha": null,
+      "rationale": "Synthetic public-test default for meal_policy; non-authoritative."
+    },
+    {
+      "path": "planning_policy",
+      "origin": "ENGINE_DEFAULT",
+      "source_kind": "ENGINE_RULE",
+      "source_ref": "public-synthetic-policy-defaults",
+      "semantic_anchor": "planning_policy",
+      "source_commit_sha": null,
+      "rationale": "Synthetic public-test default for planning_policy; non-authoritative."
+    },
+    {
+      "path": "schedule_generation",
+      "origin": "ENGINE_DEFAULT",
+      "source_kind": "ENGINE_RULE",
+      "source_ref": "public-synthetic-policy-defaults",
+      "semantic_anchor": "schedule_generation",
+      "source_commit_sha": null,
+      "rationale": "Synthetic public-test default for schedule_generation; non-authoritative."
+    },
+    {
+      "path": "sleep_policy",
+      "origin": "ENGINE_DEFAULT",
+      "source_kind": "ENGINE_RULE",
+      "source_ref": "public-synthetic-policy-defaults",
+      "semantic_anchor": "sleep_policy",
+      "source_commit_sha": null,
+      "rationale": "Synthetic public-test default for sleep_policy; non-authoritative."
+    },
+    {
+      "path": "social_policy",
+      "origin": "ENGINE_DEFAULT",
+      "source_kind": "ENGINE_RULE",
+      "source_ref": "public-synthetic-policy-defaults",
+      "semantic_anchor": "social_policy",
+      "source_commit_sha": null,
+      "rationale": "Synthetic public-test default for social_policy; non-authoritative."
+    },
+    {
+      "path": "state_dynamics",
+      "origin": "ENGINE_DEFAULT",
+      "source_kind": "ENGINE_RULE",
+      "source_ref": "public-synthetic-policy-defaults",
+      "semantic_anchor": "state_dynamics",
+      "source_commit_sha": null,
+      "rationale": "Synthetic public-test default for state_dynamics; non-authoritative."
+    },
+    {
+      "path": "time_resolution",
+      "origin": "ENGINE_DEFAULT",
+      "source_kind": "ENGINE_RULE",
+      "source_ref": "public-synthetic-policy-defaults",
+      "semantic_anchor": "time_resolution",
+      "source_commit_sha": null,
+      "rationale": "Synthetic public-test default for time_resolution; non-authoritative."
+    }
+  ],
+  "calibration_metadata": {
+    "calibration_generation": 0,
+    "source_issue_refs": [
+      "public-synthetic-fixture-v1"
+    ],
+    "calibration_notes": [
+      "Synthetic public v2 candidate fixture for schema, invariant, and deterministic behavior tests.",
+      "Not an approved production policy."
+    ]
+  }
+}

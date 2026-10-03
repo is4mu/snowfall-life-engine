@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://snowfall-life-engine.invalid/schemas/life/camera_roll_record.schema.json",
+  "title": "CameraRollRecord",
+  "description": "Slice 4A/4A.1 immutable factual Camera Roll logical record. Copies capture_kind/subject_refs from Capture. No review/materialization/post fields.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "record_id",
+    "capture_id",
+    "event_id",
+    "activity_instance_id",
+    "captured_at",
+    "capture_kind",
+    "subject_refs",
+    "visual_context",
+    "capture_context_hash"
+  ],
+  "properties": {
+    "schema_version": { "type": "integer", "const": 1 },
+    "record_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "stable_id(\"camera-roll-record\", capture_id)"
+    },
+    "capture_id": { "type": "string", "minLength": 1 },
+    "event_id": { "type": "string", "minLength": 1 },
+    "activity_instance_id": { "type": "string", "minLength": 1 },
+    "captured_at": { "type": "string", "minLength": 1 },
+    "capture_kind": {
+      "type": "string",
+      "enum": ["SELFIE", "PEOPLE", "FOOD", "SCENERY", "OBJECT", "DAILY_LIFE"],
+      "description": "Copied exactly from Capture; factual subject/framing class only."
+    },
+    "subject_refs": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "uniqueItems": true,
+      "description": "Copied canonically from Capture; record-local string sort. Same cross-field rules as Capture."
+    },
+    "visual_context": {
+      "$ref": "capture.schema.json#/$defs/visual_context"
+    },
+    "capture_context_hash": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    }
+  }
+}

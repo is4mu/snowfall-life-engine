@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://snowfall-life-engine.invalid/schemas/life/social_response_state.schema.json",
+  "title": "SocialResponseState",
+  "description": "Slice 5C1 persisted SocialResponseState v1. Semantic validator in engine.life.social_runtime remains authoritative; revision == state_hash == semantic digest.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "character_id",
+    "as_of",
+    "revision",
+    "state_hash",
+    "responses"
+  ],
+  "properties": {
+    "schema_version": { "type": "integer", "const": 1 },
+    "character_id": { "type": "string", "minLength": 1 },
+    "as_of": { "type": "string", "minLength": 1 },
+    "revision": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$",
+      "description": "Must equal state_hash and the semantic digest"
+    },
+    "state_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "responses": {
+      "type": "array",
+      "description": "Canonical sort by opportunity_id; duplicate opportunity_id reject",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "response_id",
+          "opportunity_id",
+          "response",
+          "decided_at",
+          "reason_code"
+        ],
+        "properties": {
+          "response_id": { "type": "string", "minLength": 1 },
+          "opportunity_id": { "type": "string", "minLength": 1 },
+          "response": {
+            "type": "string",
+            "enum": ["ACCEPT", "DECLINE", "DEFER"]
+          },
+          "decided_at": { "type": "string", "minLength": 1 },
+          "reason_code": { "type": "string", "minLength": 1 }
+        }
+      }
+    }
+  }
+}

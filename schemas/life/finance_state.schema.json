@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://snowfall-life-engine.invalid/schemas/life/finance_state.schema.json",
+  "title": "FinanceState",
+  "description": "Sparse/unknown-safe finance snapshot. Integer yen minor units only; null balance is valid. No inferred rent/income/savings from prose. Slice 3A v1 is currency + balance_minor only.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "domain",
+    "character_id",
+    "revision",
+    "state_hash",
+    "as_of",
+    "provenance",
+    "currency",
+    "balance_minor"
+  ],
+  "properties": {
+    "schema_version": { "type": "integer", "const": 1 },
+    "domain": { "type": "string", "const": "finance" },
+    "character_id": { "type": "string", "minLength": 1 },
+    "revision": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Content-derived identity; equals state_hash for FinanceState v1"
+    },
+    "state_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "as_of": { "type": "string", "minLength": 1 },
+    "provenance": { "$ref": "provenance.schema.json" },
+    "currency": { "type": "string", "const": "JPY" },
+    "balance_minor": {
+      "type": ["integer", "null"],
+      "description": "Integer yen. Null means unknown/unapproved; never invent from Character Bible."
+    }
+  }
+}

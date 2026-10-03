@@ -1,0 +1,101 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://snowfall-life-engine.invalid/schemas/life/spatial_context.schema.json",
+  "title": "SpatialContext",
+  "description": "Static approved location catalog + RouteProfile set. One hash-bound bootstrap/runtime configuration file. Coordinates are optional non-authoritative metadata (integer microdegrees only). RouteProfile remains the sole v1 travel-duration authority; production geography is never invented.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "character_id",
+    "spatial_context_version",
+    "locations",
+    "route_profiles",
+    "context_hash"
+  ],
+  "properties": {
+    "schema_version": { "type": "integer", "const": 1 },
+    "character_id": { "type": "string", "minLength": 1 },
+    "spatial_context_version": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Human/version identity. Not a substitute for context_hash content identity."
+    },
+    "locations": {
+      "type": "array",
+      "description": "LocationEntry records. Canonical sort by location_id. Empty valid.",
+      "items": { "$ref": "#/$defs/location_entry" }
+    },
+    "route_profiles": {
+      "type": "array",
+      "description": "Existing RouteProfile records. Canonical sort by route_profile_id. Empty valid. Do not invent reverse routes.",
+      "items": { "$ref": "route_profile.schema.json" }
+    },
+    "context_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$",
+      "description": "SHA-256 over normalized semantic payload excluding context_hash itself."
+    }
+  },
+  "$defs": {
+    "location_entry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["location_id", "kind", "provenance"],
+      "properties": {
+        "location_id": { "type": "string", "minLength": 1 },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "HOME",
+            "CAMPUS",
+            "WORKPLACE",
+            "GYM",
+            "LOCAL_AREA",
+            "STATION",
+            "PUBLIC_PLACE",
+            "OTHER"
+          ]
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Optional internal/display label. Absence only — not nullable."
+        },
+        "geo_anchor": {
+          "$ref": "#/$defs/geo_anchor",
+          "description": "Optional non-authoritative map metadata. Absence only — not nullable."
+        },
+        "provenance": { "$ref": "provenance.schema.json" }
+      }
+    },
+    "geo_anchor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["precision", "lat_e6", "lon_e6", "radius_m"],
+      "properties": {
+        "precision": {
+          "type": "string",
+          "enum": ["AREA", "PUBLIC_POINT", "SYNTHETIC_POINT"]
+        },
+        "lat_e6": {
+          "type": "integer",
+          "minimum": -90000000,
+          "maximum": 90000000,
+          "description": "Latitude in integer microdegrees. No decimal-degree conversion."
+        },
+        "lon_e6": {
+          "type": "integer",
+          "minimum": -180000000,
+          "maximum": 180000000,
+          "description": "Longitude in integer microdegrees. No decimal-degree conversion."
+        },
+        "radius_m": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "AREA => >= 1; PUBLIC_POINT / SYNTHETIC_POINT => == 0. Semantic layer enforces precision pairing."
+        }
+      }
+    }
+  }
+}

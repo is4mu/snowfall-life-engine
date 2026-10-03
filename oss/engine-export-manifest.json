@@ -1,0 +1,337 @@
+{
+  "schema_version": 1,
+  "status": "approved-source-audited",
+  "source_repository": "is4mu/project-snowfall",
+  "source_sha": "458e05673a8d4a8f3b2346825b2eef8419411d64",
+  "source_file_count": 77,
+  "counts": {
+    "direct_export": 48,
+    "sanitize_then_export": 21,
+    "hold_private_or_generalize": 8
+  },
+  "rules": {
+    "direct_export": "Copy bytes from approved SHA after dependency-closure check.",
+    "sanitize_then_export": "Only non-semantic neutralization/generalization is allowed; record every transform.",
+    "hold_private_or_generalize": "Do not export in v0.1.0 baseline unless a separate generalization change removes application/production wiring."
+  },
+  "held_initial_baseline": [
+    "README.md",
+    "runtime_operator_launcher.py",
+    "runtime_production_authority.py",
+    "runtime_production_composition.py",
+    "runtime_production_fact_provider.py",
+    "runtime_production_fact_sources.py",
+    "runtime_production_launcher.py",
+    "runtime_remote_publisher.py"
+  ],
+  "entries": [
+    {
+      "source_path": "engine/life/README.md",
+      "disposition": "hold_private_or_generalize"
+    },
+    {
+      "source_path": "engine/life/__init__.py",
+      "disposition": "direct_export"
+    },
+    {
+      "source_path": "engine/life/__main__.py",
+      "disposition": "direct_export"
+    },
+    {
+      "source_path": "engine/life/activity_finalization.py",
+      "disposition": "sanitize_then_export"
+    },
+    {
+      "source_path": "engine/life/activity_lifecycle.py",
+      "disposition": "sanitize_then_export"
+    },
+    {
+      "source_path": "engine/life/activity_materialization.py",
+      "disposition": "sanitize_then_export"
+    },
+    {
+      "source_path": "engine/life/activity_runtime.py",
+      "disposition": "sanitize_then_export"
+    },
+    {
+      "source_path": "engine/life/bootstrap.py",
+      "disposition": "sanitize_then_export"
+    },
+    {
+      "source_path": "engine/life/camera_roll.py",
+      "disposition": "direct_export"
+    },
+    {
+      "source_path": "engine/life/canonical.py",
+      "disposition": "direct_export"
+    },
+    {
+      "source_path": "engine/life/capture_decisions.py",
+      "disposition": "sanitize_then_export"
+    },
+    {
+      "source_path": "engine/life/capture_emitters.py",
+      "disposition": "direct_export"
+    },
+    {
+      "source_path": "engine/life/capture_pipeline.py",
+      "disposition": "direct_export"
+    },
+    {
+      "source_path": "engine/life/capture_repeats.py",
+      "disposition": "direct_export"
+    },
+    {
+      "source_path": "engine/life/captures.py",
+      "disposition": "direct_export"
+    },
+    {
+      "source_path": "engine/life/checkpoint.py",
+      "disposition": "direct_export"
+    },
+    {
+      "source_path": "engine/life/cli.py",
+      "disposition": "sanitize_then_export"
+    },
+    {
+      "source_path": "engine/life/clock.py",
+      "disposition": "direct_export"
+    },
+    {
+      "source_path": "engine/life/contracts.py",
+      "disposition": "direct_export"
+    },
+    {
+      "source_path": "engine/life/correction.py",
+      "disposition": "direct_export"
+    },
+    {
+      "source_path": "engine/life/decisions.py",
+      "disposition": "direct_export"
+    },
+    {
+      "source_path": "engine/life/derived.py",
+      "disposition": "sanitize_then_export"
+    },
+    {
+      "source_path": "engine/life/domain_adapters.py",
+      "disposition": "direct_export"
+    },
+    {
+      "source_path": "engine/life/dynamics.py",
+      "disposition": "direct_export"
+    },
+    {
+      "source_path": "engine/life/effects.py",
+      "disposition": "direct_export"
+    },
+    {
+      "source_path": "engine/life/errors.py",
+      "disposition": "direct_export"
+    },
+    {
+      "source_path": "engine/life/events.py",
+      "disposition": "direct_export"
+    },
+    {
+      "source_path": "engine/life/finance_reducer.py",
+      "disposition": "direct_export"
+    },
+    {
+      "source_path": "engine/life/fixed_point.py",
+      "disposition": "direct_export"
+    },
+    {
+      "source_path": "engine/life/history.py",
+      "disposition": "direct_export"
+    },
+    {
+      "source_path": "engine/life/home_reducer.py",
+      "disposition": "direct_export"
+    },
+    {
+      "source_path": "engine/life/ids.py",
+      "disposition": "direct_export"
+    },
+    {
+      "source_path": "engine/life/invariants.py",
+      "disposition": "direct_export"
+    },
+    {
+      "source_path": "engine/life/last_operator_action.py",
+      "disposition": "direct_export"
+    },
+    {
+      "source_path": "engine/life/operator_action.py",
+      "disposition": "direct_export"
+    },
+    {
+      "source_path": "engine/life/operator_candidate.py",
+      "disposition": "direct_export"
+    },
+    {
+      "source_path": "engine/life/operator_git_transaction.py",
+      "disposition": "sanitize_then_export"
+    },
+    {
+      "source_path": "engine/life/operator_history.py",
+      "disposition": "direct_export"
+    },
+    {
+      "source_path": "engine/life/operator_recovery.py",
+      "disposition": "direct_export"
+    },
+    {
+      "source_path": "engine/life/operator_request.py",
+      "disposition": "direct_export"
+    },
+    {
+      "source_path": "engine/life/operator_upgrade.py",
+      "disposition": "sanitize_then_export"
+    },
+    {
+      "source_path": "engine/life/policy.py",
+      "disposition": "direct_export"
+    },
+    {
+      "source_path": "engine/life/policy_invariants.py",
+      "disposition": "sanitize_then_export"
+    },
+    {
+      "source_path": "engine/life/relation_reducer.py",
+      "disposition": "direct_export"
+    },
+    {
+      "source_path": "engine/life/requirements.txt",
+      "disposition": "direct_export"
+    },
+    {
+      "source_path": "engine/life/rng.py",
+      "disposition": "direct_export"
+    },
+    {
+      "source_path": "engine/life/routine_adapters.py",
+      "disposition": "direct_export"
+    },
+    {
+      "source_path": "engine/life/runtime_bundle.py",
+      "disposition": "sanitize_then_export"
+    },
+    {
+      "source_path": "engine/life/runtime_capture.py",
+      "disposition": "sanitize_then_export"
+    },
+    {
+      "source_path": "engine/life/runtime_decision.py",
+      "disposition": "direct_export"
+    },
+    {
+      "source_path": "engine/life/runtime_effects.py",
+      "disposition": "direct_export"
+    },
+    {
+      "source_path": "engine/life/runtime_fact_provider.py",
+      "disposition": "sanitize_then_export"
+    },
+    {
+      "source_path": "engine/life/runtime_git_transaction.py",
+      "disposition": "sanitize_then_export"
+    },
+    {
+      "source_path": "engine/life/runtime_operator_launcher.py",
+      "disposition": "hold_private_or_generalize"
+    },
+    {
+      "source_path": "engine/life/runtime_orchestrator.py",
+      "disposition": "sanitize_then_export"
+    },
+    {
+      "source_path": "engine/life/runtime_persistence.py",
+      "disposition": "sanitize_then_export"
+    },
+    {
+      "source_path": "engine/life/runtime_production_authority.py",
+      "disposition": "hold_private_or_generalize"
+    },
+    {
+      "source_path": "engine/life/runtime_production_composition.py",
+      "disposition": "hold_private_or_generalize"
+    },
+    {
+      "source_path": "engine/life/runtime_production_fact_provider.py",
+      "disposition": "hold_private_or_generalize"
+    },
+    {
+      "source_path": "engine/life/runtime_production_fact_sources.py",
+      "disposition": "hold_private_or_generalize"
+    },
+    {
+      "source_path": "engine/life/runtime_production_launcher.py",
+      "disposition": "hold_private_or_generalize"
+    },
+    {
+      "source_path": "engine/life/runtime_remote_publisher.py",
+      "disposition": "hold_private_or_generalize"
+    },
+    {
+      "source_path": "engine/life/runtime_spatial.py",
+      "disposition": "sanitize_then_export"
+    },
+    {
+      "source_path": "engine/life/schedule_reducer.py",
+      "disposition": "direct_export"
+    },
+    {
+      "source_path": "engine/life/schedule_state.py",
+      "disposition": "sanitize_then_export"
+    },
+    {
+      "source_path": "engine/life/schema.py",
+      "disposition": "direct_export"
+    },
+    {
+      "source_path": "engine/life/social_opportunities.py",
+      "disposition": "direct_export"
+    },
+    {
+      "source_path": "engine/life/social_response.py",
+      "disposition": "sanitize_then_export"
+    },
+    {
+      "source_path": "engine/life/social_runtime.py",
+      "disposition": "direct_export"
+    },
+    {
+      "source_path": "engine/life/spatial_context.py",
+      "disposition": "sanitize_then_export"
+    },
+    {
+      "source_path": "engine/life/timeline.py",
+      "disposition": "direct_export"
+    },
+    {
+      "source_path": "engine/life/timeutil.py",
+      "disposition": "direct_export"
+    },
+    {
+      "source_path": "engine/life/versioning.py",
+      "disposition": "direct_export"
+    },
+    {
+      "source_path": "engine/life/wakeups.py",
+      "disposition": "direct_export"
+    },
+    {
+      "source_path": "engine/life/wardrobe_reducer.py",
+      "disposition": "direct_export"
+    },
+    {
+      "source_path": "engine/life/workspace.py",
+      "disposition": "direct_export"
+    },
+    {
+      "source_path": "engine/life/world_state.py",
+      "disposition": "direct_export"
+    }
+  ]
+}

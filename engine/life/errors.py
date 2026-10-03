@@ -1,0 +1,36 @@
+"""Fail-closed error codes for Life Engine Foundation."""
+
+from __future__ import annotations
+
+from enum import Enum
+
+
+class ErrorCode(str, Enum):
+    SCHEMA_INVALID = "SCHEMA_INVALID"
+    TIME_REVERSAL = "TIME_REVERSAL"
+    TARGET_BEFORE_EPOCH = "TARGET_BEFORE_EPOCH"
+    CATCHUP_LIMIT_EXCEEDED = "CATCHUP_LIMIT_EXCEEDED"
+    BOOTSTRAP_NOT_APPROVED = "BOOTSTRAP_NOT_APPROVED"
+    BOOTSTRAP_HASH_MISMATCH = "BOOTSTRAP_HASH_MISMATCH"
+    POLICY_NOT_APPROVED = "POLICY_NOT_APPROVED"
+    POLICY_HASH_MISMATCH = "POLICY_HASH_MISMATCH"
+    PRODUCTION_POLICY_MISSING = "PRODUCTION_POLICY_MISSING"
+    FIXTURE_POLICY_FORBIDDEN = "FIXTURE_POLICY_FORBIDDEN"
+    DUPLICATE_ID = "DUPLICATE_ID"
+    CLOSED_DAY_MUTATION = "CLOSED_DAY_MUTATION"
+    HISTORY_HASH_MISMATCH = "HISTORY_HASH_MISMATCH"
+    UNSUPPORTED_VERSION = "UNSUPPORTED_VERSION"
+    UNSUPPORTED_EFFECT = "UNSUPPORTED_EFFECT"
+    INVALID_STATE = "INVALID_STATE"
+    EVENT_BUDGET_EXCEEDED = "EVENT_BUDGET_EXCEEDED"
+    RUNTIME_GIT_CAS_MISMATCH = "RUNTIME_GIT_CAS_MISMATCH"
+    RUNTIME_REMOTE_CAS_MISMATCH = "RUNTIME_REMOTE_CAS_MISMATCH"
+
+
+class LifeEngineError(Exception):
+    """Raised with a stable ErrorCode; message is diagnostic only."""
+
+    def __init__(self, code: ErrorCode, detail: str = "") -> None:
+        self.code = code
+        self.detail = detail
+        super().__init__(f"{code.value}: {detail}" if detail else code.value)
