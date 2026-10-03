@@ -702,7 +702,7 @@
     {
       "source": "tests/life/test_slice5c1_camera.py",
       "disposition": "migrate",
-      "destination": "tests/integration/persistence/test_camera_roll.py",
+      "destination": "tests/integration/persistence/test_persistence_camera_roll.py",
       "notes": ""
     },
     {
@@ -738,7 +738,7 @@
     {
       "source": "tests/life/test_slice5c1_review_fixes.py",
       "disposition": "merge",
-      "destination": "tests/integration/persistence/test_camera_roll.py; tests/integration/persistence/test_isolation.py; tests/contracts/persistence/test_closed_history_integrity.py",
+      "destination": "tests/integration/persistence/test_persistence_camera_roll.py; tests/integration/persistence/test_isolation.py; tests/contracts/persistence/test_closed_history_integrity.py",
       "notes": ""
     },
     {

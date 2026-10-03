@@ -1,1 +1,0 @@
-"""Persistence integration test package."""
