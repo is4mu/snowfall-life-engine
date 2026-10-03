@@ -691,7 +691,7 @@
       "source": "tests/life/test_slice5c1_boundaries.py",
       "disposition": "replace-split",
       "destination": "tests/contracts/persistence/test_persistence_boundaries.py; private process guard",
-      "notes": ""
+      "notes": "private repository diff/source-freeze checks remain private; public boundary directly asserts no Git/network/shell ownership, closed runtime paths, isolation, and no production activation"
     },
     {
       "source": "tests/life/test_slice5c1_c3_handoff.py",
@@ -737,9 +737,9 @@
     },
     {
       "source": "tests/life/test_slice5c1_review_fixes.py",
-      "disposition": "merge",
-      "destination": "tests/integration/persistence/test_persistence_camera_roll.py; tests/integration/persistence/test_isolation.py; tests/contracts/persistence/test_closed_history_integrity.py",
-      "notes": ""
+      "disposition": "migrate-regressions",
+      "destination": "tests/integration/persistence/test_regressions.py",
+      "notes": "review regressions retained as public semantic persistence regressions against synthetic roots"
     },
     {
       "source": "tests/life/test_slice5c1_social_persistence.py",
