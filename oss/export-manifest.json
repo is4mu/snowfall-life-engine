@@ -73,6 +73,14 @@
         "engine/life/__init__.py",
         "engine/life/versioning.py"
       ]
+    },
+    {
+      "name": "runtime-git-transaction",
+      "source_sha": "458e05673a8d4a8f3b2346825b2eef8419411d64",
+      "transform": "branding-only public identity and temp-prefix transform; local CAS/object semantics preserved",
+      "files": [
+        "engine/life/runtime_git_transaction.py"
+      ]
     }
   ]
 }
