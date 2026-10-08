@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "phase-1-export-authorized",
+  "status": "v0.1.0-released",
   "project_name": "Snowfall Life Engine",
   "repository": "is4mu/snowfall-life-engine",
   "initial_import_path": "engine.life",
@@ -91,5 +91,11 @@
         "engine/life/operator_upgrade.py"
       ]
     }
-  ]
+  ],
+  "release": {
+    "tag": "v0.1.0",
+    "commit_sha": "a274470dcc1b6a2f22c1ae74df19d94d66a21f34",
+    "published_at": "2026-10-08T05:37:18Z"
+  },
+  "v1_boundary": "docs/V1_BOUNDARY.md"
 }
