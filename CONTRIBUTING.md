@@ -6,6 +6,8 @@ Thank you for your interest in Snowfall Life Engine.
 
 The repository has published **v0.1.0** as its first clean OSS baseline and is now stabilizing the **public v1 contract**.
 
+The frozen responsibility boundary is [docs/V1_BOUNDARY.md](docs/V1_BOUNDARY.md). The proposed public-contract inventory and unresolved v1 readiness gates are in [docs/V1_CONTRACT_PLAN.md](docs/V1_CONTRACT_PLAN.md).
+
 During the pre-v1 stabilization phase:
 
 - changes must remain inside the responsibility boundary in [docs/V1_BOUNDARY.md](docs/V1_BOUNDARY.md), unless the boundary is explicitly amended;

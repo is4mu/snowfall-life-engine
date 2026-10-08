@@ -45,7 +45,7 @@ Current baseline:
 - CI Python: `3.12`
 - planned canonical v1 package/CLI identity: `snowfall_life` / `snowfall-life`
 
-The clean public history does not expose private project Git history. The v1 boundary defines which responsibilities and contracts will become stable before 1.0.
+The clean public history does not expose private project Git history. The frozen v1 responsibility boundary is defined in [docs/V1_BOUNDARY.md](docs/V1_BOUNDARY.md). The concrete contract inventory, compatibility proposal, and remaining implementation gates are tracked in [docs/V1_CONTRACT_PLAN.md](docs/V1_CONTRACT_PLAN.md); they are not yet shipped as stable APIs.
 
 ## Local development
 
@@ -89,7 +89,8 @@ It **does not** contain:
 
 See:
 
-- [docs/V1_BOUNDARY.md](docs/V1_BOUNDARY.md) for the frozen public v1 responsibility/compatibility boundary;
+- [docs/V1_BOUNDARY.md](docs/V1_BOUNDARY.md) for the frozen public v1 responsibility boundary;
+- [docs/V1_CONTRACT_PLAN.md](docs/V1_CONTRACT_PLAN.md) for contract candidates, compatibility decisions, and remaining v1 acceptance gates;
 - [docs/EXPORT_BOUNDARY.md](docs/EXPORT_BOUNDARY.md) for the publication contract;
 - [docs/TESTING.md](docs/TESTING.md) for the normative public test architecture;
 - [docs/TEST_MIGRATION_MATRIX.md](docs/TEST_MIGRATION_MATRIX.md) for historical-suite dispositions;
@@ -146,7 +147,7 @@ Please see [SECURITY.md](SECURITY.md).
 
 ## Contributing
 
-Contribution guidelines will evolve as the first engine baseline is published. See [CONTRIBUTING.md](CONTRIBUTING.md).
+For the current pre-v1 review, testing, and compatibility requirements, see [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## License
 

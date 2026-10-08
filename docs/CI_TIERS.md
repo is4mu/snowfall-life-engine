@@ -1,6 +1,6 @@
 # CI Tiers
 
-Status: Phase 1 active CI contract.
+Status: active public CI contract after the v0.1.0 release (P1 v1 stabilization in progress).
 
 The initial public baseline uses **Python 3.12** because the pre-split private Life Engine validation runs on Python 3.12. Supporting additional Python versions is a separate post-baseline compatibility decision.
 
@@ -162,7 +162,7 @@ Non-draft pull requests:
 - Fast;
 - Full.
 
-Main/release:
+Main (and release-candidate validation when explicitly run):
 
 - Publication boundary;
 - Fast;
@@ -185,9 +185,9 @@ No core test requires live GitHub access.
 
 Do not weaken a semantic assertion solely to make a tier green.
 
-## Initial export transition
+## Initial export transition (historical)
 
-During the first code export, existing `unittest.TestCase` bodies may execute under pytest while files are reorganized.
+During the completed initial export, existing `unittest.TestCase` bodies were allowed to execute under pytest while files were reorganized. The following sequence records the original migration policy.
 
 Migration sequence:
 

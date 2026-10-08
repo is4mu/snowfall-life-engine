@@ -1,5 +1,8 @@
 # Export Boundary
 
+> [!NOTE]
+> **Historical pre-release design/audit record.** The v0.1.0 public baseline was released on 2026-10-08 at `a274470dcc1b6a2f22c1ae74df19d94d66a21f34`. Future-tense export steps below describe the completed extraction process, not the current project phase. See [README](../README.md) and [V1_BOUNDARY.md](V1_BOUNDARY.md) for current authority.
+
 This document defines the publication boundary for the initial Snowfall Life Engine OSS extraction.
 
 The first engine-source export will occur only after the originating private application's final pre-split validation and human review are complete.
