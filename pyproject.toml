@@ -1,0 +1,39 @@
+[build-system]
+requires = ["hatchling>=1.25,<2"]
+build-backend = "hatchling.build"
+
+[project]
+name = "snowfall-life-engine"
+version = "0.2.0.dev0"
+description = "Deterministic, application-agnostic life simulation engine (pre-v1 prototype)"
+readme = "README.md"
+license = "Apache-2.0"
+requires-python = ">=3.12,<3.13"
+dependencies = ["jsonschema>=4,<5"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Programming Language :: Python :: 3.12",
+    "License :: OSI Approved :: Apache Software License",
+]
+
+[project.urls]
+Repository = "https://github.com/is4mu/snowfall-life-engine"
+
+[project.scripts]
+snowfall-life = "snowfall_life.cli:main"
+
+[tool.hatch.build.targets.wheel]
+only-include = ["engine/life", "snowfall_life"]
+
+[tool.hatch.build.targets.wheel.force-include]
+"schemas/life" = "engine/life/_schemas"
+
+[tool.hatch.build.targets.sdist]
+only-include = [
+    "engine/life",
+    "snowfall_life",
+    "schemas/life",
+    "README.md",
+    "LICENSE",
+    "pyproject.toml",
+]
