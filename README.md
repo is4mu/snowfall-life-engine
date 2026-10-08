@@ -5,8 +5,8 @@
 It is designed to advance persistent character state through time using explicit policies, schedules, tasks, social opportunities, append-only events, deterministic randomness, and restart-safe serialization — without requiring an LLM, a live API, or an always-on server.
 
 > [!IMPORTANT]
-> This repository has completed **Phase 0: public repository preparation** and the pre-split validation gate is satisfied.
-> The first clean engine export is now being prepared from the approved private source baseline `458e05673a8d4a8f3b2346825b2eef8419411d64`. No private Git history is imported.
+> **v0.1.0 is released and post-merge CI is green.**
+> The repository now serves as the authoritative public home for the reusable Snowfall Life Engine baseline. The next architecture step is to freeze the Life Engine v1 product boundary before downstream Character Creator integration expands scope.
 
 ## Project goals
 
@@ -33,18 +33,19 @@ Snowfall Life Engine is intended to provide a reusable core for:
 
 ## Repository status
 
-Current public status: **Phase 1 clean export in progress**. The reusable engine and public test architecture are being validated as an independent repository before the first `v0.1.0` baseline.
+Current public status: **v0.1.0 released; Life Engine v1 boundary freeze in progress**.
 
-Planned initial baseline:
+Current baseline:
 
 - release: `v0.1.0`
+- release commit: `a274470dcc1b6a2f22c1ae74df19d94d66a21f34`
 - maturity: experimental
 - license: Apache-2.0
-- initial import compatibility: `engine.life`
-- initial CI Python: `3.12`
+- public import compatibility: `engine.life`
+- public CI Python: `3.12`
 - future preferred package/CLI identity: `snowfall_life` / `snowfall-life`
 
-The first extraction uses a clean public history and does not expose private project Git history.
+The public baseline was extracted with a clean public history and does not expose private project Git history. The proposed Life Engine v1 scope is defined in [docs/V1_BOUNDARY.md](docs/V1_BOUNDARY.md).
 
 ## Local development
 
@@ -74,9 +75,9 @@ The three public long-horizon runners are the 72-hour restart-equivalence, 28-da
 
 ## Public / private boundary
 
-This repository will contain only reusable engine code, versioned schemas, synthetic fixtures, generic documentation, and public CI.
+This repository contains reusable engine code, versioned schemas, synthetic fixtures, generic documentation, and public CI.
 
-It will **not** contain:
+It does **not** contain:
 
 - private character canon or identity assets;
 - private environment / home assets;
@@ -88,6 +89,7 @@ It will **not** contain:
 
 See:
 
+- [docs/V1_BOUNDARY.md](docs/V1_BOUNDARY.md) for the proposed Life Engine v1 product boundary;
 - [docs/EXPORT_BOUNDARY.md](docs/EXPORT_BOUNDARY.md) for the publication contract;
 - [docs/TESTING.md](docs/TESTING.md) for the normative public test architecture;
 - [docs/TEST_MIGRATION_MATRIX.md](docs/TEST_MIGRATION_MATRIX.md) for historical-suite dispositions;
@@ -114,17 +116,24 @@ See:
 
 Approved extraction baseline: `is4mu/project-snowfall@458e05673a8d4a8f3b2346825b2eef8419411d64`.
 
-- export only approved engine/schema/test paths;
-- preserve engine semantics during extraction;
-- replace private-only fixture assumptions with synthetic equivalents;
-- run public Fast and Full regression suites;
-- verify that no private data or Git history is present.
+- [x] export only approved engine/schema/test paths;
+- [x] preserve engine semantics during extraction;
+- [x] replace private-only fixture assumptions with synthetic equivalents;
+- [x] run public Fast and Full regression suites;
+- [x] verify that no private data or Git history is present.
 
 ### Phase 2 — public baseline
 
-- tag `v0.1.0`;
-- make the public engine identity authoritative for reusable engine code;
-- reconnect the originating application through an explicit reviewed engine version/commit.
+- [x] tag `v0.1.0`;
+- [x] make the public engine identity authoritative for reusable engine code;
+- [ ] reconnect the originating application through an explicit reviewed engine version/commit.
+
+### Phase 3 — Life Engine v1 boundary freeze
+
+- [ ] merge the normative v1 product boundary;
+- [ ] keep Character Creator, rendering, hosted-service, and private production wiring outside the engine;
+- [ ] preserve determinism, restart equivalence, append-only history, and fail-closed persistence/operator contracts;
+- [ ] complete the scope freeze before downstream Character Creator v1 work expands integration surface.
 
 ## Security
 
@@ -132,7 +141,7 @@ Please see [SECURITY.md](SECURITY.md).
 
 ## Contributing
 
-Contribution guidelines will evolve as the first engine baseline is published. See [CONTRIBUTING.md](CONTRIBUTING.md).
+Contribution guidelines will evolve as the public baseline matures. See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## License
 
