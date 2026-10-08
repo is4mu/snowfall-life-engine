@@ -74,14 +74,21 @@ The matrix verifies that unordered container iteration and host timezone do not 
 
 Coverage is collected by the Full job on main pushes and uploaded as `coverage.json`. Non-draft pull requests run the same Full semantics without making coverage a merge threshold.
 
-Initial policy:
+Accepted public baseline (main Run #126, commit `a274470dcc1b6a2f22c1ae74df19d94d66a21f34`):
 
-1. record statement and branch coverage at the first green exported baseline;
-2. store the baseline in repository metadata/documentation;
-3. fail on unexplained regression from the accepted baseline once that baseline has been recorded;
-4. do not use a global 100% target as a substitute for semantic tests.
+- statement coverage: **80.84%** (12390 / 15327 lines);
+- branch coverage: **64.78%** (4375 / 6754 branches);
+- combined coverage.py percentage: **75.93%**.
 
-Until the first green exported Full baseline is recorded, coverage is reporting-only; no invented threshold is used.
+Ratchet policy:
+
+1. preserve this accepted baseline as the v0.1.0 reference point;
+2. investigate any coverage decrease in a behavior-changing pull request;
+3. require explicit review/rationale before accepting a regression;
+4. prefer targeted branch-level tests for integrity-critical modules over chasing a global vanity target;
+5. do not use a global 100% target as a substitute for semantic/invariant tests.
+
+CI currently reports coverage and stores `coverage.json`. Turning the documented baseline into an automated numeric fail threshold is pre-v1 stabilization work and must account for intentional source additions rather than blindly rejecting all denominator growth.
 
 ## Markers
 
