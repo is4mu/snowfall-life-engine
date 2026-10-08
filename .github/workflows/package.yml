@@ -76,7 +76,7 @@ jobs:
           import engine.life
           import engine.life.schema as legacy_schema
           from snowfall_life import ErrorCode, LifeEngineError, canonical_hash
-          from snowfall_life.schema import load_schema_document
+          from snowfall_life.schema import load_schema_document, validate_instance
 
           assert importlib.metadata.version("snowfall-life-engine") == "0.2.0.dev0"
           assert engine.life.ENGINE_VERSION == "0.1.0-foundation"
@@ -87,6 +87,13 @@ jobs:
           for name in legacy_schema.SCHEMA_NAMES:
               doc = load_schema_document(name)
               assert doc["$id"].startswith("https://snowfall-life-engine.invalid/schemas/life/")
+          # Exercise the installed JSON Schema validator, not only loading.
+          try:
+              validate_instance({}, "current_state")
+          except LifeEngineError as exc:
+              assert exc.code is ErrorCode.SCHEMA_INVALID
+          else:
+              raise AssertionError("invalid current_state unexpectedly accepted")
           assert canonical_hash({"x": 1}) == canonical_hash({"x": 1})
           print("isolated distribution: facade + 37 schemas OK")
           PY
