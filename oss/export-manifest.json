@@ -48,6 +48,48 @@
     "oss/exclusion-manifest.json",
     "oss/test-migration-manifest.json",
     "oss/fixture-migration-manifest.json",
-    ".github/workflows/ci.yml"
+    ".github/workflows/ci.yml",
+    "docs/ENGINE_EXPORT_AUDIT.md"
+  ],
+  "engine_audit": {
+    "source_file_count": 77,
+    "direct_export_count": 48,
+    "genericize_count": 21,
+    "private_only_count": 8,
+    "document": "docs/ENGINE_EXPORT_AUDIT.md"
+  },
+  "exported_batches": [
+    {
+      "name": "foundation-core",
+      "source_sha": "458e05673a8d4a8f3b2346825b2eef8419411d64",
+      "transform": "byte-for-byte",
+      "files": [
+        "engine/life/errors.py",
+        "engine/life/timeutil.py",
+        "engine/life/canonical.py",
+        "engine/life/ids.py",
+        "engine/life/rng.py",
+        "engine/life/fixed_point.py",
+        "engine/life/__init__.py",
+        "engine/life/versioning.py"
+      ]
+    },
+    {
+      "name": "runtime-git-transaction",
+      "source_sha": "458e05673a8d4a8f3b2346825b2eef8419411d64",
+      "transform": "branding-only public identity and temp-prefix transform; local CAS/object semantics preserved",
+      "files": [
+        "engine/life/runtime_git_transaction.py"
+      ]
+    },
+    {
+      "name": "operator-transactions-and-upgrade-gates",
+      "source_sha": "458e05673a8d4a8f3b2346825b2eef8419411d64",
+      "transform": "public commit/temp identity transform plus injected upgrade-environment adapter; local Git transaction, pinning, clean-checkout, policy-identity, and compatibility-probe semantics preserved",
+      "files": [
+        "engine/life/operator_git_transaction.py",
+        "engine/life/operator_upgrade.py"
+      ]
+    }
   ]
 }

@@ -1,0 +1,227 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://snowfall-life-engine.invalid/schemas/life/actual_event.schema.json",
+  "title": "ActualEvent",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "event_id",
+    "activity_instance_id",
+    "event_type",
+    "actual_start",
+    "actual_end",
+    "finalized_at",
+    "captures",
+    "provenance"
+  ],
+  "properties": {
+    "schema_version": { "type": "integer", "const": 1 },
+    "event_id": { "type": "string", "minLength": 1 },
+    "activity_instance_id": { "type": "string", "minLength": 1 },
+    "event_type": { "type": "string", "minLength": 1 },
+    "actual_start": { "type": "string", "minLength": 1 },
+    "actual_end": { "type": "string", "minLength": 1 },
+    "finalized_at": { "type": "string", "minLength": 1 },
+    "location_id": { "type": "string" },
+    "summary": { "type": "string" },
+    "effects": {
+      "type": "array",
+      "items": { "$ref": "effect.schema.json" }
+    },
+    "captures": {
+      "type": "array",
+      "description": "Frozen capture facts copied at finalization. Empty remains valid. Canonicalized by (captured_at, capture_id) locally — not via global key-name rules.",
+      "items": { "$ref": "capture.schema.json" }
+    },
+    "participants": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["entity_id"],
+        "properties": {
+          "entity_id": { "type": "string", "minLength": 1 },
+          "role": { "type": "string" }
+        }
+      }
+    },
+    "causes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["cause_type"],
+        "properties": {
+          "cause_type": { "type": "string", "minLength": 1 },
+          "ref": { "type": "string" }
+        }
+      }
+    },
+    "provenance": { "$ref": "provenance.schema.json" },
+    "details": {
+      "description": "Nullable strict event_type-conditioned details. Foundation may use null. No arbitrary metadata.",
+      "oneOf": [
+        { "type": "null" },
+        { "$ref": "#/$defs/sleep_details" },
+        { "$ref": "#/$defs/meal_details" },
+        { "$ref": "#/$defs/social_contact_details" }
+      ]
+    },
+    "decision_evidence": {
+      "oneOf": [
+        { "type": "null" },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "#4 decision evidence: rule ids, input state refs, random key, selected result. No free-form notes or chain-of-thought.",
+          "required": [
+            "decision_type",
+            "policy_version",
+            "rule_ids",
+            "input_state_refs",
+            "random_key",
+            "selected_result"
+          ],
+          "properties": {
+            "decision_type": { "type": "string", "minLength": 1 },
+            "policy_version": { "type": "string", "minLength": 1 },
+            "rule_ids": {
+              "type": "array",
+              "items": { "type": "string", "minLength": 1 },
+              "description": "Semantically unordered; canonicalized by string sort"
+            },
+            "input_state_refs": {
+              "type": "array",
+              "items": { "type": "string", "minLength": 1 },
+              "description": "Semantically unordered; canonicalized by string sort"
+            },
+            "random_key": { "type": ["string", "null"] },
+            "selected_result": { "type": "string", "minLength": 1 }
+          }
+        }
+      ]
+    },
+    "dynamics_context": {
+      "$ref": "#/$defs/dynamics_context",
+      "description": "Slice 5B2C1 rate context copied from ActiveActivity at finalization when present. Optional for legacy/Foundation events."
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": { "event_type": { "const": "SLEEP" } },
+        "required": ["event_type"]
+      },
+      "then": {
+        "required": ["details"],
+        "properties": {
+          "details": { "$ref": "#/$defs/sleep_details" }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": { "event_type": { "const": "MEAL" } },
+        "required": ["event_type"]
+      },
+      "then": {
+        "required": ["details"],
+        "properties": {
+          "details": { "$ref": "#/$defs/meal_details" }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": { "event_type": { "const": "SOCIAL_CONTACT" } },
+        "required": ["event_type"]
+      },
+      "then": {
+        "required": ["details"],
+        "properties": {
+          "details": { "$ref": "#/$defs/social_contact_details" }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "event_type": {
+            "not": {
+              "enum": ["SLEEP", "MEAL", "SOCIAL_CONTACT"]
+            }
+          }
+        },
+        "required": ["event_type"]
+      },
+      "then": {
+        "properties": {
+          "details": { "type": "null" }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "sleep_details": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sleep_kind"],
+      "properties": {
+        "sleep_kind": { "type": "string", "enum": ["MAIN", "NAP"] }
+      }
+    },
+    "meal_details": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["meal_source", "meal_extent"],
+      "properties": {
+        "meal_source": {
+          "type": "string",
+          "enum": ["HOME_COOKED", "OUTSIDE", "CONVENIENCE", "DELIVERY", "SOCIAL_MEAL"]
+        },
+        "meal_extent": { "type": "string", "enum": ["LIGHT", "STANDARD"] }
+      }
+    },
+    "social_contact_details": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["contact_mode"],
+      "properties": {
+        "contact_mode": {
+          "type": "string",
+          "enum": [
+            "LIGHTWEIGHT",
+            "CALL",
+            "LONG_CATCHUP_CALL",
+            "LOCAL_OUTING",
+            "POST_WORK"
+          ]
+        }
+      }
+    },
+    "dynamics_context": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Slice 5B2C1 rate context copied from ActiveActivity at finalization when present. Optional for legacy/Foundation events.",
+      "required": ["schema_version", "base_activity_class", "social_exposure"],
+      "properties": {
+        "schema_version": { "type": "integer", "const": 1 },
+        "base_activity_class": {
+          "type": "string",
+          "enum": [
+            "SLEEP",
+            "REST_AWAKE",
+            "SEDENTARY_FOCUSED",
+            "LIGHT_ACTIVE",
+            "PHYSICALLY_ACTIVE"
+          ]
+        },
+        "social_exposure": {
+          "type": "string",
+          "enum": ["NONE", "PASSIVE", "ACTIVE"]
+        }
+      }
+    }
+  }
+}

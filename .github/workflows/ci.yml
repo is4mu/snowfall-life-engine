@@ -161,3 +161,192 @@ jobs:
 
           print("public repository boundary checks passed")
           PY
+
+
+  core-import:
+    name: Core import and schema closure
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install engine dependencies
+        run: python -m pip install -r engine/life/requirements.txt
+
+      - name: Compile and import public engine
+        run: |
+          python -m compileall -q engine/life
+          python - <<'PY'
+          import importlib
+          import pkgutil
+          import engine.life
+
+          modules = sorted(
+              m.name for m in pkgutil.iter_modules(engine.life.__path__)
+              if not m.name.startswith("_")
+          )
+          failures = []
+          for name in modules:
+              try:
+                  importlib.import_module(f"engine.life.{name}")
+              except Exception as exc:
+                  failures.append((name, repr(exc)))
+          if failures:
+              raise SystemExit(f"public engine import failures: {failures}")
+          print(f"imported {len(modules)} public engine modules")
+          PY
+
+      - name: Validate schema registry closure
+        run: |
+          python - <<'PY'
+          from engine.life.schema import SCHEMA_NAMES, preload_schema_validation
+
+          if len(SCHEMA_NAMES) != 37:
+              raise SystemExit(f"expected 37 public schemas, got {len(SCHEMA_NAMES)}")
+          if "runtime_production_authority" in SCHEMA_NAMES:
+              raise SystemExit("private production-authority schema leaked into public registry")
+          preload_schema_validation()
+          print("public schema registry closure passed")
+          PY
+
+      - name: Run CLI self-check
+        run: python -m engine.life.cli self-check
+
+      - name: Scan exported engine for private markers
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          roots = [Path("engine/life"), Path("schemas/life")]
+          forbidden = (
+              "Yukino",
+              "my-insta-girl",
+              "project-snowfall",
+              "data/runtime/character.json",
+              "data/runtime/social-graph.json",
+              "refs/heads/life",
+          )
+          hits = []
+          for root in roots:
+              for path in root.rglob("*"):
+                  if not path.is_file():
+                      continue
+                  try:
+                      text = path.read_text(encoding="utf-8")
+                  except UnicodeDecodeError:
+                      continue
+                  for token in forbidden:
+                      if token in text:
+                          hits.append(f"{path}: {token}")
+          if hits:
+              raise SystemExit("private publication markers found: " + "; ".join(hits))
+          print("private marker scan passed")
+          PY
+
+
+  fast:
+    name: Fast
+    needs:
+      - publication-boundary
+      - core-import
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install engine and test dependencies
+        run: |
+          python -m pip install -r engine/life/requirements.txt
+          python -m pip install -r tests/requirements.txt
+
+      - name: Run Fast semantic suite
+        run: python -m pytest -m "unit or contract or publication or (integration and not slow)"
+
+
+  full:
+    name: Full
+    if: github.event_name == 'push' || github.event.pull_request.draft == false
+    needs:
+      - publication-boundary
+      - core-import
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install engine and test dependencies
+        run: |
+          python -m pip install -r engine/life/requirements.txt
+          python -m pip install -r tests/requirements.txt
+
+      - name: Run Full semantic suite
+        if: github.event_name == 'pull_request'
+        run: python -m pytest
+
+      - name: Run Full semantic suite with coverage
+        if: github.event_name == 'push'
+        run: >-
+          python -m pytest
+          --cov=engine.life
+          --cov-branch
+          --cov-report=term-missing
+          --cov-report=json:coverage.json
+
+      - name: Upload coverage report
+        if: github.event_name == 'push'
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-python-3.12
+          path: coverage.json
+          if-no-files-found: error
+
+  determinism:
+    name: Determinism (hash=${{ matrix.hashseed }}, tz=${{ matrix.tz }})
+    if: github.event_name == 'push' || github.event.pull_request.draft == false
+    needs:
+      - publication-boundary
+      - core-import
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        hashseed: ["0", "1", "8675309"]
+        tz: ["UTC", "Asia/Tokyo"]
+    env:
+      PYTHONHASHSEED: ${{ matrix.hashseed }}
+      TZ: ${{ matrix.tz }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install engine and test dependencies
+        run: |
+          python -m pip install -r engine/life/requirements.txt
+          python -m pip install -r tests/requirements.txt
+
+      - name: Run host-determinism semantic probes
+        run: >-
+          python -m pytest -q
+          tests/contracts/foundation/test_serialization.py
+          tests/contracts/invariants/test_behavior_invariants.py
+          tests/scenarios/social/test_post_work_contact.py

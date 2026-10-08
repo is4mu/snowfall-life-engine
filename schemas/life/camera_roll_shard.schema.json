@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://snowfall-life-engine.invalid/schemas/life/camera_roll_shard.schema.json",
+  "title": "CameraRollShard",
+  "description": "Slice 4A monthly Camera Roll shard contract. Pure helpers only; no life-branch write in 4A.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "month", "closed_at", "records"],
+  "properties": {
+    "schema_version": { "type": "integer", "const": 1 },
+    "month": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])$",
+      "description": "Real calendar month YYYY-MM (01..12) derived from Asia/Tokyo captured_at"
+    },
+    "closed_at": {
+      "type": ["string", "null"],
+      "description": "Null = open shard. Non-null = immutable closed shard."
+    },
+    "records": {
+      "type": "array",
+      "items": { "$ref": "camera_roll_record.schema.json" },
+      "description": "Semantically unordered; canonicalized by (captured_at, record_id)"
+    }
+  }
+}

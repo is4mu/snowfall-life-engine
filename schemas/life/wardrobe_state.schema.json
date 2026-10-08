@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://snowfall-life-engine.invalid/schemas/life/wardrobe_state.schema.json",
+  "title": "WardrobeState",
+  "description": "Mutable wardrobe-domain snapshot. Item IDs must be caller-approved. No brand/color/style invention, outfit selection, or image-generation fields.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "domain",
+    "character_id",
+    "revision",
+    "state_hash",
+    "as_of",
+    "provenance",
+    "items"
+  ],
+  "properties": {
+    "schema_version": { "type": "integer", "const": 1 },
+    "domain": { "type": "string", "const": "wardrobe" },
+    "character_id": { "type": "string", "minLength": 1 },
+    "revision": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Content-derived identity; equals state_hash for WardrobeState v1"
+    },
+    "state_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "as_of": { "type": "string", "minLength": 1 },
+    "provenance": { "$ref": "provenance.schema.json" },
+    "items": {
+      "type": "array",
+      "description": "Unordered by item_id. Empty is valid when no approved wardrobe inventory exists.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "item_id",
+          "lifecycle_state",
+          "last_worn_at",
+          "wear_count_since_clean",
+          "location_ref"
+        ],
+        "properties": {
+          "item_id": { "type": "string", "minLength": 1 },
+          "lifecycle_state": {
+            "type": "string",
+            "enum": [
+              "CLEAN_AVAILABLE",
+              "DIRTY",
+              "WASHING",
+              "DRYING",
+              "DAMAGED",
+              "UNAVAILABLE"
+            ]
+          },
+          "last_worn_at": { "type": ["string", "null"] },
+          "wear_count_since_clean": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "location_ref": { "type": ["string", "null"], "minLength": 1 }
+        }
+      }
+    }
+  }
+}

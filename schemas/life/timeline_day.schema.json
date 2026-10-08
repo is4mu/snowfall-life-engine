@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://snowfall-life-engine.invalid/schemas/life/timeline_day.schema.json",
+  "title": "TimelineDay",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "date",
+    "timezone",
+    "status",
+    "actual_events"
+  ],
+  "properties": {
+    "schema_version": { "type": "integer", "const": 1 },
+    "date": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+    },
+    "timezone": { "type": "string", "const": "Asia/Tokyo" },
+    "status": { "type": "string", "enum": ["OPEN", "CLOSED"] },
+    "closed_at": { "type": ["string", "null"] },
+    "actual_events": {
+      "type": "array",
+      "items": { "$ref": "actual_event.schema.json" }
+    },
+    "notes": { "type": "string" }
+  }
+}

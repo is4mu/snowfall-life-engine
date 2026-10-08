@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://snowfall-life-engine.invalid/schemas/life/bootstrap_approval.schema.json",
+  "title": "BootstrapApproval",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "proposal_hash",
+    "approved_at",
+    "approved_by",
+    "life_epoch"
+  ],
+  "properties": {
+    "schema_version": { "type": "integer", "const": 1 },
+    "proposal_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "approved_at": { "type": "string", "minLength": 1 },
+    "approved_by": { "type": "string", "minLength": 1 },
+    "life_epoch": { "type": "string", "minLength": 1 },
+    "notes": { "type": "string" }
+  }
+}

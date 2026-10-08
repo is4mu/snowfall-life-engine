@@ -1,0 +1,203 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://snowfall-life-engine.invalid/schemas/life/operator_request.schema.json",
+  "title": "OperatorRequest",
+  "description": "Slice 5E3 pure reviewed operator request. CORRECTION, RECOVERY_AUTHORIZATION, ENGINE_UPGRADE, POLICY_UPGRADE only; no workflow I/O.",
+  "oneOf": [
+    { "$ref": "#/$defs/correction_request" },
+    { "$ref": "#/$defs/recovery_request" },
+    { "$ref": "#/$defs/engine_upgrade_request" },
+    { "$ref": "#/$defs/policy_upgrade_request" }
+  ],
+  "$defs": {
+    "correction_payload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "target_event_id",
+        "target_event_hash",
+        "supersedes_action_id",
+        "corrected_event"
+      ],
+      "properties": {
+        "target_event_id": { "type": "string", "minLength": 1 },
+        "target_event_hash": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$",
+          "description": "Canonical hash of the immutable raw ActualEvent."
+        },
+        "supersedes_action_id": {
+          "oneOf": [
+            { "type": "null" },
+            {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            }
+          ]
+        },
+        "corrected_event": { "$ref": "actual_event.schema.json" },
+        "compensation_effects": {
+          "type": "array",
+          "items": { "$ref": "effect.schema.json" },
+          "description": "Optional TypedEffects applied once via existing reducers at effective_at."
+        }
+      }
+    },
+    "recovery_payload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "from_processed_through",
+        "recover_through"
+      ],
+      "properties": {
+        "from_processed_through": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Must equal CurrentState.processed_through at apply time."
+        },
+        "recover_through": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Exactly one next window: > from and <= CATCHUP_LIMIT_DAYS later."
+        }
+      }
+    },
+    "upgrade_payload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "current_engine_commit_sha",
+        "target_engine_commit_sha",
+        "current_behavior_policy_version",
+        "target_behavior_policy_version",
+        "current_policy_hash",
+        "target_policy_hash"
+      ],
+      "properties": {
+        "current_engine_commit_sha": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{40}$"
+        },
+        "target_engine_commit_sha": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{40}$"
+        },
+        "current_behavior_policy_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "target_behavior_policy_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "current_policy_hash": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "target_policy_hash": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      }
+    },
+    "correction_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "request_type",
+        "expected_life_head",
+        "effective_at",
+        "approval_ref",
+        "correction"
+      ],
+      "properties": {
+        "schema_version": { "type": "integer", "const": 1 },
+        "request_type": {
+          "type": "string",
+          "const": "CORRECTION"
+        },
+        "expected_life_head": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{40}$"
+        },
+        "effective_at": { "type": "string", "minLength": 1 },
+        "approval_ref": { "type": "string", "minLength": 1 },
+        "correction": { "$ref": "#/$defs/correction_payload" }
+      }
+    },
+    "recovery_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "request_type",
+        "expected_life_head",
+        "approval_ref",
+        "recovery"
+      ],
+      "properties": {
+        "schema_version": { "type": "integer", "const": 1 },
+        "request_type": {
+          "type": "string",
+          "const": "RECOVERY_AUTHORIZATION"
+        },
+        "expected_life_head": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{40}$"
+        },
+        "approval_ref": { "type": "string", "minLength": 1 },
+        "recovery": { "$ref": "#/$defs/recovery_payload" }
+      }
+    },
+    "engine_upgrade_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "request_type",
+        "expected_life_head",
+        "approval_ref",
+        "upgrade"
+      ],
+      "properties": {
+        "schema_version": { "type": "integer", "const": 1 },
+        "request_type": {
+          "type": "string",
+          "const": "ENGINE_UPGRADE"
+        },
+        "expected_life_head": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{40}$"
+        },
+        "approval_ref": { "type": "string", "minLength": 1 },
+        "upgrade": { "$ref": "#/$defs/upgrade_payload" }
+      }
+    },
+    "policy_upgrade_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "request_type",
+        "expected_life_head",
+        "approval_ref",
+        "upgrade"
+      ],
+      "properties": {
+        "schema_version": { "type": "integer", "const": 1 },
+        "request_type": {
+          "type": "string",
+          "const": "POLICY_UPGRADE"
+        },
+        "expected_life_head": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{40}$"
+        },
+        "approval_ref": { "type": "string", "minLength": 1 },
+        "upgrade": { "$ref": "#/$defs/upgrade_payload" }
+      }
+    }
+  }
+}

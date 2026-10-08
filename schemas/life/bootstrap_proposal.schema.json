@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://snowfall-life-engine.invalid/schemas/life/bootstrap_proposal.schema.json",
+  "title": "BootstrapProposal",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "status",
+    "proposed_at",
+    "character_id",
+    "timezone",
+    "life_epoch",
+    "world_seed",
+    "engine_version",
+    "behavior_policy_version",
+    "initial_human_state",
+    "initial_location_id"
+  ],
+  "properties": {
+    "schema_version": { "type": "integer", "const": 1 },
+    "status": { "type": "string", "const": "PROPOSED" },
+    "proposed_at": { "type": "string", "minLength": 1 },
+    "character_id": { "type": "string", "minLength": 1 },
+    "timezone": { "type": "string", "const": "Asia/Tokyo" },
+    "life_epoch": { "type": "string", "minLength": 1 },
+    "world_seed": { "type": "string", "minLength": 1 },
+    "engine_version": { "type": "string", "minLength": 1 },
+    "behavior_policy_version": { "type": "string", "minLength": 1 },
+    "initial_location_id": { "type": "string", "minLength": 1 },
+    "spatial_context_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["spatial_context_version", "context_hash"],
+      "properties": {
+        "spatial_context_version": { "type": "string", "minLength": 1 },
+        "context_hash": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      }
+    },
+    "circadian_profile_ref": { "type": "string" },
+    "notes": { "type": "string" },
+    "initial_human_state": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sleep_debt_min",
+        "hunger",
+        "physical_fatigue",
+        "affect_valence",
+        "stress",
+        "social_battery"
+      ],
+      "properties": {
+        "sleep_debt_min": { "type": "integer", "minimum": 0, "maximum": 720 },
+        "hunger": { "type": "integer", "minimum": 0, "maximum": 1000 },
+        "physical_fatigue": { "type": "integer", "minimum": 0, "maximum": 1000 },
+        "affect_valence": { "type": "integer", "minimum": -1000, "maximum": 1000 },
+        "stress": { "type": "integer", "minimum": 0, "maximum": 1000 },
+        "social_battery": { "type": "integer", "minimum": 0, "maximum": 1000 }
+      }
+    }
+  }
+}

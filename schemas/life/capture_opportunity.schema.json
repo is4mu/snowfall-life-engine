@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://snowfall-life-engine.invalid/schemas/life/capture_opportunity.schema.json",
+  "title": "CaptureOpportunity",
+  "description": "Slice 4B1 transient CaptureOpportunity v1. Caller-built synthetic opportunity only; not a production emitter. No prose notes.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "opportunity_key",
+    "source_key",
+    "activity_instance_id",
+    "opportunity_at",
+    "capture_kind",
+    "subject_refs",
+    "visual_context",
+    "rule_ids",
+    "input_state_refs"
+  ],
+  "properties": {
+    "schema_version": { "type": "integer", "const": 1 },
+    "opportunity_key": {
+      "type": "string",
+      "minLength": 1,
+      "description": "stable_id(\"capture-opportunity\", activity_instance_id, source_key)"
+    },
+    "source_key": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Caller-supplied stable causal/source identity. Not invented by 4B1."
+    },
+    "activity_instance_id": { "type": "string", "minLength": 1 },
+    "opportunity_at": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Canonical Asia/Tokyo second precision opportunity time."
+    },
+    "capture_kind": {
+      "type": "string",
+      "enum": ["SELFIE", "PEOPLE", "FOOD", "SCENERY", "OBJECT", "DAILY_LIFE"]
+    },
+    "subject_refs": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "uniqueItems": true,
+      "description": "Same local canonical sort + SELFIE/PEOPLE cross-field rules as Capture (4A.1)."
+    },
+    "visual_context": {
+      "$ref": "capture.schema.json#/$defs/visual_context"
+    },
+    "rule_ids": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "uniqueItems": true,
+      "description": "Semantically unordered; locally canonical sorted. No prose."
+    },
+    "input_state_refs": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "uniqueItems": true,
+      "description": "Semantically unordered; locally canonical sorted. No prose."
+    }
+  }
+}

@@ -1,0 +1,14 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+coverage.json
+htmlcov/
+
+# Local virtual environments
+.venv/
+venv/
+
+# Editor / OS noise
+.DS_Store

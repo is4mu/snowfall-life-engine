@@ -1,0 +1,95 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://snowfall-life-engine.invalid/schemas/life/capture_source_moment.schema.json",
+  "title": "CaptureSourceMoment",
+  "description": "Slice 4B2 transient CaptureSourceMoment v1. Semantic photographable moment only; not a Capture fact and creates no Camera Roll media. Caller supplies typed context; no prose inference.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "emitter_rule_id",
+    "source_context_kind",
+    "activity_instance_id",
+    "semantic_source_ref",
+    "moment_ref",
+    "moment_at",
+    "subject_refs",
+    "visual_context",
+    "input_state_refs"
+  ],
+  "properties": {
+    "schema_version": { "type": "integer", "const": 1 },
+    "emitter_rule_id": {
+      "type": "string",
+      "enum": [
+        "slice4b2.selfie.appearance",
+        "slice4b2.selfie.contextual",
+        "slice4b2.social.group_selfie",
+        "slice4b2.social.people",
+        "slice4b2.meal.contextual",
+        "slice4b2.scenery.view",
+        "slice4b2.object.detail",
+        "slice4b2.daily.detail"
+      ]
+    },
+    "source_context_kind": {
+      "type": "string",
+      "enum": [
+        "PRE_OUTING_SELF_CHECK",
+        "OUTFIT_COMPARISON",
+        "APPEARANCE_SATISFACTION",
+        "TRAVEL_SELFIE",
+        "OUTING_SELFIE",
+        "IN_PERSON_SOCIAL",
+        "SOCIAL_MEAL",
+        "TRAVEL_MEAL",
+        "SPECIAL_OCCASION",
+        "FIRST_AT_PLACE",
+        "VISUAL_DISTINCT",
+        "TRAVEL_VIEW",
+        "OUTING_VIEW",
+        "OUTFIT_DETAIL",
+        "SHOPPING_ITEM",
+        "OWNED_ITEM_DETAIL",
+        "TRAVEL_DETAIL",
+        "TRANSIT_DETAIL",
+        "LODGING_DETAIL",
+        "SEASONAL_DETAIL",
+        "HOME_DETAIL",
+        "CAMPUS_DETAIL",
+        "OUTING_DETAIL"
+      ]
+    },
+    "activity_instance_id": { "type": "string", "minLength": 1 },
+    "semantic_source_ref": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Stable semantic source identity ref. Not invented from prose."
+    },
+    "moment_ref": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Stable moment identity within the semantic source. Not array index or timestamp-only."
+    },
+    "moment_at": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Canonical Asia/Tokyo second-precision moment time."
+    },
+    "subject_refs": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "uniqueItems": true,
+      "description": "Same local canonical sort + SELFIE/PEOPLE cross-field rules as Capture (4A.1)."
+    },
+    "visual_context": {
+      "$ref": "capture.schema.json#/$defs/visual_context"
+    },
+    "input_state_refs": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "uniqueItems": true,
+      "description": "Actual list only; unique; locally canonical sorted. No coercion."
+    }
+  }
+}

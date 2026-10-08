@@ -4,14 +4,14 @@ Thank you for your interest in Snowfall Life Engine.
 
 ## Current project phase
 
-The repository is currently in **Phase 0**. The public shell, publication boundary, and CI safeguards are being established before the first engine-source export.
+The repository is currently in **Phase 1: clean engine export**. The public shell and publication boundary are established; reusable engine code, synthetic tests, and CI gates are being validated before the first `v0.1.0` baseline.
 
-During Phase 0:
+During Phase 1:
 
 - documentation and repository-safety improvements are welcome;
-- design discussion is welcome through GitHub Issues;
-- engine behavior changes should wait until the initial public baseline is published;
-- no contribution should depend on private Snowfall application data.
+- migration/generalization changes should preserve existing engine semantics;
+- behavior changes should remain narrowly scoped until the initial public baseline is published;
+- no contribution may depend on private Snowfall application data, production authority, or private Git history.
 
 ## Principles
 
@@ -40,12 +40,29 @@ Do not weaken deterministic-equivalence, history-integrity, or fail-closed valid
 
 ## Tests
 
-After the engine baseline is exported, the repository will expose two main test levels:
+The public baseline is validated on **Python 3.12**. From a clean checkout:
 
-- **Fast**: normal development regression suite;
-- **Full**: complete regression suite including longer deterministic soak/restart tests.
+```bash
+python3.12 -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+python -m pip install -r engine/life/requirements.txt
+python -m pip install -r tests/requirements.txt
+```
 
-Public CI is expected to remain secret-free and reproducible on standard GitHub-hosted runners.
+Run the normal development gate with:
+
+```bash
+python -m pytest -m "unit or contract or publication or (integration and not slow)"
+```
+
+Run the complete public suite with:
+
+```bash
+python -m pytest
+```
+
+**Fast** contains unit, contract, publication, and non-slow integration tests. **Full** additionally contains scenario, calibration, and the 72h/28d/90d long-horizon runners. Public CI remains secret-free and reproducible on standard GitHub-hosted runners.
 
 ## Private data
 

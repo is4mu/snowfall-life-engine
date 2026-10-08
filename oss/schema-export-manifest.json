@@ -1,0 +1,291 @@
+{
+  "schema_version": 1,
+  "status": "public-schema-set-exported",
+  "source_repository": "is4mu/project-snowfall",
+  "source_baseline": "458e05673a8d4a8f3b2346825b2eef8419411d64",
+  "source_scope": "schemas/life/*",
+  "source_file_count": 39,
+  "json_schema_count": 37,
+  "registry_registered_schema_count": 37,
+  "registry_closure_complete": true,
+  "old_schema_id_prefix": "https://my-insta-girl.local/schemas/life/",
+  "public_schema_id_prefix": "https://snowfall-life-engine.invalid/schemas/life/",
+  "private_only_count": 1,
+  "entries": [
+    {
+      "source": "schemas/life/active_activity.schema.json",
+      "source_size_bytes": 7460,
+      "destination": "schemas/life/active_activity.schema.json",
+      "disposition": "publish-schema-id-rewrite",
+      "transform": "replace $id prefix https://my-insta-girl.local/schemas/life/ with https://snowfall-life-engine.invalid/schemas/life/; preserve all validation keywords and relative $ref values"
+    },
+    {
+      "source": "schemas/life/actual_event.schema.json",
+      "source_size_bytes": 6803,
+      "destination": "schemas/life/actual_event.schema.json",
+      "disposition": "publish-schema-id-rewrite",
+      "transform": "replace $id prefix https://my-insta-girl.local/schemas/life/ with https://snowfall-life-engine.invalid/schemas/life/; preserve all validation keywords and relative $ref values"
+    },
+    {
+      "source": "schemas/life/advance_result.schema.json",
+      "source_size_bytes": 875,
+      "destination": "schemas/life/advance_result.schema.json",
+      "disposition": "publish-schema-id-rewrite",
+      "transform": "replace $id prefix https://my-insta-girl.local/schemas/life/ with https://snowfall-life-engine.invalid/schemas/life/; preserve all validation keywords and relative $ref values"
+    },
+    {
+      "source": "schemas/life/behavior_policy_approval.schema.json",
+      "source_size_bytes": 958,
+      "destination": "schemas/life/behavior_policy_approval.schema.json",
+      "disposition": "publish-schema-id-rewrite",
+      "transform": "replace $id prefix https://my-insta-girl.local/schemas/life/ with https://snowfall-life-engine.invalid/schemas/life/; preserve all validation keywords and relative $ref values"
+    },
+    {
+      "source": "schemas/life/behavior_policy_fixture_v1.schema.json",
+      "source_size_bytes": 2486,
+      "destination": "schemas/life/behavior_policy_fixture_v1.schema.json",
+      "disposition": "publish-schema-id-rewrite",
+      "transform": "replace $id prefix https://my-insta-girl.local/schemas/life/ with https://snowfall-life-engine.invalid/schemas/life/; preserve all validation keywords and relative $ref values"
+    },
+    {
+      "source": "schemas/life/behavior_policy_v2.schema.json",
+      "source_size_bytes": 30243,
+      "destination": "schemas/life/behavior_policy_v2.schema.json",
+      "disposition": "publish-schema-id-rewrite",
+      "transform": "replace $id prefix https://my-insta-girl.local/schemas/life/ with https://snowfall-life-engine.invalid/schemas/life/; preserve all validation keywords and relative $ref values"
+    },
+    {
+      "source": "schemas/life/behavior_policy.schema.json",
+      "source_size_bytes": 467,
+      "destination": "schemas/life/behavior_policy.schema.json",
+      "disposition": "publish-schema-id-rewrite",
+      "transform": "replace $id prefix https://my-insta-girl.local/schemas/life/ with https://snowfall-life-engine.invalid/schemas/life/; preserve all validation keywords and relative $ref values"
+    },
+    {
+      "source": "schemas/life/bootstrap_approval.schema.json",
+      "source_size_bytes": 724,
+      "destination": "schemas/life/bootstrap_approval.schema.json",
+      "disposition": "publish-schema-id-rewrite",
+      "transform": "replace $id prefix https://my-insta-girl.local/schemas/life/ with https://snowfall-life-engine.invalid/schemas/life/; preserve all validation keywords and relative $ref values"
+    },
+    {
+      "source": "schemas/life/bootstrap_proposal.schema.json",
+      "source_size_bytes": 2321,
+      "destination": "schemas/life/bootstrap_proposal.schema.json",
+      "disposition": "publish-schema-id-rewrite",
+      "transform": "replace $id prefix https://my-insta-girl.local/schemas/life/ with https://snowfall-life-engine.invalid/schemas/life/; preserve all validation keywords and relative $ref values"
+    },
+    {
+      "source": "schemas/life/camera_roll_record.schema.json",
+      "source_size_bytes": 1734,
+      "destination": "schemas/life/camera_roll_record.schema.json",
+      "disposition": "publish-schema-id-rewrite",
+      "transform": "replace $id prefix https://my-insta-girl.local/schemas/life/ with https://snowfall-life-engine.invalid/schemas/life/; preserve all validation keywords and relative $ref values"
+    },
+    {
+      "source": "schemas/life/camera_roll_shard.schema.json",
+      "source_size_bytes": 1011,
+      "destination": "schemas/life/camera_roll_shard.schema.json",
+      "disposition": "publish-schema-id-rewrite",
+      "transform": "replace $id prefix https://my-insta-girl.local/schemas/life/ with https://snowfall-life-engine.invalid/schemas/life/; preserve all validation keywords and relative $ref values"
+    },
+    {
+      "source": "schemas/life/capture_decision_evidence.schema.json",
+      "source_size_bytes": 2219,
+      "destination": "schemas/life/capture_decision_evidence.schema.json",
+      "disposition": "publish-schema-id-rewrite",
+      "transform": "replace $id prefix https://my-insta-girl.local/schemas/life/ with https://snowfall-life-engine.invalid/schemas/life/; preserve all validation keywords and relative $ref values"
+    },
+    {
+      "source": "schemas/life/capture_opportunity.schema.json",
+      "source_size_bytes": 2135,
+      "destination": "schemas/life/capture_opportunity.schema.json",
+      "disposition": "publish-schema-id-rewrite",
+      "transform": "replace $id prefix https://my-insta-girl.local/schemas/life/ with https://snowfall-life-engine.invalid/schemas/life/; preserve all validation keywords and relative $ref values"
+    },
+    {
+      "source": "schemas/life/capture_source_moment.schema.json",
+      "source_size_bytes": 2930,
+      "destination": "schemas/life/capture_source_moment.schema.json",
+      "disposition": "publish-schema-id-rewrite",
+      "transform": "replace $id prefix https://my-insta-girl.local/schemas/life/ with https://snowfall-life-engine.invalid/schemas/life/; preserve all validation keywords and relative $ref values"
+    },
+    {
+      "source": "schemas/life/capture.schema.json",
+      "source_size_bytes": 4872,
+      "destination": "schemas/life/capture.schema.json",
+      "disposition": "publish-schema-id-rewrite",
+      "transform": "replace $id prefix https://my-insta-girl.local/schemas/life/ with https://snowfall-life-engine.invalid/schemas/life/; preserve all validation keywords and relative $ref values"
+    },
+    {
+      "source": "schemas/life/commitment.schema.json",
+      "source_size_bytes": 4120,
+      "destination": "schemas/life/commitment.schema.json",
+      "disposition": "publish-schema-id-rewrite",
+      "transform": "replace $id prefix https://my-insta-girl.local/schemas/life/ with https://snowfall-life-engine.invalid/schemas/life/; preserve all validation keywords and relative $ref values"
+    },
+    {
+      "source": "schemas/life/consumables_state.schema.json",
+      "source_size_bytes": 1546,
+      "destination": "schemas/life/consumables_state.schema.json",
+      "disposition": "publish-schema-id-rewrite",
+      "transform": "replace $id prefix https://my-insta-girl.local/schemas/life/ with https://snowfall-life-engine.invalid/schemas/life/; preserve all validation keywords and relative $ref values"
+    },
+    {
+      "source": "schemas/life/current_state.schema.json",
+      "source_size_bytes": 8068,
+      "destination": "schemas/life/current_state.schema.json",
+      "disposition": "publish-schema-id-rewrite",
+      "transform": "replace $id prefix https://my-insta-girl.local/schemas/life/ with https://snowfall-life-engine.invalid/schemas/life/; preserve all validation keywords and relative $ref values"
+    },
+    {
+      "source": "schemas/life/effect.schema.json",
+      "source_size_bytes": 13832,
+      "destination": "schemas/life/effect.schema.json",
+      "disposition": "publish-schema-id-rewrite",
+      "transform": "replace $id prefix https://my-insta-girl.local/schemas/life/ with https://snowfall-life-engine.invalid/schemas/life/; preserve all validation keywords and relative $ref values"
+    },
+    {
+      "source": "schemas/life/finance_state.schema.json",
+      "source_size_bytes": 1366,
+      "destination": "schemas/life/finance_state.schema.json",
+      "disposition": "publish-schema-id-rewrite",
+      "transform": "replace $id prefix https://my-insta-girl.local/schemas/life/ with https://snowfall-life-engine.invalid/schemas/life/; preserve all validation keywords and relative $ref values"
+    },
+    {
+      "source": "schemas/life/home_state.schema.json",
+      "source_size_bytes": 1702,
+      "destination": "schemas/life/home_state.schema.json",
+      "disposition": "publish-schema-id-rewrite",
+      "transform": "replace $id prefix https://my-insta-girl.local/schemas/life/ with https://snowfall-life-engine.invalid/schemas/life/; preserve all validation keywords and relative $ref values"
+    },
+    {
+      "source": "schemas/life/last_operator_action.schema.json",
+      "source_size_bytes": 4725,
+      "destination": "schemas/life/last_operator_action.schema.json",
+      "disposition": "publish-schema-id-rewrite",
+      "transform": "replace $id prefix https://my-insta-girl.local/schemas/life/ with https://snowfall-life-engine.invalid/schemas/life/; preserve all validation keywords and relative $ref values"
+    },
+    {
+      "source": "schemas/life/obligation_task.schema.json",
+      "source_size_bytes": 2547,
+      "destination": "schemas/life/obligation_task.schema.json",
+      "disposition": "publish-schema-id-rewrite",
+      "transform": "replace $id prefix https://my-insta-girl.local/schemas/life/ with https://snowfall-life-engine.invalid/schemas/life/; preserve all validation keywords and relative $ref values"
+    },
+    {
+      "source": "schemas/life/operator_action.schema.json",
+      "source_size_bytes": 5888,
+      "destination": "schemas/life/operator_action.schema.json",
+      "disposition": "publish-schema-id-rewrite",
+      "transform": "replace $id prefix https://my-insta-girl.local/schemas/life/ with https://snowfall-life-engine.invalid/schemas/life/; preserve all validation keywords and relative $ref values"
+    },
+    {
+      "source": "schemas/life/operator_history.schema.json",
+      "source_size_bytes": 942,
+      "destination": "schemas/life/operator_history.schema.json",
+      "disposition": "publish-schema-id-rewrite",
+      "transform": "replace $id prefix https://my-insta-girl.local/schemas/life/ with https://snowfall-life-engine.invalid/schemas/life/; preserve all validation keywords and relative $ref values"
+    },
+    {
+      "source": "schemas/life/operator_request.schema.json",
+      "source_size_bytes": 5970,
+      "destination": "schemas/life/operator_request.schema.json",
+      "disposition": "publish-schema-id-rewrite",
+      "transform": "replace $id prefix https://my-insta-girl.local/schemas/life/ with https://snowfall-life-engine.invalid/schemas/life/; preserve all validation keywords and relative $ref values"
+    },
+    {
+      "source": "schemas/life/provenance.schema.json",
+      "source_size_bytes": 831,
+      "destination": "schemas/life/provenance.schema.json",
+      "disposition": "publish-schema-id-rewrite",
+      "transform": "replace $id prefix https://my-insta-girl.local/schemas/life/ with https://snowfall-life-engine.invalid/schemas/life/; preserve all validation keywords and relative $ref values"
+    },
+    {
+      "source": "schemas/life/queued_internal_event.schema.json",
+      "source_size_bytes": 9457,
+      "destination": "schemas/life/queued_internal_event.schema.json",
+      "disposition": "publish-schema-id-rewrite",
+      "transform": "replace $id prefix https://my-insta-girl.local/schemas/life/ with https://snowfall-life-engine.invalid/schemas/life/; preserve all validation keywords and relative $ref values"
+    },
+    {
+      "source": "schemas/life/README.md",
+      "source_size_bytes": 7984,
+      "destination": "schemas/life/README.md",
+      "disposition": "publish-rewrite-doc",
+      "transform": "rewrite historical/private application wording as public schema documentation"
+    },
+    {
+      "source": "schemas/life/relation_state.schema.json",
+      "source_size_bytes": 2088,
+      "destination": "schemas/life/relation_state.schema.json",
+      "disposition": "publish-schema-id-rewrite",
+      "transform": "replace $id prefix https://my-insta-girl.local/schemas/life/ with https://snowfall-life-engine.invalid/schemas/life/; preserve all validation keywords and relative $ref values"
+    },
+    {
+      "source": "schemas/life/route_profile.schema.json",
+      "source_size_bytes": 1221,
+      "destination": "schemas/life/route_profile.schema.json",
+      "disposition": "publish-schema-id-rewrite",
+      "transform": "replace $id prefix https://my-insta-girl.local/schemas/life/ with https://snowfall-life-engine.invalid/schemas/life/; preserve all validation keywords and relative $ref values"
+    },
+    {
+      "source": "schemas/life/runtime_last_run.schema.json",
+      "source_size_bytes": 2741,
+      "destination": "schemas/life/runtime_last_run.schema.json",
+      "disposition": "publish-schema-id-rewrite",
+      "transform": "replace $id prefix https://my-insta-girl.local/schemas/life/ with https://snowfall-life-engine.invalid/schemas/life/; preserve all validation keywords and relative $ref values"
+    },
+    {
+      "source": "schemas/life/runtime_production_authority.schema.json",
+      "source_size_bytes": 3622,
+      "destination": null,
+      "disposition": "hold-private-or-generalize",
+      "transform": "Not exported in the v0.1.0 baseline; application production-authority contract remains private."
+    },
+    {
+      "source": "schemas/life/schedule_state.schema.json",
+      "source_size_bytes": 1582,
+      "destination": "schemas/life/schedule_state.schema.json",
+      "disposition": "publish-schema-id-rewrite",
+      "transform": "replace $id prefix https://my-insta-girl.local/schemas/life/ with https://snowfall-life-engine.invalid/schemas/life/; preserve all validation keywords and relative $ref values"
+    },
+    {
+      "source": "schemas/life/social_archetype_assignment.schema.json",
+      "source_size_bytes": 756,
+      "destination": "schemas/life/social_archetype_assignment.schema.json",
+      "disposition": "publish-schema-id-rewrite",
+      "transform": "replace $id prefix https://my-insta-girl.local/schemas/life/ with https://snowfall-life-engine.invalid/schemas/life/; preserve all validation keywords and relative $ref values"
+    },
+    {
+      "source": "schemas/life/social_response_state.schema.json",
+      "source_size_bytes": 1759,
+      "destination": "schemas/life/social_response_state.schema.json",
+      "disposition": "publish-schema-id-rewrite",
+      "transform": "replace $id prefix https://my-insta-girl.local/schemas/life/ with https://snowfall-life-engine.invalid/schemas/life/; preserve all validation keywords and relative $ref values"
+    },
+    {
+      "source": "schemas/life/spatial_context.schema.json",
+      "source_size_bytes": 3576,
+      "destination": "schemas/life/spatial_context.schema.json",
+      "disposition": "publish-schema-id-rewrite",
+      "transform": "replace $id prefix https://my-insta-girl.local/schemas/life/ with https://snowfall-life-engine.invalid/schemas/life/; preserve all validation keywords and relative $ref values"
+    },
+    {
+      "source": "schemas/life/timeline_day.schema.json",
+      "source_size_bytes": 814,
+      "destination": "schemas/life/timeline_day.schema.json",
+      "disposition": "publish-schema-id-rewrite",
+      "transform": "replace $id prefix https://my-insta-girl.local/schemas/life/ with https://snowfall-life-engine.invalid/schemas/life/; preserve all validation keywords and relative $ref values"
+    },
+    {
+      "source": "schemas/life/wardrobe_state.schema.json",
+      "source_size_bytes": 2099,
+      "destination": "schemas/life/wardrobe_state.schema.json",
+      "disposition": "publish-schema-id-rewrite",
+      "transform": "replace $id prefix https://my-insta-girl.local/schemas/life/ with https://snowfall-life-engine.invalid/schemas/life/; preserve all validation keywords and relative $ref values"
+    }
+  ],
+  "source_json_schema_count": 38,
+  "public_json_schema_count": 37
+}

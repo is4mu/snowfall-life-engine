@@ -1,0 +1,226 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://snowfall-life-engine.invalid/schemas/life/current_state.schema.json",
+  "title": "CurrentState",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "state_revision",
+    "engine_version",
+    "engine_commit_sha",
+    "behavior_policy_version",
+    "character_id",
+    "timezone",
+    "life_epoch",
+    "processed_through",
+    "world_seed",
+    "context",
+    "human_state",
+    "sleep_context",
+    "conditions",
+    "appearance",
+    "domain_refs",
+    "pending_queue",
+    "history",
+    "integration"
+  ],
+  "properties": {
+    "schema_version": { "type": "integer", "const": 1 },
+    "state_revision": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Operational write counter; excluded from semantic equivalence"
+    },
+    "engine_version": { "type": "string", "minLength": 1 },
+    "engine_commit_sha": { "type": "string", "minLength": 1 },
+    "behavior_policy_version": { "type": "string", "minLength": 1 },
+    "character_id": { "type": "string", "minLength": 1 },
+    "timezone": { "type": "string", "const": "Asia/Tokyo" },
+    "life_epoch": { "type": "string", "minLength": 1 },
+    "processed_through": { "type": "string", "minLength": 1 },
+    "world_seed": { "type": "string", "minLength": 1 },
+    "context": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["location_id", "active_activity"],
+      "properties": {
+        "location_id": { "type": "string", "minLength": 1 },
+        "active_activity": {
+          "oneOf": [
+            { "type": "null" },
+            { "$ref": "active_activity.schema.json" }
+          ]
+        }
+      }
+    },
+    "human_state": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sleep_debt_min",
+        "hunger",
+        "physical_fatigue",
+        "affect_valence",
+        "stress",
+        "social_battery"
+      ],
+      "properties": {
+        "sleep_debt_min": { "type": "integer", "minimum": 0, "maximum": 720 },
+        "hunger": { "type": "integer", "minimum": 0, "maximum": 1000 },
+        "physical_fatigue": { "type": "integer", "minimum": 0, "maximum": 1000 },
+        "affect_valence": { "type": "integer", "minimum": -1000, "maximum": 1000 },
+        "stress": { "type": "integer", "minimum": 0, "maximum": 1000 },
+        "social_battery": { "type": "integer", "minimum": 0, "maximum": 1000 }
+      }
+    },
+    "sleep_context": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["last_wake_at", "last_main_sleep_end", "circadian_profile_ref"],
+      "properties": {
+        "last_wake_at": { "type": ["string", "null"] },
+        "last_main_sleep_end": { "type": ["string", "null"] },
+        "circadian_profile_ref": { "type": ["string", "null"] }
+      }
+    },
+    "conditions": {
+      "type": "array",
+      "description": "Condition episodes. Empty OK. When a record exists, severity and started_at are required non-null; reassess_at may be null (unknown next reassessment).",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schema_version",
+          "condition_id",
+          "condition_type",
+          "severity",
+          "started_at",
+          "reassess_at",
+          "provenance"
+        ],
+        "properties": {
+          "schema_version": { "type": "integer", "const": 1 },
+          "condition_id": { "type": "string", "minLength": 1 },
+          "condition_type": { "type": "string", "minLength": 1 },
+          "severity": {
+            "type": "string",
+            "enum": ["LOW", "MEDIUM", "HIGH", "CRITICAL"]
+          },
+          "started_at": { "type": "string", "minLength": 1 },
+          "reassess_at": {
+            "type": ["string", "null"],
+            "description": "Null means next reassessment is unknown / not yet scheduled."
+          },
+          "provenance": { "$ref": "provenance.schema.json" },
+          "notes": { "type": "string" }
+        }
+      }
+    },
+    "appearance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["outfit_state_id", "makeup_level", "hair_state_id"],
+      "properties": {
+        "outfit_state_id": {
+          "type": ["string", "null"],
+          "description": "#4 outfit_state_id (nullable / uninitialized OK)"
+        },
+        "makeup_level": {
+          "type": ["string", "null"],
+          "enum": ["NONE", "MINIMAL", "NORMAL", "DRESSED_UP", null]
+        },
+        "hair_state_id": {
+          "type": ["string", "null"],
+          "description": "#4 hair_state_id (nullable / uninitialized OK)"
+        }
+      }
+    },
+    "domain_refs": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "home_revision",
+        "social_graph_revision",
+        "finance_revision",
+        "wardrobe_revision",
+        "relation_state_revision",
+        "consumables_revision",
+        "schedule_revision",
+        "schedule_hash",
+        "social_response_revision"
+      ],
+      "properties": {
+        "home_revision": { "type": ["string", "null"] },
+        "social_graph_revision": { "type": ["string", "null"] },
+        "finance_revision": { "type": ["string", "null"] },
+        "wardrobe_revision": { "type": ["string", "null"] },
+        "relation_state_revision": { "type": ["string", "null"] },
+        "consumables_revision": { "type": ["string", "null"] },
+        "schedule_revision": { "type": ["string", "null"] },
+        "schedule_hash": { "type": ["string", "null"] },
+        "social_response_revision": {
+          "type": ["string", "null"],
+          "description": "Slice 5C1: binds CurrentState to state/social-responses.json revision. Nullable in empty_checkpoint; required non-null 64-hex in persistent 5C snapshots."
+        }
+      }
+    },
+    "integration": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_version", "rate_remainders"],
+      "properties": {
+        "schema_version": { "type": "integer", "const": 1 },
+        "rate_remainders": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "hunger",
+            "physical_fatigue",
+            "affect_valence",
+            "stress",
+            "social_battery"
+          ],
+          "properties": {
+            "hunger": { "type": "integer", "minimum": 0, "maximum": 3599 },
+            "physical_fatigue": { "type": "integer", "minimum": 0, "maximum": 3599 },
+            "affect_valence": { "type": "integer", "minimum": 0, "maximum": 3599 },
+            "stress": { "type": "integer", "minimum": 0, "maximum": 3599 },
+            "social_battery": { "type": "integer", "minimum": 0, "maximum": 3599 }
+          }
+        }
+      },
+      "description": "Mechanical remainder state for partition-invariant rate integration (not Human State)"
+    },
+    "pending_queue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["cursor", "events"],
+      "description": "Pending internal scheduler queue. Foundation v1 stores a compacted queue (processed events removed); cursor is the 0-based index of the next event to consider and must remain 0.",
+      "properties": {
+        "cursor": {
+          "type": "integer",
+          "const": 0,
+          "description": "Next-event index into events after deterministic sort. Compaction strategy ⇒ always 0."
+        },
+        "events": {
+          "type": "array",
+          "items": { "$ref": "queued_internal_event.schema.json" }
+        }
+      }
+    },
+    "history": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["head_event_id", "history_hash", "event_count"],
+      "properties": {
+        "head_event_id": { "type": ["string", "null"] },
+        "history_hash": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "event_count": { "type": "integer", "minimum": 0 }
+      }
+    }
+  }
+}

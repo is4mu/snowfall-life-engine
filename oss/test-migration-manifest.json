@@ -2,7 +2,7 @@
   "schema_version": 1,
   "status": "phase-0-pre-export",
   "source_repository": "is4mu/project-snowfall",
-  "source_baseline": "9fe73f78ef8845d8c3b330faa7bf40b2a76c9fb0",
+  "source_baseline": "458e05673a8d4a8f3b2346825b2eef8419411d64",
   "source_scope": "tests/life/*.py",
   "source_file_count": 146,
   "executable_test_file_count": 138,
@@ -181,7 +181,7 @@
       "source": "tests/life/test_slice2d_candidates.py",
       "disposition": "migrate",
       "destination": "tests/unit/decisions/test_candidates.py",
-      "notes": ""
+      "notes": "private fixture SHA lock is replaced by public policy/fixture contracts; engine candidate semantics migrate here"
     },
     {
       "source": "tests/life/test_slice2d_resolver.py",
@@ -252,8 +252,8 @@
     {
       "source": "tests/life/test_slice2g_post_work.py",
       "disposition": "migrate",
-      "destination": "tests/scenarios/social/test_post_work_contact.py",
-      "notes": ""
+      "destination": "tests/scenarios/social/test_post_work_contact.py; tests/unit/social/test_generation_boundaries.py",
+      "notes": "private social-graph immutability guard remains private; generic generator strictness/dependency boundaries migrate publicly"
     },
     {
       "source": "tests/life/test_slice2g_slots.py",
@@ -271,7 +271,7 @@
       "source": "tests/life/test_slice2h_integration.py",
       "disposition": "rewrite-migrate",
       "destination": "tests/integration/social/test_social_response_runtime.py",
-      "notes": "synthetic runtime data only"
+      "notes": "private runtime/social-graph byte guards replaced by public module and fixture immutability boundaries"
     },
     {
       "source": "tests/life/test_slice2h_invites.py",
@@ -288,8 +288,8 @@
     {
       "source": "tests/life/test_slice2h_review1.py",
       "disposition": "merge",
-      "destination": "tests/unit/social/test_contact_opportunities.py; tests/unit/social/test_response_rules.py",
-      "notes": ""
+      "destination": "tests/unit/social/test_response_rules.py",
+      "notes": "semantic validation regressions merged into response rules"
     },
     {
       "source": "tests/life/test_slice2h_soak.py",
@@ -301,19 +301,19 @@
       "source": "tests/life/test_slice2i_calibration.py",
       "disposition": "consolidate",
       "destination": "tests/calibration/test_behavior_policy.py",
-      "notes": ""
+      "notes": "day-snapshot builder extracted to tests/support/harnesses/behavior_scenarios.py; public calibration uses synthetic policy only"
     },
     {
       "source": "tests/life/test_slice2i_cross_domain.py",
       "disposition": "migrate",
       "destination": "tests/integration/cross_domain/test_behavior_runtime.py",
-      "notes": ""
+      "notes": "private fixed policy SHA/module path guard replaced by public fixture immutability and semantic composition checks"
     },
     {
       "source": "tests/life/test_slice2i_invariants.py",
       "disposition": "rewrite-merge",
       "destination": "tests/contracts/invariants/test_behavior_invariants.py; tests/soak/test_invariants_90d.py",
-      "notes": "remove test-to-test import"
+      "notes": "test-to-test import removed via shared scenario harness; private Canon/social-graph guards remain private; public engine/fixture immutability retained"
     },
     {
       "source": "tests/life/test_slice3a_soak.py",
@@ -325,13 +325,13 @@
       "source": "tests/life/test_slice3a_world_state.py",
       "disposition": "rewrite-split",
       "destination": "tests/unit/state/test_world_state.py; tests/contracts/state/test_world_state_schema.py",
-      "notes": ""
+      "notes": "private baseline/canon byte guards removed; public schema, projection, canonicalization, fail-closed and no-I/O contracts retained"
     },
     {
       "source": "tests/life/test_slice3b_relation_reducer.py",
       "disposition": "rewrite-migrate",
       "destination": "tests/unit/state/test_relation_reducer.py",
-      "notes": "synthetic entities"
+      "notes": "private baseline/canon guards removed; strict relation semantics, replay/idempotence and reducer no-I/O retained"
     },
     {
       "source": "tests/life/test_slice3b_soak.py",
@@ -343,7 +343,7 @@
       "source": "tests/life/test_slice3c_home_consumables_reducer.py",
       "disposition": "rewrite-migrate",
       "destination": "tests/unit/state/test_consumables_reducer.py",
-      "notes": "generic synthetic inventory"
+      "notes": "private baseline/canon guards removed; home/consumables strict semantics, replay/idempotence and no-I/O retained"
     },
     {
       "source": "tests/life/test_slice3c_soak.py",
@@ -361,13 +361,13 @@
       "source": "tests/life/test_slice3d_wardrobe_reducer.py",
       "disposition": "rewrite-migrate",
       "destination": "tests/unit/state/test_wardrobe_reducer.py",
-      "notes": "synthetic wardrobe catalog"
+      "notes": "private canon/baseline guards removed; strict wardrobe transition semantics and no-I/O retained"
     },
     {
       "source": "tests/life/test_slice3e_finance_reducer.py",
       "disposition": "rewrite-migrate",
       "destination": "tests/unit/state/test_finance_reducer.py",
-      "notes": "synthetic accounts"
+      "notes": "private canon/baseline guards removed; integer finance semantics, replay/idempotence and no-I/O retained"
     },
     {
       "source": "tests/life/test_slice3e_soak.py",
@@ -378,8 +378,8 @@
     {
       "source": "tests/life/test_slice4a_capture_camera_roll.py",
       "disposition": "split",
-      "destination": "tests/unit/captures/test_camera_roll.py; tests/integration/capture_pipeline/test_camera_roll.py",
-      "notes": "shared builders extracted"
+      "destination": "tests/unit/captures/test_camera_roll.py; tests/integration/capture_pipeline/test_capture_finalization.py",
+      "notes": "split into pure Camera Roll contracts and capture/finalization integration; private legacy-file freezes removed; no-capture hashes retained as public semantic goldens"
     },
     {
       "source": "tests/life/test_slice4a_soak.py",
@@ -391,13 +391,13 @@
       "source": "tests/life/test_slice4a1_capture_subject_kind.py",
       "disposition": "rewrite-merge",
       "destination": "tests/contracts/captures/test_subject_contracts.py",
-      "notes": "synthetic subjects"
+      "notes": "capture kind/subject semantics migrate as public contract; private legacy/canon freeze guards remain private"
     },
     {
       "source": "tests/life/test_slice4b1_capture_decisions.py",
       "disposition": "rewrite-migrate",
       "destination": "tests/unit/captures/test_capture_decisions.py",
-      "notes": "remove test-module helper imports"
+      "notes": "private issue/SHA provenance and canon/runtime byte guards removed; public synthetic capture-policy contract, deterministic resolver, evidence, and no-I/O isolation retained"
     },
     {
       "source": "tests/life/test_slice4b1_soak.py",
@@ -409,7 +409,7 @@
       "source": "tests/life/test_slice4b2_capture_emitters.py",
       "disposition": "rewrite-migrate",
       "destination": "tests/integration/capture_pipeline/test_emitters.py",
-      "notes": "shared builders extracted"
+      "notes": "private issue/SHA approval and canon/runtime snapshots removed; emitter/source-moment/stress/TAKE bridge semantics and public no-capture compatibility retained"
     },
     {
       "source": "tests/life/test_slice4b2_soak.py",
@@ -421,7 +421,7 @@
       "source": "tests/life/test_slice4b3_capture_repeats.py",
       "disposition": "rewrite-split",
       "destination": "tests/unit/captures/test_repeat_policy.py; tests/integration/capture_pipeline/test_repeats.py",
-      "notes": ""
+      "notes": "repeat identity/eligibility/source-boundary split from resolver/evidence chain; private baseline/canon/approval guards removed; public no-capture compatibility retained"
     },
     {
       "source": "tests/life/test_slice4b3_soak.py",
@@ -439,13 +439,13 @@
       "source": "tests/life/test_slice5a_runtime_bundle.py",
       "disposition": "rewrite-split",
       "destination": "tests/contracts/runtime/test_runtime_bundle.py; tests/integration/runtime/test_bundle_loading.py",
-      "notes": "synthetic runtime fixture"
+      "notes": "private Canon/scope assertions replaced by public RuntimeBundle contracts and synthetic filesystem builder"
     },
     {
       "source": "tests/life/test_slice5a_schedule_state.py",
       "disposition": "migrate",
       "destination": "tests/unit/schedule/test_schedule_state.py",
-      "notes": ""
+      "notes": "synthetic commitment/task builders extracted to tests/support/builders/schedule.py for runtime and persistence reuse"
     },
     {
       "source": "tests/life/test_slice5b1_activity_runtime.py",
@@ -481,7 +481,7 @@
       "source": "tests/life/test_slice5b2a_runtime_decision.py",
       "disposition": "migrate",
       "destination": "tests/integration/decision_runtime/test_runtime_decision.py",
-      "notes": "shared runtime builders extracted"
+      "notes": "shared runtime decision builders extracted to tests/support/builders/runtime_decision.py"
     },
     {
       "source": "tests/life/test_slice5b2b_boundaries.py",
@@ -493,7 +493,7 @@
       "source": "tests/life/test_slice5b2b_social_runtime.py",
       "disposition": "migrate",
       "destination": "tests/integration/social/test_social_runtime.py",
-      "notes": ""
+      "notes": "shared social runtime builders extracted; public synthetic social fixtures only"
     },
     {
       "source": "tests/life/test_slice5b2b_social_state.py",
@@ -505,7 +505,7 @@
       "source": "tests/life/test_slice5b2c1_activity_materialization.py",
       "disposition": "split",
       "destination": "tests/unit/activities/test_materialization.py; tests/integration/activity_lifecycle/test_materialization.py",
-      "notes": ""
+      "notes": "shared activity materialization builders extracted; pure semantics split from bundle-backed lifecycle integration"
     },
     {
       "source": "tests/life/test_slice5b2c1_boundaries.py",
@@ -529,7 +529,7 @@
       "source": "tests/life/test_slice5b2c2a_wakeups.py",
       "disposition": "migrate",
       "destination": "tests/integration/activity_lifecycle/test_wakeups.py",
-      "notes": ""
+      "notes": "shared wakeup builders extracted for runtime orchestrator reuse"
     },
     {
       "source": "tests/life/test_slice5b2c2b_boundaries.py",
@@ -547,7 +547,7 @@
       "source": "tests/life/test_slice5b2c2b_finalization.py",
       "disposition": "migrate",
       "destination": "tests/integration/activity_lifecycle/test_finalization.py",
-      "notes": ""
+      "notes": "shared finalization builders extracted for orchestrator/capture reuse"
     },
     {
       "source": "tests/life/test_slice5b2c2b_finish_context.py",
@@ -577,7 +577,7 @@
       "source": "tests/life/test_slice5b2c2c_fixtures.py",
       "disposition": "support",
       "destination": "tests/support/builders/capture_runtime.py",
-      "notes": "zero-test module becomes support"
+      "notes": "public synthetic capture-runtime builder; no private source approvals or repository snapshots"
     },
     {
       "source": "tests/life/test_slice5b2c2c_mutation.py",
@@ -613,7 +613,7 @@
       "source": "tests/life/test_slice5b2c3_boundaries.py",
       "disposition": "replace-split",
       "destination": "tests/contracts/runtime/test_orchestrator_boundaries.py; private repository scope guard",
-      "notes": ""
+      "notes": "private repository diff/freeze checks remain private; public contract pins pure ownership, dependency isolation, and closed input/trigger surfaces"
     },
     {
       "source": "tests/life/test_slice5b2c3_capture_repeat.py",
@@ -643,7 +643,7 @@
       "source": "tests/life/test_slice5b2c3_fixtures.py",
       "disposition": "support",
       "destination": "tests/support/builders/runtime_orchestrator.py",
-      "notes": "zero-test module becomes support"
+      "notes": "shared public orchestrator builder composed only from public synthetic builders"
     },
     {
       "source": "tests/life/test_slice5b2c3_history_budget_stable.py",
@@ -685,13 +685,13 @@
       "source": "tests/life/test_slice5c1_baseline_verify.py",
       "disposition": "replace",
       "destination": "tests/contracts/persistence/test_persistent_golden.py",
-      "notes": "semantic/versioned golden, not private commit baseline"
+      "notes": "semantic persistent-snapshot golden; private repository baseline byte comparison is not exported"
     },
     {
       "source": "tests/life/test_slice5c1_boundaries.py",
       "disposition": "replace-split",
       "destination": "tests/contracts/persistence/test_persistence_boundaries.py; private process guard",
-      "notes": ""
+      "notes": "private repository diff/source-freeze checks remain private; public boundary directly asserts no Git/network/shell ownership, closed runtime paths, isolation, and no production activation"
     },
     {
       "source": "tests/life/test_slice5c1_c3_handoff.py",
@@ -702,7 +702,7 @@
     {
       "source": "tests/life/test_slice5c1_camera.py",
       "disposition": "migrate",
-      "destination": "tests/integration/persistence/test_camera_roll.py",
+      "destination": "tests/integration/persistence/test_persistence_camera_roll.py",
       "notes": ""
     },
     {
@@ -715,7 +715,7 @@
       "source": "tests/life/test_slice5c1_fixtures.py",
       "disposition": "support-rewrite",
       "destination": "tests/support/builders/persistence.py",
-      "notes": "remove private baseline dependency"
+      "notes": "public synthetic persistence builder composed from public runtime/capture/orchestrator builders; no private baseline SHA helpers"
     },
     {
       "source": "tests/life/test_slice5c1_isolation.py",
@@ -737,9 +737,9 @@
     },
     {
       "source": "tests/life/test_slice5c1_review_fixes.py",
-      "disposition": "merge",
-      "destination": "tests/integration/persistence/test_camera_roll.py; tests/integration/persistence/test_isolation.py; tests/contracts/persistence/test_closed_history_integrity.py",
-      "notes": ""
+      "disposition": "migrate-regressions",
+      "destination": "tests/integration/persistence/test_regressions.py",
+      "notes": "review regressions retained as public semantic persistence regressions against synthetic roots"
     },
     {
       "source": "tests/life/test_slice5c1_social_persistence.py",

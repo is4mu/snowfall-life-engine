@@ -1,0 +1,851 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://snowfall-life-engine.invalid/schemas/life/behavior_policy_v2.schema.json",
+  "title": "BehaviorPolicyV2",
+  "description": "Production-capable Behavior Policy (schema_version=2). Policy file must not self-declare approved; approval is a separate artifact.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "behavior_policy_version",
+    "policy_mode",
+    "character_id",
+    "timezone",
+    "time_resolution",
+    "engine_safety",
+    "state_dynamics",
+    "derived_bands",
+    "sleep_policy",
+    "meal_policy",
+    "decision_thresholds",
+    "planning_policy",
+    "schedule_generation",
+    "domain_policy",
+    "social_policy",
+    "behavior_modes",
+    "capture_policy",
+    "provenance_index",
+    "calibration_metadata"
+  ],
+  "properties": {
+    "schema_version": { "type": "integer", "const": 2 },
+    "behavior_policy_version": { "type": "string", "minLength": 1 },
+    "policy_mode": { "type": "string", "const": "PRODUCTION" },
+    "character_id": { "type": "string", "minLength": 1 },
+    "timezone": { "type": "string", "const": "Asia/Tokyo" },
+    "time_resolution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["human_quantum_min"],
+      "properties": {
+        "human_quantum_min": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "engine_safety": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["max_events_per_advance"],
+      "properties": {
+        "max_events_per_advance": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100000,
+          "description": "Fail-closed computational ceiling (not a human behavior parameter)"
+        }
+      }
+    },
+    "state_dynamics": { "$ref": "#/$defs/state_dynamics" },
+    "derived_bands": { "$ref": "#/$defs/derived_bands" },
+    "sleep_policy": { "$ref": "#/$defs/sleep_policy" },
+    "meal_policy": { "$ref": "#/$defs/meal_policy" },
+    "decision_thresholds": { "$ref": "#/$defs/decision_thresholds" },
+    "planning_policy": { "$ref": "#/$defs/planning_policy" },
+    "schedule_generation": { "$ref": "#/$defs/schedule_generation" },
+    "domain_policy": { "$ref": "#/$defs/domain_policy" },
+    "social_policy": { "$ref": "#/$defs/social_policy" },
+    "behavior_modes": { "$ref": "#/$defs/behavior_modes" },
+    "capture_policy": { "$ref": "#/$defs/capture_policy" },
+    "provenance_index": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/provenance_index_entry" }
+    },
+    "calibration_metadata": { "$ref": "#/$defs/calibration_metadata" }
+  },
+  "$defs": {
+    "int_rate": { "type": "integer", "minimum": -1000, "maximum": 1000 },
+    "permille": { "type": "integer", "minimum": 0, "maximum": 1000 },
+    "band_0_1000": { "type": "integer", "minimum": 0, "maximum": 1000 },
+    "positive_int": { "type": "integer", "minimum": 1 },
+    "nonneg_int": { "type": "integer", "minimum": 0 },
+    "ratio": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["numerator", "denominator"],
+      "properties": {
+        "numerator": { "type": "integer", "minimum": 0 },
+        "denominator": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "duration_range": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["duration_min", "duration_max"],
+      "properties": {
+        "duration_min": { "type": "integer", "minimum": 1 },
+        "duration_max": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "xy_knot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["x", "y"],
+      "properties": {
+        "x": { "type": "integer" },
+        "y": { "type": "integer" }
+      }
+    },
+    "activity_rates": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["hunger_per_hour", "physical_fatigue_per_hour", "stress_per_hour"],
+      "properties": {
+        "hunger_per_hour": { "$ref": "#/$defs/int_rate" },
+        "physical_fatigue_per_hour": { "$ref": "#/$defs/int_rate" },
+        "stress_per_hour": { "$ref": "#/$defs/int_rate" }
+      }
+    },
+    "affect_return_band": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["abs_valence_lo", "abs_valence_hi", "rate_toward_zero_per_hour"],
+      "properties": {
+        "abs_valence_lo": { "$ref": "#/$defs/band_0_1000" },
+        "abs_valence_hi": { "$ref": "#/$defs/band_0_1000" },
+        "rate_toward_zero_per_hour": { "type": "integer", "minimum": 0, "maximum": 1000 }
+      }
+    },
+    "state_dynamics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "base_activity_rates",
+        "affect_return_to_baseline",
+        "affect_impulses",
+        "stress_impulses",
+        "social_exposure_rates"
+      ],
+      "properties": {
+        "base_activity_rates": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "SLEEP",
+            "REST_AWAKE",
+            "SEDENTARY_FOCUSED",
+            "LIGHT_ACTIVE",
+            "PHYSICALLY_ACTIVE"
+          ],
+          "properties": {
+            "SLEEP": { "$ref": "#/$defs/activity_rates" },
+            "REST_AWAKE": { "$ref": "#/$defs/activity_rates" },
+            "SEDENTARY_FOCUSED": { "$ref": "#/$defs/activity_rates" },
+            "LIGHT_ACTIVE": { "$ref": "#/$defs/activity_rates" },
+            "PHYSICALLY_ACTIVE": { "$ref": "#/$defs/activity_rates" }
+          }
+        },
+        "affect_return_to_baseline": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["bands"],
+          "properties": {
+            "bands": {
+              "type": "array",
+              "minItems": 1,
+              "items": { "$ref": "#/$defs/affect_return_band" }
+            }
+          }
+        },
+        "affect_impulses": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["SMALL", "MEDIUM", "LARGE"],
+          "properties": {
+            "SMALL": { "type": "integer", "minimum": 0 },
+            "MEDIUM": { "type": "integer", "minimum": 0 },
+            "LARGE": { "type": "integer", "minimum": 0 }
+          }
+        },
+        "stress_impulses": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["MINOR", "MODERATE", "MAJOR", "RELIEF_MINOR", "RELIEF_MODERATE"],
+          "properties": {
+            "MINOR": { "type": "integer" },
+            "MODERATE": { "type": "integer" },
+            "MAJOR": { "type": "integer" },
+            "RELIEF_MINOR": { "type": "integer" },
+            "RELIEF_MODERATE": { "type": "integer" }
+          }
+        },
+        "social_exposure_rates": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["SLEEP", "NONE", "PASSIVE", "ACTIVE"],
+          "properties": {
+            "SLEEP": { "$ref": "#/$defs/int_rate" },
+            "NONE": { "$ref": "#/$defs/int_rate" },
+            "PASSIVE": { "$ref": "#/$defs/int_rate" },
+            "ACTIVE": { "$ref": "#/$defs/int_rate" }
+          }
+        }
+      }
+    },
+    "derived_bands": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["hunger", "physical_fatigue", "stress", "social_battery", "sleep_pressure"],
+      "properties": {
+        "hunger": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["NOTICEABLE", "MEAL_NEEDED", "URGENT"],
+          "properties": {
+            "NOTICEABLE": { "$ref": "#/$defs/band_0_1000" },
+            "MEAL_NEEDED": { "$ref": "#/$defs/band_0_1000" },
+            "URGENT": { "$ref": "#/$defs/band_0_1000" }
+          }
+        },
+        "physical_fatigue": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["MODERATE", "HIGH", "VERY_HIGH"],
+          "properties": {
+            "MODERATE": { "$ref": "#/$defs/band_0_1000" },
+            "HIGH": { "$ref": "#/$defs/band_0_1000" },
+            "VERY_HIGH": { "$ref": "#/$defs/band_0_1000" }
+          }
+        },
+        "stress": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["MODERATE", "HIGH", "VERY_HIGH"],
+          "properties": {
+            "MODERATE": { "$ref": "#/$defs/band_0_1000" },
+            "HIGH": { "$ref": "#/$defs/band_0_1000" },
+            "VERY_HIGH": { "$ref": "#/$defs/band_0_1000" }
+          }
+        },
+        "social_battery": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["MODERATE", "HIGH"],
+          "description": "Below MODERATE threshold = LOW",
+          "properties": {
+            "MODERATE": { "$ref": "#/$defs/band_0_1000" },
+            "HIGH": { "$ref": "#/$defs/band_0_1000" }
+          }
+        },
+        "sleep_pressure": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["MODERATE", "HIGH", "CRITICAL"],
+          "properties": {
+            "MODERATE": { "$ref": "#/$defs/band_0_1000" },
+            "HIGH": { "$ref": "#/$defs/band_0_1000" },
+            "CRITICAL": { "$ref": "#/$defs/band_0_1000" }
+          }
+        }
+      }
+    },
+    "sleep_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "homeostatic_awake_fraction_knots",
+        "sleep_debt_knots",
+        "fatigue_contribution_knots",
+        "circadian_bias_mechanics",
+        "stress_onset_friction",
+        "main_settlement",
+        "nap",
+        "wake_variation"
+      ],
+      "properties": {
+        "homeostatic_awake_fraction_knots": {
+          "type": "array",
+          "minItems": 2,
+          "items": { "$ref": "#/$defs/xy_knot" }
+        },
+        "sleep_debt_knots": {
+          "type": "array",
+          "minItems": 2,
+          "items": { "$ref": "#/$defs/xy_knot" }
+        },
+        "fatigue_contribution_knots": {
+          "type": "array",
+          "minItems": 2,
+          "items": { "$ref": "#/$defs/xy_knot" }
+        },
+        "circadian_bias_mechanics": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "wake_window_bias",
+            "daytime_floor_bias",
+            "pre_sleep_ramp_min",
+            "pre_sleep_target_bias",
+            "sleep_window_bias",
+            "late_awake_cap_bias"
+          ],
+          "properties": {
+            "wake_window_bias": { "type": "integer" },
+            "daytime_floor_bias": { "type": "integer" },
+            "pre_sleep_ramp_min": { "type": "integer", "minimum": 0 },
+            "pre_sleep_target_bias": { "type": "integer" },
+            "sleep_window_bias": { "type": "integer" },
+            "late_awake_cap_bias": { "type": "integer" }
+          }
+        },
+        "stress_onset_friction": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "high_threshold",
+            "high_penalty",
+            "very_high_threshold",
+            "very_high_penalty"
+          ],
+          "properties": {
+            "high_threshold": { "$ref": "#/$defs/band_0_1000" },
+            "high_penalty": { "type": "integer", "minimum": 0 },
+            "very_high_threshold": { "$ref": "#/$defs/band_0_1000" },
+            "very_high_penalty": { "type": "integer", "minimum": 0 }
+          }
+        },
+        "main_settlement": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "max_surplus_repayment_min",
+            "deficit_credit",
+            "surplus_repayment"
+          ],
+          "properties": {
+            "max_surplus_repayment_min": { "$ref": "#/$defs/nonneg_int" },
+            "deficit_credit": { "$ref": "#/$defs/ratio" },
+            "surplus_repayment": { "$ref": "#/$defs/ratio" }
+          }
+        },
+        "nap": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "duration_min",
+            "duration_max",
+            "recent_guard_min",
+            "awake_load_credit",
+            "awake_load_credit_cap_min",
+            "debt_credit",
+            "debt_credit_cap_min"
+          ],
+          "properties": {
+            "duration_min": { "type": "integer", "minimum": 1 },
+            "duration_max": { "type": "integer", "minimum": 1 },
+            "recent_guard_min": { "$ref": "#/$defs/nonneg_int" },
+            "awake_load_credit": { "$ref": "#/$defs/ratio" },
+            "awake_load_credit_cap_min": { "$ref": "#/$defs/nonneg_int" },
+            "debt_credit": { "$ref": "#/$defs/ratio" },
+            "debt_credit_cap_min": { "$ref": "#/$defs/nonneg_int" }
+          }
+        },
+        "wake_variation": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["early_min", "late_min"],
+          "description": "Wake variation minutes; human quantum is only time_resolution.human_quantum_min",
+          "properties": {
+            "early_min": { "$ref": "#/$defs/nonneg_int" },
+            "late_min": { "$ref": "#/$defs/nonneg_int" }
+          }
+        }
+      }
+    },
+    "meal_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "post_meal_target",
+        "recent_guard_min",
+        "duration_families",
+        "anticipatory"
+      ],
+      "properties": {
+        "post_meal_target": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["LIGHT", "STANDARD"],
+          "properties": {
+            "LIGHT": { "$ref": "#/$defs/band_0_1000" },
+            "STANDARD": { "$ref": "#/$defs/band_0_1000" }
+          }
+        },
+        "recent_guard_min": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["LIGHT", "STANDARD"],
+          "properties": {
+            "LIGHT": { "$ref": "#/$defs/nonneg_int" },
+            "STANDARD": { "$ref": "#/$defs/nonneg_int" }
+          }
+        },
+        "duration_families": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "LIGHT",
+            "QUICK_STANDARD",
+            "HOME_COOKED_STANDARD",
+            "OUTSIDE_STANDARD",
+            "SOCIAL_MEAL_STANDARD"
+          ],
+          "properties": {
+            "LIGHT": { "$ref": "#/$defs/duration_range" },
+            "QUICK_STANDARD": { "$ref": "#/$defs/duration_range" },
+            "HOME_COOKED_STANDARD": { "$ref": "#/$defs/duration_range" },
+            "OUTSIDE_STANDARD": { "$ref": "#/$defs/duration_range" },
+            "SOCIAL_MEAL_STANDARD": { "$ref": "#/$defs/duration_range" }
+          }
+        },
+        "anticipatory": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["minimum_current_band", "projected_trigger_band"],
+          "properties": {
+            "minimum_current_band": {
+              "type": "string",
+              "enum": ["NOTICEABLE", "MEAL_NEEDED", "URGENT"]
+            },
+            "projected_trigger_band": {
+              "type": "string",
+              "enum": ["NOTICEABLE", "MEAL_NEEDED", "URGENT"]
+            }
+          }
+        }
+      }
+    },
+    "decision_thresholds": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "awake_idle_reassessment_max_min",
+        "soft_reconsider_guard_min",
+        "reassessable_min_dwell_min",
+        "near_equal_margin_permille"
+      ],
+      "properties": {
+        "awake_idle_reassessment_max_min": { "type": "integer", "minimum": 1 },
+        "soft_reconsider_guard_min": { "$ref": "#/$defs/nonneg_int" },
+        "reassessable_min_dwell_min": { "$ref": "#/$defs/nonneg_int" },
+        "near_equal_margin_permille": { "type": "integer", "minimum": 0, "maximum": 1000 }
+      }
+    },
+    "planning_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "work_horizon_min_days",
+        "work_horizon_target_days",
+        "weekly_personal_horizon_days",
+        "soft_start_window_default_min",
+        "prep_buffer_min",
+        "prep_buffer_max",
+        "departure_early_margin_max_min",
+        "optional_extension_max_min",
+        "short_gap_max_min",
+        "short_candidate_gap_max_min",
+        "max_new_same_domain_soft_windows_per_day"
+      ],
+      "properties": {
+        "work_horizon_min_days": { "type": "integer", "minimum": 1 },
+        "work_horizon_target_days": { "type": "integer", "minimum": 1 },
+        "weekly_personal_horizon_days": { "type": "integer", "minimum": 1 },
+        "soft_start_window_default_min": { "$ref": "#/$defs/nonneg_int" },
+        "prep_buffer_min": { "$ref": "#/$defs/nonneg_int" },
+        "prep_buffer_max": { "$ref": "#/$defs/nonneg_int" },
+        "departure_early_margin_max_min": { "$ref": "#/$defs/nonneg_int" },
+        "optional_extension_max_min": { "$ref": "#/$defs/nonneg_int" },
+        "short_gap_max_min": { "$ref": "#/$defs/nonneg_int" },
+        "short_candidate_gap_max_min": { "$ref": "#/$defs/nonneg_int" },
+        "max_new_same_domain_soft_windows_per_day": { "$ref": "#/$defs/nonneg_int" }
+      }
+    },
+    "schedule_generation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["work"],
+      "properties": {
+        "work": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["ordinary_days_per_week_min", "ordinary_days_per_week_max"],
+          "properties": {
+            "ordinary_days_per_week_min": { "type": "integer", "minimum": 0, "maximum": 7 },
+            "ordinary_days_per_week_max": { "type": "integer", "minimum": 0, "maximum": 7 }
+          }
+        }
+      }
+    },
+    "domain_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["study", "exercise_kickboxing", "household_age", "errand", "leisure_categories"],
+      "properties": {
+        "study": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["chunk_min", "chunk_max", "requires_open_academic_task"],
+          "properties": {
+            "chunk_min": { "type": "integer", "minimum": 1 },
+            "chunk_max": { "type": "integer", "minimum": 1 },
+            "requires_open_academic_task": { "type": "boolean" }
+          }
+        },
+        "exercise_kickboxing": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "history_window_days",
+            "opportunity_by_count_in_window",
+            "duration_min",
+            "duration_max",
+            "max_self_generated_per_day",
+            "max_equivalent_pending_plans",
+            "block_self_generated_at_fatigue_band"
+          ],
+          "properties": {
+            "history_window_days": { "type": "integer", "minimum": 1 },
+            "opportunity_by_count_in_window": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["0", "1", "2_or_more"],
+              "properties": {
+                "0": { "type": "string", "enum": ["HIGH", "NORMAL", "LOW"] },
+                "1": { "type": "string", "enum": ["HIGH", "NORMAL", "LOW"] },
+                "2_or_more": { "type": "string", "enum": ["HIGH", "NORMAL", "LOW"] }
+              }
+            },
+            "duration_min": { "type": "integer", "minimum": 1 },
+            "duration_max": { "type": "integer", "minimum": 1 },
+            "max_self_generated_per_day": { "$ref": "#/$defs/nonneg_int" },
+            "max_equivalent_pending_plans": { "$ref": "#/$defs/nonneg_int" },
+            "block_self_generated_at_fatigue_band": {
+              "type": "string",
+              "enum": ["MODERATE", "HIGH", "VERY_HIGH"]
+            }
+          }
+        },
+        "household_age": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "aging_start_min",
+            "pressing_start_min",
+            "overdue_start_min",
+            "duration_min",
+            "duration_max",
+            "overdue_uses_exact_age_tiebreak",
+            "requires_external_task_source"
+          ],
+          "properties": {
+            "aging_start_min": { "$ref": "#/$defs/nonneg_int" },
+            "pressing_start_min": { "$ref": "#/$defs/nonneg_int" },
+            "overdue_start_min": { "$ref": "#/$defs/nonneg_int" },
+            "duration_min": { "type": "integer", "minimum": 1 },
+            "duration_max": { "type": "integer", "minimum": 1 },
+            "overdue_uses_exact_age_tiebreak": { "type": "boolean" },
+            "requires_external_task_source": { "type": "boolean" }
+          }
+        },
+        "errand": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["duration_min", "duration_max", "requires_open_task"],
+          "properties": {
+            "duration_min": { "type": "integer", "minimum": 1 },
+            "duration_max": { "type": "integer", "minimum": 1 },
+            "requires_open_task": { "type": "boolean" }
+          }
+        },
+        "leisure_categories": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "enum": [
+              "PASSIVE_HOME_MEDIA",
+              "MUSIC",
+              "MOVIE",
+              "LOCAL_WALK",
+              "VINTAGE_BROWSING",
+              "UNSTRUCTURED_REST"
+            ]
+          }
+        }
+      }
+    },
+    "recency_band": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["min_hours_inclusive", "max_hours_exclusive", "multiplier_permille"],
+      "properties": {
+        "min_hours_inclusive": { "$ref": "#/$defs/nonneg_int" },
+        "max_hours_exclusive": {
+          "oneOf": [
+            { "type": "integer", "minimum": 1 },
+            { "type": "null" }
+          ]
+        },
+        "multiplier_permille": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "social_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["archetypes", "contact_mode_durations"],
+      "properties": {
+        "archetypes": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["REMOTE_CLOSE_BURSTY", "LOCAL_CLOSE_INVITER", "WORK_CONTEXTUAL"],
+          "properties": {
+            "REMOTE_CLOSE_BURSTY": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "slots_per_week",
+                "base_activation_permille",
+                "activation_cap_permille",
+                "recency_multipliers"
+              ],
+              "properties": {
+                "slots_per_week": { "$ref": "#/$defs/nonneg_int" },
+                "base_activation_permille": { "$ref": "#/$defs/permille" },
+                "activation_cap_permille": { "$ref": "#/$defs/permille" },
+                "recency_multipliers": {
+                  "type": "array",
+                  "minItems": 1,
+                  "items": { "$ref": "#/$defs/recency_band" }
+                }
+              }
+            },
+            "LOCAL_CLOSE_INVITER": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "slots_per_week",
+                "base_activation_permille",
+                "activation_cap_permille",
+                "recency_multipliers",
+                "invite"
+              ],
+              "properties": {
+                "slots_per_week": { "$ref": "#/$defs/nonneg_int" },
+                "base_activation_permille": { "$ref": "#/$defs/permille" },
+                "activation_cap_permille": { "$ref": "#/$defs/permille" },
+                "recency_multipliers": {
+                  "type": "array",
+                  "minItems": 1,
+                  "items": { "$ref": "#/$defs/recency_band" }
+                },
+                "invite": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "slots_per_week",
+                    "base_activation_permille",
+                    "same_day_split_permille",
+                    "future_split_permille",
+                    "future_horizon_min_days",
+                    "future_horizon_max_days"
+                  ],
+                  "properties": {
+                    "slots_per_week": { "$ref": "#/$defs/nonneg_int" },
+                    "base_activation_permille": { "$ref": "#/$defs/permille" },
+                    "same_day_split_permille": { "type": "integer", "minimum": 0, "maximum": 1000 },
+                    "future_split_permille": { "type": "integer", "minimum": 0, "maximum": 1000 },
+                    "future_horizon_min_days": { "type": "integer", "minimum": 1 },
+                    "future_horizon_max_days": { "type": "integer", "minimum": 1 }
+                  }
+                }
+              }
+            },
+            "WORK_CONTEXTUAL": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["free_running_slots_per_week", "post_work_activation_permille"],
+              "properties": {
+                "free_running_slots_per_week": { "$ref": "#/$defs/nonneg_int" },
+                "post_work_activation_permille": { "$ref": "#/$defs/permille" }
+              }
+            }
+          }
+        },
+        "contact_mode_durations": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "LIGHTWEIGHT",
+            "CALL",
+            "LONG_CATCHUP_CALL",
+            "LOCAL_OUTING",
+            "POST_WORK"
+          ],
+          "properties": {
+            "LIGHTWEIGHT": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {}
+            },
+            "CALL": { "$ref": "#/$defs/duration_range" },
+            "LONG_CATCHUP_CALL": { "$ref": "#/$defs/duration_range" },
+            "LOCAL_OUTING": { "$ref": "#/$defs/duration_range" },
+            "POST_WORK": { "$ref": "#/$defs/duration_range" }
+          }
+        }
+      }
+    },
+    "behavior_modes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "social_initiation",
+        "invitation_receptivity",
+        "conflict_style",
+        "boundary_style",
+        "spontaneity",
+        "self_presentation",
+        "personal_spending",
+        "social_spending",
+        "housekeeping",
+        "exercise_adherence"
+      ],
+      "properties": {
+        "social_initiation": {
+          "type": "string",
+          "enum": ["LOW_TO_MEDIUM"]
+        },
+        "invitation_receptivity": {
+          "type": "string",
+          "enum": ["MODERATE_TO_HIGH_IF_CAPACITY"]
+        },
+        "conflict_style": {
+          "type": "string",
+          "enum": ["AVOID_UNNECESSARY_FRICTION"]
+        },
+        "boundary_style": {
+          "type": "string",
+          "enum": ["ACCOMMODATING_UNTIL_THRESHOLD_THEN_FIRM"]
+        },
+        "spontaneity": {
+          "type": "string",
+          "enum": ["MODERATE"]
+        },
+        "self_presentation": {
+          "type": "string",
+          "enum": ["MODERATE_CONTEXTUAL"]
+        },
+        "personal_spending": {
+          "type": "string",
+          "enum": ["FRUGAL_SELECTIVE"]
+        },
+        "social_spending": {
+          "type": "string",
+          "enum": ["GENEROUS_WITH_REASON"]
+        },
+        "housekeeping": {
+          "type": "string",
+          "enum": ["TOLERATES_SHORT_TERM_MESS_NOT_PERSISTENT"]
+        },
+        "exercise_adherence": {
+          "type": "string",
+          "enum": ["MODERATE"]
+        }
+      }
+    },
+    "capture_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Slice 4B1 capture activation shape only. No daily quota/cooldown/feedback knobs.",
+      "required": ["activation_permille_by_kind"],
+      "properties": {
+        "activation_permille_by_kind": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["SELFIE", "PEOPLE", "FOOD", "SCENERY", "OBJECT", "DAILY_LIFE"],
+          "properties": {
+            "SELFIE": { "$ref": "#/$defs/permille" },
+            "PEOPLE": { "$ref": "#/$defs/permille" },
+            "FOOD": { "$ref": "#/$defs/permille" },
+            "SCENERY": { "$ref": "#/$defs/permille" },
+            "OBJECT": { "$ref": "#/$defs/permille" },
+            "DAILY_LIFE": { "$ref": "#/$defs/permille" }
+          }
+        }
+      }
+    },
+    "provenance_index_entry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "origin",
+        "source_kind",
+        "source_ref",
+        "semantic_anchor",
+        "source_commit_sha",
+        "rationale"
+      ],
+      "properties": {
+        "path": { "type": "string", "minLength": 1 },
+        "origin": {
+          "type": "string",
+          "enum": ["CANON_DERIVED", "ENGINE_DEFAULT"]
+        },
+        "source_kind": {
+          "type": "string",
+          "enum": ["FILE", "ISSUE", "ENGINE_RULE"]
+        },
+        "source_ref": { "type": "string", "minLength": 1 },
+        "semantic_anchor": { "type": "string", "minLength": 1 },
+        "source_commit_sha": {
+          "oneOf": [
+            { "type": "string", "pattern": "^[a-f0-9]{40}$" },
+            { "type": "null" }
+          ]
+        },
+        "rationale": {
+          "type": "string",
+          "description": "Non-authoritative; never parse at runtime"
+        }
+      }
+    },
+    "calibration_metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["calibration_generation", "source_issue_refs", "calibration_notes"],
+      "properties": {
+        "calibration_generation": { "type": "integer", "minimum": 0 },
+        "source_issue_refs": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "calibration_notes": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    }
+  }
+}
