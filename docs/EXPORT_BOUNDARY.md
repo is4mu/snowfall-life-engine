@@ -2,7 +2,9 @@
 
 This document defines the publication boundary for the initial Snowfall Life Engine OSS extraction.
 
-The first engine-source export will occur only after the originating private application's final pre-split validation and human review are complete.
+**Status:** the initial extraction is complete and published as `v0.1.0`. This document remains normative for the public/private publication boundary. The broader product scope freeze is defined separately in [V1_BOUNDARY.md](V1_BOUNDARY.md).
+
+The first engine-source export was performed only after the originating private application's final pre-split validation and human review were complete.
 
 ## Public repository owns
 
@@ -102,6 +104,6 @@ The export process must verify:
 
 ## Reconnection rule
 
-After the public baseline becomes authoritative, the private Snowfall application should consume a reviewed public engine identity (commit/tag/version) and keep application-specific data/integration tests private.
+The public baseline is now authoritative. The private Snowfall application should consume a reviewed public engine identity (commit/tag/version) and keep application-specific data/integration tests private.
 
 The public engine must not need access to the private application repository to run or test itself.
