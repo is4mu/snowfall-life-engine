@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://snowfall-life-engine.invalid/schemas/life/runtime_last_run.schema.json",
+  "title": "RuntimeLastRun",
+  "description": "Slice 5C1 SUCCESS-only bounded last-run observability. No commit SHA, world_seed, fact tapes, decision frames, or prose rationale.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "result",
+    "run_id",
+    "character_id",
+    "engine_commit_sha",
+    "behavior_policy_version",
+    "behavior_policy_hash",
+    "life_base_sha",
+    "target_time",
+    "previous_processed_through",
+    "processed_through",
+    "state_revision_before",
+    "state_revision_after",
+    "state_before_hash",
+    "state_after_hash",
+    "history_head_before",
+    "history_head_after",
+    "scheduler_events_processed_count",
+    "finalized_actual_events_count",
+    "capture_records_added_count",
+    "microsteps_used",
+    "files_changed"
+  ],
+  "properties": {
+    "schema_version": { "type": "integer", "const": 1 },
+    "result": { "type": "string", "const": "SUCCESS" },
+    "run_id": { "type": "string", "minLength": 1 },
+    "character_id": { "type": "string", "minLength": 1 },
+    "engine_commit_sha": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{40}$"
+    },
+    "behavior_policy_version": { "type": "string", "minLength": 1 },
+    "behavior_policy_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "life_base_sha": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{40}$",
+      "description": "Caller-supplied frozen runtime Git base; not a resulting commit SHA"
+    },
+    "target_time": { "type": "string", "minLength": 1 },
+    "previous_processed_through": { "type": "string", "minLength": 1 },
+    "processed_through": { "type": "string", "minLength": 1 },
+    "state_revision_before": { "type": "integer", "minimum": 0 },
+    "state_revision_after": { "type": "integer", "minimum": 0 },
+    "state_before_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "state_after_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "history_head_before": { "type": ["string", "null"] },
+    "history_head_after": { "type": ["string", "null"] },
+    "scheduler_events_processed_count": { "type": "integer", "minimum": 0 },
+    "finalized_actual_events_count": { "type": "integer", "minimum": 0 },
+    "capture_records_added_count": { "type": "integer", "minimum": 0 },
+    "microsteps_used": { "type": "integer", "minimum": 0 },
+    "files_changed": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "description": "Sorted exact candidate-vs-baseline changed relative paths"
+    }
+  }
+}

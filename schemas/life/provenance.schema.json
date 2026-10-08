@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://snowfall-life-engine.invalid/schemas/life/provenance.schema.json",
+  "title": "Provenance",
+  "description": "Reusable runtime provenance envelope. Origin enum is closed; optional refs are non-authoritative pointers.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["origin"],
+  "properties": {
+    "origin": {
+      "type": "string",
+      "enum": [
+        "CANON",
+        "CANON_DERIVED",
+        "ENGINE_DEFAULT",
+        "SIMULATION_BOOTSTRAP",
+        "ACTUAL_EVENT",
+        "OPERATOR_CORRECTION"
+      ]
+    },
+    "source_file": { "type": "string", "minLength": 1 },
+    "source_event_id": { "type": "string", "minLength": 1 },
+    "source_rule_id": { "type": "string", "minLength": 1 },
+    "notes": { "type": "string" }
+  }
+}

@@ -1,0 +1,286 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://snowfall-life-engine.invalid/schemas/life/effect.schema.json",
+  "title": "TypedEffect",
+  "description": "Closed #4 effect-type set. HUMAN_STATE_DELTA and LOCATION_SET are implemented in Foundation. RELATION_TOUCH (Slice 3B), HOME_TRANSITION (Slice 3C), WARDROBE_TRANSITION (Slice 3D), FINANCE_TRANSACTION (Slice 3E), TASK_PROGRESS (Slice 5B1), and COMMITMENT_COMPLETE (Slice 5B2C2B) have strict payloads but Foundation apply_effect still raises UNSUPPORTED_EFFECT for all except HUMAN_STATE_DELTA/LOCATION_SET. Totally unknown types fail SCHEMA_INVALID.",
+  "oneOf": [
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_version", "effect_type", "payload"],
+      "properties": {
+        "schema_version": { "type": "integer", "const": 1 },
+        "effect_type": { "const": "HUMAN_STATE_DELTA" },
+        "payload": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "sleep_debt_min": { "type": "integer" },
+            "hunger": { "type": "integer" },
+            "physical_fatigue": { "type": "integer" },
+            "affect_valence": { "type": "integer" },
+            "stress": { "type": "integer" },
+            "social_battery": { "type": "integer" }
+          }
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_version", "effect_type", "payload"],
+      "properties": {
+        "schema_version": { "type": "integer", "const": 1 },
+        "effect_type": { "const": "LOCATION_SET" },
+        "payload": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["location_id"],
+          "properties": {
+            "location_id": { "type": "string", "minLength": 1 }
+          }
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_version", "effect_type", "payload"],
+      "properties": {
+        "schema_version": { "type": "integer", "const": 1 },
+        "effect_type": { "const": "RELATION_TOUCH" },
+        "payload": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["person_id", "contact_at", "in_person_at"],
+          "description": "Slice 3B structural payload only (keys/types/additionalProperties). Semantic rules — Asia/Tokyo canonicalize, reject bad/naive/fractional timestamps, and null-or-same-instant for in_person_at — are enforced by normalize_relation_touch_effect, not by this schema alone. No closeness/friendship/trust, names, roles, or prose.",
+          "properties": {
+            "person_id": { "type": "string", "minLength": 1 },
+            "contact_at": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Structural: non-empty string. Semantic canonicalize to Asia/Tokyo +09:00 is owned by normalize_relation_touch_effect."
+            },
+            "in_person_at": {
+              "type": ["string", "null"],
+              "minLength": 1,
+              "description": "Structural: string or null. Semantic null-or-same-instant vs contact_at is owned by normalize_relation_touch_effect (schema alone does not enforce equality)."
+            }
+          }
+        }
+      },
+      "description": "Strict RELATION_TOUCH (Slice 3B). Structural schema + semantic normalizer; domain reducer only; Foundation apply_effect raises UNSUPPORTED_EFFECT."
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_version", "effect_type", "payload"],
+      "properties": {
+        "schema_version": { "type": "integer", "const": 1 },
+        "effect_type": { "const": "HOME_TRANSITION" },
+        "payload": {
+          "description": "Slice 3C structural payload only. Semantic Asia/Tokyo canonicalize for transition_at is owned by normalize_home_transition_effect. Coarse status only — no quantity/brand/product/expiry/price/geometry.",
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["transition_kind", "transition_at", "entity_id", "status"],
+              "properties": {
+                "transition_kind": { "const": "HOME_ENTITY_STATUS_SET" },
+                "transition_at": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Structural: non-empty string. Semantic canonicalize to Asia/Tokyo +09:00 is owned by normalize_home_transition_effect."
+                },
+                "entity_id": { "type": "string", "minLength": 1 },
+                "status": {
+                  "type": "string",
+                  "enum": ["UNKNOWN", "NORMAL", "NEEDS_ATTENTION"]
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["transition_kind", "transition_at", "consumable_id", "status"],
+              "properties": {
+                "transition_kind": { "const": "CONSUMABLE_STATUS_SET" },
+                "transition_at": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Structural: non-empty string. Semantic canonicalize to Asia/Tokyo +09:00 is owned by normalize_home_transition_effect."
+                },
+                "consumable_id": { "type": "string", "minLength": 1 },
+                "status": {
+                  "type": "string",
+                  "enum": ["UNKNOWN", "AVAILABLE", "LOW", "OUT"]
+                }
+              }
+            }
+          ]
+        }
+      },
+      "description": "Strict HOME_TRANSITION (Slice 3C). Structural schema + semantic normalizer; domain reducers only; Foundation apply_effect raises UNSUPPORTED_EFFECT."
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_version", "effect_type", "payload"],
+      "properties": {
+        "schema_version": { "type": "integer", "const": 1 },
+        "effect_type": { "const": "WARDROBE_TRANSITION" },
+        "payload": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "transition_kind",
+            "transition_at",
+            "item_id",
+            "lifecycle_state",
+            "last_worn_at",
+            "wear_count_since_clean",
+            "location_ref"
+          ],
+          "description": "Slice 3D structural payload only (keys/types/closed enums/additionalProperties). Semantic rules — Asia/Tokyo canonicalize for transition_at and non-null last_worn_at, reject bad/naive/fractional timestamps, and last_worn_at <= transition_at — are enforced by normalize_wardrobe_transition_effect, not by this schema alone. Explicit absolute item-state SET only; no brand/color/style/size/outfit/image/purchase fields, no wear-count increment ops.",
+          "properties": {
+            "transition_kind": { "const": "WARDROBE_ITEM_STATE_SET" },
+            "transition_at": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Structural: non-empty string. Semantic canonicalize to Asia/Tokyo +09:00 is owned by normalize_wardrobe_transition_effect."
+            },
+            "item_id": { "type": "string", "minLength": 1 },
+            "lifecycle_state": {
+              "type": "string",
+              "enum": [
+                "CLEAN_AVAILABLE",
+                "DIRTY",
+                "WASHING",
+                "DRYING",
+                "DAMAGED",
+                "UNAVAILABLE"
+              ]
+            },
+            "last_worn_at": {
+              "type": ["string", "null"],
+              "minLength": 1,
+              "description": "Structural: string or null. Semantic last_worn_at <= transition_at is owned by normalize_wardrobe_transition_effect."
+            },
+            "wear_count_since_clean": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "location_ref": {
+              "type": ["string", "null"],
+              "minLength": 1
+            }
+          }
+        }
+      },
+      "description": "Strict WARDROBE_TRANSITION (Slice 3D). Structural schema + semantic normalizer; domain reducer only; Foundation apply_effect raises UNSUPPORTED_EFFECT."
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_version", "effect_type", "payload"],
+      "properties": {
+        "schema_version": { "type": "integer", "const": 1 },
+        "effect_type": { "const": "FINANCE_TRANSACTION" },
+        "payload": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "transaction_at",
+            "amount_minor",
+            "balance_after_minor"
+          ],
+          "description": "Slice 3E structural payload only (keys/types/additionalProperties). Semantic rules — Asia/Tokyo canonicalize for transaction_at, reject bad/naive/fractional timestamps, and true-integer (not bool/string/float) amount_minor / balance_after_minor — are enforced by normalize_finance_transaction_effect, not by this schema alone. Signed integer JPY minor units only; no category/merchant/memo/account/payment/transaction_id.",
+          "properties": {
+            "transaction_at": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Structural: non-empty string. Semantic canonicalize to Asia/Tokyo +09:00 is owned by normalize_finance_transaction_effect."
+            },
+            "amount_minor": {
+              "type": "integer",
+              "description": "Signed integer JPY minor units. Positive=inflow, negative=outflow, zero allowed. Bool/float/string rejected by semantic normalizer."
+            },
+            "balance_after_minor": {
+              "type": ["integer", "null"],
+              "description": "Explicit post-transaction balance or null (unknown remains unknown). Bool/float/string rejected by semantic normalizer."
+            }
+          }
+        }
+      },
+      "description": "Strict FINANCE_TRANSACTION (Slice 3E). Structural schema + semantic normalizer; domain reducer only; Foundation apply_effect raises UNSUPPORTED_EFFECT."
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_version", "effect_type", "payload"],
+      "properties": {
+        "schema_version": { "type": "integer", "const": 1 },
+        "effect_type": { "const": "TASK_PROGRESS" },
+        "payload": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "task_id",
+            "progress_at",
+            "effort_spent_min",
+            "effort_remaining_after_min",
+            "status_after"
+          ],
+          "description": "Slice 5B1 structural payload only (keys/types/closed enums/additionalProperties). Semantic rules — Asia/Tokyo canonicalize for progress_at, reject bad/naive/fractional timestamps, and true-integer (not bool/string/float) effort fields — are enforced by normalize_task_progress_effect, not by this schema alone. Explicit post-state remaining/status only; no inferred progress from duration.",
+          "properties": {
+            "task_id": { "type": "string", "minLength": 1 },
+            "progress_at": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Structural: non-empty string. Semantic canonicalize to Asia/Tokyo +09:00 is owned by normalize_task_progress_effect."
+            },
+            "effort_spent_min": {
+              "type": "integer",
+              "minimum": 1,
+              "description": "True integer minutes spent (>=1). Bool/float/string rejected by semantic normalizer."
+            },
+            "effort_remaining_after_min": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "True integer remaining after progress (>=0). Bool/float/string rejected by semantic normalizer."
+            },
+            "status_after": {
+              "type": "string",
+              "enum": ["IN_PROGRESS", "DONE"]
+            }
+          }
+        }
+      },
+      "description": "Strict TASK_PROGRESS (Slice 5B1). Structural schema + semantic normalizer; Schedule reducer only; Foundation apply_effect raises UNSUPPORTED_EFFECT."
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_version", "effect_type", "payload"],
+      "properties": {
+        "schema_version": { "type": "integer", "const": 1 },
+        "effect_type": { "const": "COMMITMENT_COMPLETE" },
+        "payload": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["commitment_id", "completed_at"],
+          "description": "Slice 5B2C2B structural payload only (keys/types/additionalProperties). Semantic rules — Asia/Tokyo canonicalize for completed_at, reject bad/naive/fractional timestamps — are enforced by normalize_commitment_complete_effect, not by this schema alone. PLANNED→COMPLETED only via complete_commitment; no MISSED/CANCELLED/DEFERRED.",
+          "properties": {
+            "commitment_id": { "type": "string", "minLength": 1 },
+            "completed_at": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Structural: non-empty string. Semantic canonicalize to Asia/Tokyo +09:00 is owned by normalize_commitment_complete_effect."
+            }
+          }
+        }
+      },
+      "description": "Strict COMMITMENT_COMPLETE (Slice 5B2C2B). Structural schema + semantic normalizer; Schedule reducer / runtime dispatcher only; Foundation apply_effect raises UNSUPPORTED_EFFECT."
+    }
+  ]
+}

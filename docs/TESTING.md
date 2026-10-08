@@ -103,6 +103,8 @@ The initial public suite has three primary horizons:
    - no duplicate causal records;
    - deterministic fingerprints.
 
+The integrated 90-day sweep may be executed as disjoint internal shards to keep process resource use bounded, but the public runner must still cover the complete 90 distinct local dates and apply the same required-zero invariants to every shard. Sharding is an execution detail, not a reduction of the horizon.
+
 Feature-specific assertions should be scenario parameters or reusable invariants, not separate copies of the 28d/90d harness.
 
 ### Calibration

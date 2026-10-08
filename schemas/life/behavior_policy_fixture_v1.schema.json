@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://snowfall-life-engine.invalid/schemas/life/behavior_policy_fixture_v1.schema.json",
+  "title": "BehaviorPolicyFixtureV1",
+  "description": "Foundation TEST_FIXTURE Behavior Policy format (schema_version=1). PRODUCTION is invalid for v1.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "behavior_policy_version",
+    "policy_mode",
+    "character_id",
+    "timezone",
+    "rates",
+    "thresholds",
+    "idle_reassessment"
+  ],
+  "properties": {
+    "schema_version": { "type": "integer", "const": 1 },
+    "behavior_policy_version": { "type": "string", "minLength": 1 },
+    "policy_mode": { "type": "string", "const": "TEST_FIXTURE" },
+    "character_id": { "type": "string", "minLength": 1 },
+    "timezone": { "type": "string", "const": "Asia/Tokyo" },
+    "description": { "type": "string" },
+    "rates": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["hunger_per_hour", "physical_fatigue_per_hour", "stress_per_hour"],
+      "properties": {
+        "hunger_per_hour": { "type": "integer", "minimum": -1000, "maximum": 1000 },
+        "physical_fatigue_per_hour": { "type": "integer", "minimum": -1000, "maximum": 1000 },
+        "stress_per_hour": { "type": "integer", "minimum": -1000, "maximum": 1000 },
+        "affect_valence_per_hour": { "type": "integer", "minimum": -1000, "maximum": 1000 },
+        "social_battery_per_hour": { "type": "integer", "minimum": -1000, "maximum": 1000 }
+      }
+    },
+    "thresholds": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["hunger_wakeup", "fatigue_wakeup", "stress_wakeup"],
+      "properties": {
+        "hunger_wakeup": { "type": "integer", "minimum": 0, "maximum": 1000 },
+        "fatigue_wakeup": { "type": "integer", "minimum": 0, "maximum": 1000 },
+        "stress_wakeup": { "type": "integer", "minimum": 0, "maximum": 1000 }
+      }
+    },
+    "idle_reassessment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["interval_min"],
+      "properties": {
+        "interval_min": { "type": "integer", "minimum": 1, "maximum": 10080 },
+        "max_events_per_advance": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100000,
+          "description": "Fail-closed computational ceiling for events processed in one advance (not a semantic drop)"
+        }
+      }
+    }
+  }
+}

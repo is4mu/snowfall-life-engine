@@ -33,7 +33,7 @@ Snowfall Life Engine is intended to provide a reusable core for:
 
 ## Repository status
 
-Current public status: **clean export authorized; source migration in progress**.
+Current public status: **Phase 1 clean export in progress**. The reusable engine and public test architecture are being validated as an independent repository before the first `v0.1.0` baseline.
 
 Planned initial baseline:
 
@@ -44,7 +44,33 @@ Planned initial baseline:
 - initial CI Python: `3.12`
 - future preferred package/CLI identity: `snowfall_life` / `snowfall-life`
 
-The first extraction will use a clean public history and will not expose private project Git history.
+The first extraction uses a clean public history and does not expose private project Git history.
+
+## Local development
+
+The public baseline is validated on **Python 3.12**. A clean local setup is:
+
+```bash
+python3.12 -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+python -m pip install -r engine/life/requirements.txt
+python -m pip install -r tests/requirements.txt
+```
+
+Run the normal development gate with:
+
+```bash
+python -m pytest -m "unit or contract or publication or (integration and not slow)"
+```
+
+Run the complete public suite, including scenario, calibration, and long-horizon soak tests, with:
+
+```bash
+python -m pytest
+```
+
+The three public long-horizon runners are the 72-hour restart-equivalence, 28-day structural, and 90-day invariant suites under `tests/soak/`. See `docs/TESTING.md` and `docs/CI_TIERS.md` for the normative test/CI contract.
 
 ## Public / private boundary
 

@@ -1,6 +1,6 @@
 # CI Tiers
 
-Status: Phase 0 design artifact.
+Status: Phase 1 active CI contract.
 
 The initial public baseline uses **Python 3.12** because the pre-split private Life Engine validation runs on Python 3.12. Supporting additional Python versions is a separate post-baseline compatibility decision.
 
@@ -60,7 +60,7 @@ A behavior-changing pull request is not merge-ready until Full is green.
 
 ### Determinism matrix
 
-Runs on main/release validation.
+Runs on main validation (and is intended for release validation when release automation is enabled).
 
 Selected semantic fingerprint/scenario tests run under combinations including:
 
@@ -72,14 +72,16 @@ The matrix verifies that unordered container iteration and host timezone do not 
 
 ### Coverage
 
-Coverage is collected on Full/main.
+Coverage is collected by the Full job on main pushes and uploaded as `coverage.json`. Non-draft pull requests run the same Full semantics without making coverage a merge threshold.
 
 Initial policy:
 
 1. record statement and branch coverage at the first green exported baseline;
 2. store the baseline in repository metadata/documentation;
-3. fail on unexplained regression from the accepted baseline;
+3. fail on unexplained regression from the accepted baseline once that baseline has been recorded;
 4. do not use a global 100% target as a substitute for semantic tests.
+
+Until the first green exported Full baseline is recorded, coverage is reporting-only; no invented threshold is used.
 
 ## Markers
 

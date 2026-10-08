@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://snowfall-life-engine.invalid/schemas/life/advance_result.schema.json",
+  "title": "AdvanceResult",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "status",
+    "processed_through",
+    "events_processed_count",
+    "wakeups_fired_count",
+    "finalized_event_ids"
+  ],
+  "properties": {
+    "schema_version": { "type": "integer", "const": 1 },
+    "status": {
+      "type": "string",
+      "enum": ["ADVANCED", "NOOP"]
+    },
+    "processed_through": { "type": "string", "minLength": 1 },
+    "events_processed_count": { "type": "integer", "minimum": 0 },
+    "wakeups_fired_count": { "type": "integer", "minimum": 0 },
+    "finalized_event_ids": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "notes": { "type": "string" }
+  }
+}

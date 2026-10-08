@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://snowfall-life-engine.invalid/schemas/life/social_archetype_assignment.schema.json",
+  "title": "SocialArchetypeAssignment",
+  "description": "Maps a person_id to an archetype_id. Application-specific social-graph mappings are not embedded in this schema.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "person_id", "archetype_id", "provenance"],
+  "properties": {
+    "schema_version": { "type": "integer", "const": 1 },
+    "person_id": { "type": "string", "minLength": 1 },
+    "archetype_id": {
+      "type": "string",
+      "enum": ["REMOTE_CLOSE_BURSTY", "LOCAL_CLOSE_INVITER", "WORK_CONTEXTUAL"]
+    },
+    "provenance": { "$ref": "provenance.schema.json" }
+  }
+}

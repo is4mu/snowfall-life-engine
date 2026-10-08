@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://snowfall-life-engine.invalid/schemas/life/operator_history.schema.json",
+  "title": "OperatorHistory",
+  "description": "Slice 5E1 semantic operator-history identity. Separate from CurrentState.history (raw ActualEvent ledger).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "head_action_id",
+    "operator_history_hash",
+    "action_count"
+  ],
+  "properties": {
+    "schema_version": { "type": "integer", "const": 1 },
+    "head_action_id": {
+      "oneOf": [
+        { "type": "null" },
+        { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+      ],
+      "description": "Null when empty; otherwise exact 64 lower-hex action_id of the chain head."
+    },
+    "operator_history_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "action_count": { "type": "integer", "minimum": 0 }
+  }
+}

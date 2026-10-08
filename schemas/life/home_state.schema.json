@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://snowfall-life-engine.invalid/schemas/life/home_state.schema.json",
+  "title": "HomeState",
+  "description": "Mutable home-domain snapshot for explicitly tracked entities only. Does not embed Home Bible geometry, furniture inventory, cleanliness percentages, or storage quantities.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "domain",
+    "character_id",
+    "revision",
+    "state_hash",
+    "as_of",
+    "provenance",
+    "entities"
+  ],
+  "properties": {
+    "schema_version": { "type": "integer", "const": 1 },
+    "domain": { "type": "string", "const": "home" },
+    "character_id": { "type": "string", "minLength": 1 },
+    "revision": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Content-derived identity; equals state_hash for HomeState v1"
+    },
+    "state_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "as_of": { "type": "string", "minLength": 1 },
+    "provenance": { "$ref": "provenance.schema.json" },
+    "entities": {
+      "type": "array",
+      "description": "Unordered by entity_id. Empty is valid when no approved trackable inventory exists.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["entity_id", "status"],
+        "properties": {
+          "entity_id": { "type": "string", "minLength": 1 },
+          "status": {
+            "type": "string",
+            "enum": ["UNKNOWN", "NORMAL", "NEEDS_ATTENTION"],
+            "description": "Coarse closed status only; no geometry or quantity fields"
+          }
+        }
+      }
+    }
+  }
+}

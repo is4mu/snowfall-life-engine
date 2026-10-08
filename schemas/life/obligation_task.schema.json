@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://snowfall-life-engine.invalid/schemas/life/obligation_task.schema.json",
+  "title": "ObligationTask",
+  "description": "Open obligation/task record. due_at XOR due_window (both null = no deadline). Runtime source_kind is #4 causality; provenance is separate.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "task_id",
+    "domain",
+    "created_at",
+    "earliest_start",
+    "due_at",
+    "due_window",
+    "effort_remaining_min",
+    "min_work_chunk_min",
+    "priority",
+    "location_constraints",
+    "status",
+    "provenance",
+    "source_kind",
+    "caused_by_event_id"
+  ],
+  "properties": {
+    "schema_version": { "type": "integer", "const": 1 },
+    "task_id": { "type": "string", "minLength": 1 },
+    "domain": {
+      "type": "string",
+      "enum": ["ACADEMIC", "WORK", "PERSONAL", "ADMIN", "ERRAND"]
+    },
+    "created_at": { "type": "string", "minLength": 1 },
+    "earliest_start": {
+      "oneOf": [
+        { "type": "string", "minLength": 1 },
+        { "type": "null" }
+      ]
+    },
+    "due_at": {
+      "oneOf": [
+        { "type": "string", "minLength": 1 },
+        { "type": "null" }
+      ]
+    },
+    "due_window": {
+      "oneOf": [
+        { "type": "null" },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["earliest_due", "latest_due"],
+          "properties": {
+            "earliest_due": { "type": "string", "minLength": 1 },
+            "latest_due": { "type": "string", "minLength": 1 }
+          }
+        }
+      ]
+    },
+    "effort_remaining_min": { "type": "integer", "minimum": 0 },
+    "min_work_chunk_min": { "type": "integer", "minimum": 1 },
+    "priority": {
+      "type": "string",
+      "enum": ["LOW", "NORMAL", "HIGH", "URGENT"]
+    },
+    "location_constraints": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "description": "Semantically unordered; sorted before persist/hash"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["OPEN", "IN_PROGRESS", "DONE", "CANCELLED"]
+    },
+    "provenance": { "$ref": "provenance.schema.json" },
+    "source_kind": {
+      "type": "string",
+      "enum": [
+        "INTERNAL",
+        "COMMITMENT",
+        "EXOGENOUS_SOCIAL",
+        "EXTERNAL_CONTEXT",
+        "OPERATOR"
+      ]
+    },
+    "caused_by_event_id": {
+      "oneOf": [
+        { "type": "string", "minLength": 1 },
+        { "type": "null" }
+      ]
+    }
+  }
+}

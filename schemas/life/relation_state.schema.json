@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://snowfall-life-engine.invalid/schemas/life/relation_state.schema.json",
+  "title": "RelationState",
+  "description": "Mutable relation-domain snapshot. No friendship/closeness/trust scores. person_id must be caller-approved; no embedded canon names/roles.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "domain",
+    "character_id",
+    "revision",
+    "state_hash",
+    "as_of",
+    "provenance",
+    "people"
+  ],
+  "properties": {
+    "schema_version": { "type": "integer", "const": 1 },
+    "domain": { "type": "string", "const": "relation" },
+    "character_id": { "type": "string", "minLength": 1 },
+    "revision": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Content-derived identity; equals state_hash for RelationState v1"
+    },
+    "state_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "as_of": { "type": "string", "minLength": 1 },
+    "provenance": { "$ref": "provenance.schema.json" },
+    "people": {
+      "type": "array",
+      "description": "Unordered by person_id. Empty is valid.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "person_id",
+          "last_contact_at",
+          "last_in_person_at",
+          "open_promises"
+        ],
+        "properties": {
+          "person_id": { "type": "string", "minLength": 1 },
+          "last_contact_at": { "type": ["string", "null"] },
+          "last_in_person_at": { "type": ["string", "null"] },
+          "open_promises": {
+            "type": "array",
+            "description": "Structured machine facts only; empty-capable. No free-form prose promises.",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["promise_id"],
+              "properties": {
+                "promise_id": { "type": "string", "minLength": 1 }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
