@@ -5,8 +5,8 @@
 It is designed to advance persistent character state through time using explicit policies, schedules, tasks, social opportunities, append-only events, deterministic randomness, and restart-safe serialization — without requiring an LLM, a live API, or an always-on server.
 
 > [!IMPORTANT]
-> This repository has completed **Phase 0: public repository preparation** and the pre-split validation gate is satisfied.
-> The first clean engine export is now being prepared from the approved private source baseline `458e05673a8d4a8f3b2346825b2eef8419411d64`. No private Git history is imported.
+> **v0.1.0 is released** as the first clean public baseline.
+> The project is now freezing the **public v1 boundary** before broader API/package stabilization. See [docs/V1_BOUNDARY.md](docs/V1_BOUNDARY.md).
 
 ## Project goals
 
@@ -33,18 +33,19 @@ Snowfall Life Engine is intended to provide a reusable core for:
 
 ## Repository status
 
-Current public status: **Phase 1 clean export in progress**. The reusable engine and public test architecture are being validated as an independent repository before the first `v0.1.0` baseline.
+Current public status: **v0.1.0 baseline released; public v1 boundary frozen for planning**.
 
-Planned initial baseline:
+Current baseline:
 
 - release: `v0.1.0`
+- baseline commit: `a274470dcc1b6a2f22c1ae74df19d94d66a21f34`
 - maturity: experimental
 - license: Apache-2.0
-- initial import compatibility: `engine.life`
-- initial CI Python: `3.12`
-- future preferred package/CLI identity: `snowfall_life` / `snowfall-life`
+- current compatibility import: `engine.life`
+- CI Python: `3.12`
+- planned canonical v1 package/CLI identity: `snowfall_life` / `snowfall-life`
 
-The first extraction uses a clean public history and does not expose private project Git history.
+The clean public history does not expose private project Git history. The v1 boundary defines which responsibilities and contracts will become stable before 1.0.
 
 ## Local development
 
@@ -74,9 +75,9 @@ The three public long-horizon runners are the 72-hour restart-equivalence, 28-da
 
 ## Public / private boundary
 
-This repository will contain only reusable engine code, versioned schemas, synthetic fixtures, generic documentation, and public CI.
+This repository contains only reusable engine code, versioned schemas, synthetic fixtures, generic documentation, and public CI.
 
-It will **not** contain:
+It **does not** contain:
 
 - private character canon or identity assets;
 - private environment / home assets;
@@ -88,6 +89,7 @@ It will **not** contain:
 
 See:
 
+- [docs/V1_BOUNDARY.md](docs/V1_BOUNDARY.md) for the frozen public v1 responsibility/compatibility boundary;
 - [docs/EXPORT_BOUNDARY.md](docs/EXPORT_BOUNDARY.md) for the publication contract;
 - [docs/TESTING.md](docs/TESTING.md) for the normative public test architecture;
 - [docs/TEST_MIGRATION_MATRIX.md](docs/TEST_MIGRATION_MATRIX.md) for historical-suite dispositions;
@@ -114,17 +116,29 @@ See:
 
 Approved extraction baseline: `is4mu/project-snowfall@458e05673a8d4a8f3b2346825b2eef8419411d64`.
 
-- export only approved engine/schema/test paths;
-- preserve engine semantics during extraction;
-- replace private-only fixture assumptions with synthetic equivalents;
-- run public Fast and Full regression suites;
-- verify that no private data or Git history is present.
+- [x] export only approved engine/schema/test paths;
+- [x] preserve engine semantics during extraction;
+- [x] replace private-only fixture assumptions with synthetic equivalents;
+- [x] run public Fast and Full regression suites;
+- [x] verify that no private data or Git history is present.
 
 ### Phase 2 — public baseline
 
-- tag `v0.1.0`;
-- make the public engine identity authoritative for reusable engine code;
-- reconnect the originating application through an explicit reviewed engine version/commit.
+- [x] tag and publish `v0.1.0`;
+- [x] make the public engine repository authoritative for reusable engine code;
+- [x] validate main with Fast, Full, determinism, publication, and coverage reporting.
+
+### Phase 3 — v1 contract stabilization
+
+- [x] freeze the functional/public-private v1 boundary;
+- [ ] define the minimal stable Python facade;
+- [ ] introduce canonical `snowfall_life` packaging and `snowfall-life` CLI;
+- [ ] document compatibility/deprecation rules for `engine.life`;
+- [ ] contract-test public fact/spatial/upgrade adapter protocols;
+- [ ] define persisted-schema migration policy for 1.x;
+- [ ] publish a complete synthetic consumer example;
+- [ ] finalize the supported Python-version window and coverage ratchet;
+- [ ] validate a v1 release candidate.
 
 ## Security
 

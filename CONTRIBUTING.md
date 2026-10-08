@@ -4,14 +4,15 @@ Thank you for your interest in Snowfall Life Engine.
 
 ## Current project phase
 
-The repository is currently in **Phase 1: clean engine export**. The public shell and publication boundary are established; reusable engine code, synthetic tests, and CI gates are being validated before the first `v0.1.0` baseline.
+The repository has published **v0.1.0** as its first clean OSS baseline and is now stabilizing the **public v1 contract**.
 
-During Phase 1:
+During the pre-v1 stabilization phase:
 
-- documentation and repository-safety improvements are welcome;
-- migration/generalization changes should preserve existing engine semantics;
-- behavior changes should remain narrowly scoped until the initial public baseline is published;
-- no contribution may depend on private Snowfall application data, production authority, or private Git history.
+- changes must remain inside the responsibility boundary in [docs/V1_BOUNDARY.md](docs/V1_BOUNDARY.md), unless the boundary is explicitly amended;
+- documented persistent, deterministic, error, adapter, and CLI contracts require compatibility review;
+- internal implementation may evolve without freezing every importable module as public API;
+- behavior changes must include semantic regression coverage;
+- no contribution may depend on private Snowfall application data, production authority, private Git history, or live application workflow wiring.
 
 ## Principles
 
