@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "domain": "relation",
+  "character_id": "fixture-character",
+  "as_of": "2026-04-15T12:00:00+09:00",
+  "provenance": {
+    "origin": "SIMULATION_BOOTSTRAP",
+    "notes": "public-synthetic-runtime-bundle"
+  },
+  "revision": "1f7ea8051e03909876deddb8b76ef4659cd981383cb6eb1370b0b77eb226ea25",
+  "state_hash": "1f7ea8051e03909876deddb8b76ef4659cd981383cb6eb1370b0b77eb226ea25",
+  "people": [
+    {
+      "person_id": "person-a",
+      "last_contact_at": null,
+      "last_in_person_at": null,
+      "open_promises": []
+    }
+  ]
+}

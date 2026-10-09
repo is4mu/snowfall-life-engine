@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "month": "2026-03",
+  "closed_at": "2026-04-01T00:00:00+09:00",
+  "records": [
+    {
+      "schema_version": 1,
+      "record_id": "camera-roll-record:55f0af963776065dd6a519115a5ca5e2",
+      "capture_id": "capture:4ae04969c66566f51b163660b75730a4",
+      "event_id": "actual-event:cb7c3346be03802cc974648dd6f028be",
+      "activity_instance_id": "activity:5c1-fixture-1",
+      "captured_at": "2026-03-15T10:30:00+09:00",
+      "capture_kind": "DAILY_LIFE",
+      "subject_refs": [],
+      "visual_context": {
+        "character_id": "fixture-character",
+        "character_source_sha": "public-persistence-character-sha",
+        "engine_commit_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "behavior_policy_version": "public-fixture-v2-candidate-1",
+        "location_id": "fixture-home",
+        "appearance": {
+          "outfit_state_id": null,
+          "outfit_item_ids": [],
+          "makeup_level": null,
+          "hair_state_id": null
+        },
+        "home_revision": null,
+        "wardrobe_revision": null,
+        "photographer_ref": null,
+        "companion_refs": [],
+        "lighting_context": "NATURAL"
+      },
+      "capture_context_hash": "f58734b1be06788df53502fb81e5d9e83f7aefbd36af69a62676b72b14c8fb84"
+    }
+  ]
+}

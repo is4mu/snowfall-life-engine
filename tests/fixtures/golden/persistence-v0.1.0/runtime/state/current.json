@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "state_revision": 2,
+  "engine_version": "0.1.0-foundation",
+  "engine_commit_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "behavior_policy_version": "fixture-policy-1",
+  "character_id": "fixture-character",
+  "timezone": "Asia/Tokyo",
+  "life_epoch": "2026-04-01T00:00:00+09:00",
+  "processed_through": "2026-04-15T12:00:00+09:00",
+  "world_seed": "public-runtime-world-seed",
+  "context": {
+    "location_id": "fixture-home",
+    "active_activity": null
+  },
+  "human_state": {
+    "sleep_debt_min": 0,
+    "hunger": 100,
+    "physical_fatigue": 100,
+    "affect_valence": 0,
+    "stress": 100,
+    "social_battery": 800
+  },
+  "sleep_context": {
+    "last_wake_at": null,
+    "last_main_sleep_end": null,
+    "circadian_profile_ref": "fixture:circadian-synthetic"
+  },
+  "conditions": [],
+  "appearance": {
+    "outfit_state_id": null,
+    "makeup_level": null,
+    "hair_state_id": null
+  },
+  "domain_refs": {
+    "home_revision": "e98911decbc03645d357305f639e27879fc05f664e841c017db5d81a6bc6ccc7",
+    "social_graph_revision": null,
+    "finance_revision": "23b6fc548565b15de8c1ce47648f12858975687442da72b3ce5de404464f0815",
+    "wardrobe_revision": "4eb366902289c269388a2f7744eb99458c4397c1266b85bead98e21279eae11d",
+    "relation_state_revision": "1f7ea8051e03909876deddb8b76ef4659cd981383cb6eb1370b0b77eb226ea25",
+    "consumables_revision": "2b761eacd0d7b2a1974477ed49b59cf261bf3c046a0d39d9c281f2ccc1d80051",
+    "schedule_revision": "6150a94c9b3519ff6b90e6d66df28559ea50623694f77daa4972802fab264506",
+    "schedule_hash": "6150a94c9b3519ff6b90e6d66df28559ea50623694f77daa4972802fab264506",
+    "social_response_revision": "012cbe592ccc699a9bee1b1c6abb9f43025ab6286ea341d808631b255c98ff17"
+  },
+  "integration": {
+    "schema_version": 1,
+    "rate_remainders": {
+      "hunger": 0,
+      "physical_fatigue": 0,
+      "affect_valence": 0,
+      "stress": 0,
+      "social_battery": 0
+    }
+  },
+  "pending_queue": {
+    "cursor": 0,
+    "events": []
+  },
+  "history": {
+    "head_event_id": "actual-event:cb7c3346be03802cc974648dd6f028be",
+    "history_hash": "37fb01dcdaa7826dd24fd91dca4be8ef1935ac5573bb062160cdcfa9b277b5b4",
+    "event_count": 1
+  }
+}
