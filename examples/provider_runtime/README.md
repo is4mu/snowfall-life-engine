@@ -1,6 +1,6 @@
 # Synthetic Provider-Driven RuntimeBundle Consumer (P1 / pre-v1)
 
-This is a **complete, review-only example of the existing full RuntimeBundle candidate path**; it is different from the Foundation sandbox CLI in Draft PR #8. It deliberately uses the current `engine.life.*` implementation imports until the minimal `snowfall_life` facade is reviewed and shipped. **Nothing in this example declares those imports stable 1.x APIs.**
+This is a **complete, review-only example of the existing full RuntimeBundle candidate path**; it is different from the Foundation sandbox CLI in Draft PR #8. It now exercises the **experimental `snowfall_life.runtime` and `snowfall_life.persistence` imports** for provider execution and persistent candidate building. Synthetic fixture construction still uses internal implementation helpers; these are **not** public facade exports. The canonical aliases themselves remain **pre-v1 review candidates, not stable 1.x APIs**.
 
 Run in the public repository checkout with Python 3.12 after installing `engine/life/requirements.txt`:
 
@@ -26,4 +26,4 @@ The example does **not** load private Snowfall character data, approve a product
 
 ## Review gate
 
-Before 1.0, move only approved symbols to the `snowfall_life` facade (Draft PR #7/#8), contract-test method signatures and errors, establish installed-package resources and a documented deprecation window for `engine.life`, and decide schema migration/readability in Issue #9. This example is evidence of the existing engine boundary, **not** a substitute for those decisions.
+Before 1.0, **approve** the exact canonical export whitelist/signatures and errors, validate an **actual 1.0 release-candidate** wheel/sdist against the frozen v0.1.0 and W1 save/restart goldens, and define an `engine.life` deprecation window. The first 1.0 writer format W1 has been owner-selected (Issue #16), but this **pre-v1 preview is not a published stable API**. See [canonical facade preview](../../docs/P1_CANONICAL_RUNTIME_FACADE_PREVIEW.md).
