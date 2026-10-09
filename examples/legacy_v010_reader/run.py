@@ -8,6 +8,7 @@ synthetic goldens and never writes to the original source tree.
 from __future__ import annotations
 
 import json
+import runpy
 import shutil
 import tempfile
 from pathlib import Path
@@ -134,7 +135,16 @@ def verify_installed_reader() -> dict:
         if snapshot_tree_bytes(old_tree) != original_bytes:
             raise AssertionError("legacy frozen fixtures were modified")
 
+    # Existing installed-package CI calls this probe under isolated Python.
+    # Keep the W1 consumer standalone: it imports installed runtime only.
+    w1_script = Path(__file__).resolve().parents[1] / "w1_persistence/run.py"
+    w1 = runpy.run_path(str(w1_script))["demo"]()
+    pinned_w1 = _read_json(GOLDEN.parent / "w1-write-reload.experimental.json")
+    if w1 != pinned_w1:
+        raise AssertionError("installed W1 writer/save/restart output drifted")
+
     return {
+        "w1_writer_report_hash": canonical_hash(w1),
         "status": "PASS",
         "scope": "pre-v1-installed-reader-v0.1.0",
         "old_engine_version": expected["source_engine"],
