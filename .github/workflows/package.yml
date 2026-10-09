@@ -46,7 +46,9 @@ jobs:
                                "snowfall_life/__init__.py",
                                "snowfall_life/cli.py",
                                "snowfall_life/runtime.py",
-                               "snowfall_life/persistence.py"):
+                               "snowfall_life/persistence.py",
+                               "snowfall_life/spatial.py",
+                               "snowfall_life/upgrade.py"):
                   assert required in paths, required
               private = ("runtime_production_authority.py",
                          "runtime_production_composition.py",
@@ -96,7 +98,18 @@ jobs:
               build_runtime_candidate_tree_with_provider_factory as impl_build,
           )
           from engine.life.runtime_fact_provider import RuntimeFactProvider as ImplProvider
+          from snowfall_life.spatial import build_spatial_context, validate_spatial_context
+          from snowfall_life.upgrade import (
+              UpgradeEnvironmentAdapter, run_target_compatibility_probe,
+          )
+          from engine.life.operator_upgrade import UpgradeEnvironmentAdapter as ImplUpgrade
 
+          assert UpgradeEnvironmentAdapter is ImplUpgrade
+          sealed = build_spatial_context(
+              character_id="fixture-character", spatial_context_version="fixture-v1",
+          )
+          assert validate_spatial_context(sealed) == sealed
+          assert callable(run_target_compatibility_probe)
           assert RuntimeReferenceSets is ImplRefs
           assert RuntimeFactProvider is ImplProvider
           assert load_runtime_persistent_snapshot is impl_read

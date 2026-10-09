@@ -65,6 +65,11 @@ synthetic bootstrap helpers remain implementation-only. These imports are
 **not** yet a frozen public API. See
 [the exact proposed export/ownership contract](docs/P1_CANONICAL_RUNTIME_FACADE_PREVIEW.md).
 
+The proposed [spatial and upgrade-host preview](docs/P1_SPATIAL_UPGRADE_FACADE_PREVIEW.md)
+also exposes **sealed spatial data projection** and a **host-injected
+read-only compatibility probe**. Neither performs production publication
+or promises a stable 1.x API.
+
 ## Synthetic full RuntimeBundle consumer (pre-v1)
 
 The [provider-driven synthetic consumer](examples/provider_runtime/README.md) exercises a complete **RuntimeBundle** persistent candidate using an injected four-method fact provider, two deterministic replays, verified candidate reload, and byte-for-byte baseline immutability. It is **not** the foundation sandbox CLI, a production-character launcher, a migration path, or a declaration that the current implementation imports are stable v1 APIs.
