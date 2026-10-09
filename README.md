@@ -47,6 +47,14 @@ Current baseline:
 
 The clean public history does not expose private project Git history. The v1 boundary defines which responsibilities and contracts will become stable before 1.0.
 
+## Pre-v1 package prototype (unreleased)
+
+The canonical `snowfall_life` import and `snowfall-life` CLI are under review in a **0.2.0.dev0 development build**, not in the published v0.1.0 release. From a checkout of the prototype branch, `python -m pip install .` creates both entry points; the existing `engine.life` import and `python -m engine.life` command remain functional. This proposal does not change persisted `ENGINE_VERSION = "0.1.0-foundation"` or claim stable v1 API compatibility.
+
+`snowfall-life advance` currently delegates to the **foundation sandbox** workflow; full provider-driven runtime and persistent candidate operations are separate. The package build must include the exact 37 public JSON Schemas. See the packaging CI job for isolated wheel/sdist checks.
+
+See [the standalone synthetic foundation sandbox consumer](examples/foundation_sandbox/README.md) for a full offline example of installing this prototype, creating and advancing a synthetic checkpoint, verifying it, and testing idempotent NOOP behavior. This is **not** the separate full provider-driven RuntimeBundle consumer gate.
+
 ## Local development
 
 The public baseline is validated on **Python 3.12**. A clean local setup is:

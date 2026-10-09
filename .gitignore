@@ -12,3 +12,7 @@ venv/
 
 # Editor / OS noise
 .DS_Store
+# Python distribution artifacts
+build/
+dist/
+*.egg-info/

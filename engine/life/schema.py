@@ -9,7 +9,13 @@ from typing import Any
 
 from .errors import ErrorCode, LifeEngineError
 
-SCHEMA_DIR = Path(__file__).resolve().parents[2] / "schemas" / "life"
+# An installed wheel includes the exact public registry in this package.
+# A source checkout continues to use schemas/life as its single authority.
+# If packaged resources are present but invalid/incomplete, validation fails
+# closed; do not silently fall back to a different schema set.
+_PACKAGE_SCHEMAS = Path(__file__).resolve().parent / "_schemas"
+_SOURCE_SCHEMAS = Path(__file__).resolve().parents[2] / "schemas" / "life"
+SCHEMA_DIR = _PACKAGE_SCHEMAS if _PACKAGE_SCHEMAS.is_dir() else _SOURCE_SCHEMAS
 
 SCHEMA_NAMES = {
     "behavior_policy": "behavior_policy.schema.json",

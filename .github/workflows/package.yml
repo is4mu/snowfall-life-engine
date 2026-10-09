@@ -1,0 +1,112 @@
+name: Pre-v1 package installation
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  installed-package:
+    name: Wheel and sdist isolation (Python 3.12)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Build artifacts
+        run: |
+          python -m pip install --upgrade build
+          python -m build --sdist --wheel
+
+      - name: Verify wheel contents and publication exclusions
+        run: |
+          python - <<'PY'
+          import glob
+          import zipfile
+
+          wheels = glob.glob("dist/*.whl")
+          assert len(wheels) == 1, wheels
+          with zipfile.ZipFile(wheels[0]) as archive:
+              paths = archive.namelist()
+              schemas = [p for p in paths
+                         if p.startswith("engine/life/_schemas/")
+                         and p.endswith(".schema.json")]
+              assert len(schemas) == 37, schemas
+              for required in ("engine/life/schema.py",
+                               "engine/life/__init__.py",
+                               "snowfall_life/__init__.py",
+                               "snowfall_life/cli.py"):
+                  assert required in paths, required
+              private = ("runtime_production_authority.py",
+                         "runtime_production_composition.py",
+                         "runtime_production_fact_provider.py",
+                         "runtime_production_fact_sources.py",
+                         "runtime_production_launcher.py",
+                         "runtime_operator_launcher.py",
+                         "runtime_remote_publisher.py")
+              assert not any(p.endswith(name) for p in paths for name in private)
+              print(f"wheel includes {len(schemas)} schemas and no private launchers")
+          PY
+
+      - name: Verify clean wheel and sdist installs outside checkout
+        shell: bash
+        run: |
+          set -euo pipefail
+          WHEEL="$(realpath "$(find dist -maxdepth 1 -name '*.whl' -print -quit)")"
+          SDIST="$(realpath "$(find dist -maxdepth 1 -name '*.tar.gz' -print -quit)")"
+          test -n "$WHEEL" && test -n "$SDIST"
+          for artifact in "$WHEEL" "$SDIST"; do
+            TEST_DIR="$(mktemp -d)"
+            python -m venv "$TEST_DIR/venv"
+            "$TEST_DIR/venv/bin/python" -m pip install "$artifact"
+            (
+              cd "$TEST_DIR"
+              "$TEST_DIR/venv/bin/python" -I - <<'PY'
+          import importlib.metadata
+
+          import engine.life
+          import engine.life.schema as legacy_schema
+          from snowfall_life import ErrorCode, LifeEngineError, canonical_hash
+          from snowfall_life.schema import load_schema_document, validate_instance
+
+          assert importlib.metadata.version("snowfall-life-engine") == "0.2.0.dev0"
+          assert engine.life.ENGINE_VERSION == "0.1.0-foundation"
+          assert issubclass(LifeEngineError, Exception)
+          assert ErrorCode.UNSUPPORTED_VERSION.value == "UNSUPPORTED_VERSION"
+          assert len(legacy_schema.SCHEMA_NAMES) == 37
+          assert legacy_schema.SCHEMA_DIR.name == "_schemas"
+          for name in legacy_schema.SCHEMA_NAMES:
+              doc = load_schema_document(name)
+              assert doc["$id"].startswith("https://snowfall-life-engine.invalid/schemas/life/")
+          # Exercise the installed JSON Schema validator, not only loading.
+          try:
+              validate_instance({}, "current_state")
+          except LifeEngineError as exc:
+              assert exc.code is ErrorCode.SCHEMA_INVALID
+          else:
+              raise AssertionError("invalid current_state unexpectedly accepted")
+          assert canonical_hash({"x": 1}) == canonical_hash({"x": 1})
+          print("isolated distribution: facade + 37 schemas OK")
+          PY
+              "$TEST_DIR/venv/bin/snowfall-life" self-check
+              "$TEST_DIR/venv/bin/python" -I -m snowfall_life self-check
+            )
+            # Execute the standalone synthetic consumer with each installed
+            # distribution, with no source-checkout imports in the subprocess.
+            sample_output="$("$TEST_DIR/venv/bin/python" "$GITHUB_WORKSPACE/examples/foundation_sandbox/run.py")"
+            printf '%s\\n' "$sample_output"
+            if [ -z "${expected_sample_output:-}" ]; then
+              expected_sample_output="$sample_output"
+            else
+              test "$sample_output" = "$expected_sample_output"
+            fi
+          done
