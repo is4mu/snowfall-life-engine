@@ -1,6 +1,6 @@
 # P1 Persistence Evolution Design — Future-Resilient Save Data
 
-**Status: DESIGN TARGET / REVIEW PROPOSAL, 2026-10-09.** The owner requests (a) continuation from valid v0.1.0 saved histories, (b) an **early durable approach** to upgrading the save format over future releases (not necessarily an immediate reformat), and (c) continued narrow legacy OperatorHistory read tolerance. **No new format, schema, writer version, migration or public facade is implemented or authorized by this document.**
+**Status: W1 INITIAL WRITER CHOSEN BY OWNER; EVOLUTION/FACADE DESIGN STILL REVIEW-ONLY, 2026-10-09.** The first stable 1.0 writer will retain the verified existing persisted epoch and schema-v1 layout. The owner requires valid historical v0.1.0 reads and the narrow OperatorHistory compatibility exception. **No new W2 format, migration, stable API, deployment or release is authorized.** See [W1 decision](P1_W1_INITIAL_WRITER_DECISION.md).
 
 ## Why this matters
 
@@ -39,7 +39,7 @@ For **each** of the existing 16 families (see [machine-readable inventory](../os
 
 `family`, `schema_id`, `source_format`, `oldest_readable`, `accepted_versions`, `writer_version`, `explicit_migration_edges`, `decoder`, `writer`, `canonical_hash_algorithm`, `unknown_field_policy`, `historic_goldens`, `rejected_future_versions`, `support_window`.
 
-Initially all **future 1.x** reader/writer values in the existing manifest remain null until a concrete tested implementation and owner-approved writer target exist. The owner has chosen the **v0.1.0 read-compatibility outcome**, not fabricated a new target version or signed off on 1.x implementation today.
+The owner has now selected the **W1 initial 1.0 writer format**, separately recorded in [the decision](../oss/p1-w1-initial-writer-decision.json). The earlier **null v1 capability fields** in current experimental tables mean “not yet implemented or validated by actual stable v1 binaries”; they do **not** mean the writer design remains undecided. A tested stable reader/writer, public facade, support range and 1.0 RC are still needed.
 
 ## Concrete sequence (P1, before a stable 1.0 declaration)
 
@@ -49,7 +49,7 @@ Initially all **future 1.x** reader/writer values in the existing manifest remai
 | E2 — Exercise **new packaged reader** against the **old pinned goldens** | A separate wheel/sdist installed test that reads v0.1.0 as-is, validates all 16 families and links, and makes no writes to source | Both distribution types and at least two process environments; pin output hashes instead of regenerating fixtures. |
 | E3 — Define explicit versioned compatibility capability table | Reviewed policy for old reader/new reader/new writer, clear unsupported-version errors and old `engine_version` identity | No source/file edits as a side effect of inspection; unknown future version remains rejected. |
 | E4 — Prototype format-evolution mechanics **only on synthetic data** | Optional in-memory adapter, new-format candidate & schema/migration prototype if a real format change is needed | Separate target schema, old/new golden vectors, failure injection, clean rollback before publication. |
-| E5 — Owner reviews **W1 versus W2** | Choose initial stable writer format after analyzing whether an envelope/migration earns its risk | If W1, record reason+future trigger; if W2, target reader/migration must pass before 1.0. |
+| E5 — Owner selects **W1 (complete)** | First 1.0 writer retains current persisted epoch and 16 schema-v1 families; avoid immediate W2 conversion | Selection recorded in [W1 decision](P1_W1_INITIAL_WRITER_DECISION.md); an actual 1.0 RC and stable API have **not** been approved. |
 | E6 — Stable v1 release-candidate gate | Public `snowfall_life` facade and CLI, 37 schema resource closure, pinned backward-read suite, Full/soak, 6/6, coverage review | No unapproved private data, no implicit Git publication; actual 1.x candidate reads v0.1.0 intact. |
 
 **Do not treat E2 passing on a pre-v1 package build as proof of a future, as-yet-unbuilt 1.0 release.** Retest the final 1.0 candidate using the same frozen goldens.
@@ -64,12 +64,12 @@ Initially all **future 1.x** reader/writer values in the existing manifest remai
 
 ## Release hard stop
 
-No `main` merge, actual Life-ref publication, release tag, stable Python API designation, mass schema-version bump, new persisted format declaration, or migration target selection is authorized by this evolution proposal. Source Draft PRs remain separate; the 1.0 release and any irreversible decisions require explicit review.
+No `main` merge, actual Life-ref publication, release tag, stable Python API designation, mass schema-version bump, **new W2 format declaration**, or new migration target selection is authorized by this evolution proposal. **The W1 initial format selection itself is approved.** Source Draft PRs remain separate; the 1.0 release and any irreversible decisions require explicit review.
 
 ## Experimental baseline implementation evidence
 
 The stacked [versioned capability evidence](P1_VERSIONED_CAPABILITY_EVIDENCE.md)
 adds the current-only 16-family reader/serializer table, explicit-target read-only
 planning, byte-identical copy conformance and executable W1/W2 constraint probes.
-Future v1 fields and first-writer selection remain unset. This advances E3 without
+Future **shipped-capability** fields remain unset, while the **initial writer design is now W1 (selected)**. This advances E3 without
 claiming E4's old-to-new migration or E6's actual stable release-candidate proof.

@@ -1,0 +1,49 @@
+{
+  "decision_record_version": 1,
+  "status": "owner-selected-design-not-yet-shipped",
+  "selected_on": "2026-10-09",
+  "parent_issues": [
+    9,
+    16
+  ],
+  "first_stable_writer": "W1",
+  "persisted_engine_epoch": "0.1.0-foundation",
+  "family_schema_versions": {
+    "current_state": 1,
+    "schedule_state": 1,
+    "relation_state": 1,
+    "home_state": 1,
+    "consumables_state": 1,
+    "wardrobe_state": 1,
+    "finance_state": 1,
+    "social_response_state": 1,
+    "timeline_day": 1,
+    "actual_event": 1,
+    "camera_roll_shard": 1,
+    "camera_roll_record": 1,
+    "operator_history": 1,
+    "operator_action": 1,
+    "runtime_last_run": 1,
+    "last_operator_action": 1
+  },
+  "legacy_reader_requirement": "valid-v0.1.0-snapshots-must-remain-readable",
+  "operator_history_missing_schema_version_read": "preserve-current-narrow-normalization-and-integrity-checks",
+  "automatic_load_migration": false,
+  "write_existing_save_in_place": false,
+  "next_writer_format": "not-selected-reconsider-only-if-concrete-incompatibility",
+  "future_w2_migration_registered": false,
+  "canonical_python_cli_contract_approved": false,
+  "stable_v1_reader_writer_implemented": false,
+  "release_candidate_validated": false,
+  "main_merge_authorized": false,
+  "release_authorized": false,
+  "evidence": {
+    "golden_archive": "tests/fixtures/golden/persistence-v0.1.0",
+    "w1_replay": "tests/fixtures/golden/w1-write-reload.experimental.json",
+    "w2_lab": "tests/fixtures/golden/w2-lab.experimental.json",
+    "w1_pr": 18,
+    "w2_review_pr": 19,
+    "integrated_pre_v1_full_ci_run": 37898693747,
+    "integrated_pre_v1_package_ci_run": 37898693734
+  }
+}

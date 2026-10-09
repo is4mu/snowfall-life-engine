@@ -1,8 +1,9 @@
 # P1 W1/W2 comparison and reviewed-API / actual-v1 RC gates
 
-Status: selection material, 2026-10-09. **No first-v1 writer or stable API is
-selected.** Refs #9, #16. The owner-approved order is W1 write/reload → synthetic
-W2 migration/recovery → comparison → API/RC preparation. Main remains the
+Status: **W1 SELECTED AS FIRST 1.0 WRITER FORMAT**, 2026-10-09. A stable public
+API and an actual 1.0 release candidate remain unapproved. Refs #9, #16 and
+[W1 decision](P1_W1_INITIAL_WRITER_DECISION.md). The owner-approved order was
+W1 write/reload → synthetic W2 migration/recovery → comparison → API/RC preparation. Main remains the
 released baseline; this is a stacked Draft evidence layer.
 
 ## Executable comparison
@@ -18,13 +19,13 @@ released baseline; this is a stacked Draft evidence layer.
 | Determinism/distributions | Six source-process environments plus installed wheel/sdist × six environments compare pinned writer report. | Six fresh-process environments compare transformation and restarted recovery proof. Lab tools are excluded from distributions. |
 | Remaining format work | Guard every future semantic change under the same persisted epoch; approve writer/support window and facade. | Define an actual target schema/epoch and dual reader, any required historical rekey/relink and metadata resealing; then run new target-schema vectors. A transport experiment does **not** prove a production schema migration. |
 
-**Provisional recommendation remains W1.** The demonstrated W1 operation adds
-history without format churn, and there is still no approved incompatible data
-requirement that earns W2's extra reader/migration burden. W2 laboratory evidence
-supports transaction and recovery design, but does not erase the missing
-production-format gates. Revisit W2 when a concrete required data-shape change
-cannot be expressed under the reviewed existing schemas. Never silently add
-fields under existing format identities.
+**Owner decision: W1 is the first stable 1.0 writer design.** The tested W1
+operation adds history without format churn; no demonstrated incompatible
+requirement justifies an initial W2 migration. The W2 lab remains synthetic
+future-design evidence, **not the 1.0 writer**. Revisit W2 **later if a concrete
+format limitation arises**; require a new schema/epoch, dual-reader,
+immutable historical evidence and separately approved migration before switching.
+Never silently add fields under unchanged W1 format identities.
 
 ## W2 laboratory scope and reproducibility
 
@@ -83,8 +84,9 @@ for a test through the eventually reviewed canonical persistence facade.
 
 ## Actual-v1 release-candidate checklist (pending approval)
 
-1. Owner reviews W1/W2 initial writer, persisted epoch/family bounds, reader
-   support/deprecation policy and canonical Python/CLI whitelist.
+1. **Initial writer W1 selected by owner.** Preserve persisted epoch
+   `0.1.0-foundation` and all 16 family schema-v1 formats; separately review
+   reader support/deprecation bounds and canonical Python/CLI whitelist.
 2. Implement the selected reversible facade proposal on a dedicated Draft,
    preserving runtime behavior; contract-test ownership, errors, provider
    callback/type protocol, unsupported version rejection and no implicit writes.
@@ -95,8 +97,9 @@ for a test through the eventually reviewed canonical persistence facade.
    rerun unchanged v0.1.0 and W1 pinned reports through the reviewed facade,
    all 37 bundled schemas, provider simulation and six environment replays.
 5. Rerun Fast/Full, 72h restart, 28d structural and 90d invariants on the exact RC
-   head. If W2 is selected, add actual old/new schemas, dual-reader/migration
-   vectors and separately approved host-CAS durability/recovery checks.
+   head. W2 is **deferred until a later demonstrated need**; any future switch
+   requires actual old/new schemas, dual-reader/migration vectors and separately
+   approved host-CAS durability/recovery checks.
 6. Review compatibility, API and RC evidence; stop before merge, tag, release,
    production-ref update or real-save rewrite until explicit owner approval.
 
