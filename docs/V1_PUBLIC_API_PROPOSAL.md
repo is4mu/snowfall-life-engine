@@ -9,6 +9,19 @@ Status: **review proposal**, not a stable v1 declaration. This elaborates [V1_BO
 - `clock.advance` drives the *foundation sandbox workspace*; `runtime_orchestrator.advance_runtime_to_target_with_provider` drives an in-memory RuntimeBundle; `runtime_persistence.build_runtime_candidate_tree_with_provider_factory` stages a persistent candidate. These are **different** operations; do not accidentally freeze the foundation CLI as the full simulation interface.
 - The stacked pre-v1 candidate now has `pyproject.toml` (`0.2.0.dev0`) and installs schemas under `engine/life/_schemas`; isolated wheel/sdist checks verify all 37 schemas. Canonical root/schema/CLI wrappers are implemented experimentally; proposed runtime/persistence/operator namespaces below are still review inputs. See [W1/W2 comparison and actual-v1 RC gates](P1_W1_W2_COMPARISON_AND_RC_GATES.md).
 
+## Initial persistence writer selection — approved design only
+
+The owner has selected **W1** as the first stable 1.0 writer format.
+The persisted `engine_version` remains `0.1.0-foundation`, with existing
+schema-version-1 files for all 16 persisted families. The distribution may
+independently be versioned `1.0.0`. Valid v0.1.0 saves remain a required
+reader input and must never be silently rewritten. W2 is deferred unless a
+later concrete incompatibility warrants a separately approved migration.
+
+See [the initial writer decision](P1_W1_INITIAL_WRITER_DECISION.md).
+This does **not** finalize canonical Python/CLI exports, errors, support
+windows or stable 1.0 behavior; those gates remain open.
+
 ## Candidate v1 facade (names under review)
 
 | Intended documented namespace | Proposed exports / role | Implementation anchors |
