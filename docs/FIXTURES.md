@@ -1,6 +1,9 @@
 # Fixture Architecture
 
-Status: Phase 0 design artifact. No engine source or private runtime data has been exported.
+> [!NOTE]
+> **Historical pre-release design/audit record.** The v0.1.0 public baseline was released on 2026-10-08 at `a274470dcc1b6a2f22c1ae74df19d94d66a21f34`. Future-tense export steps below describe the completed extraction process, not the current project phase. See [README](../README.md) and [V1_BOUNDARY.md](V1_BOUNDARY.md) for current authority.
+
+Original status (at time of drafting): Phase 0 design, before the public engine-source export. Private runtime data was never part of the export.
 
 ## Principles
 
