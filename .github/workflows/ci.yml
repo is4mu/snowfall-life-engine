@@ -60,8 +60,21 @@ jobs:
               "phase-0-pre-export",
               "phase-1-export-authorized",
               "engine-exported",
+              "baseline-released",
           }:
               raise SystemExit(f"unexpected export status: {export.get('status')!r}")
+
+
+          if export.get("status") == "baseline-released":
+              release = export.get("published_release", {})
+              if release.get("tag") != export.get("release_target"):
+                  raise SystemExit("published release tag and target disagree")
+              if not re.fullmatch(r"[0-9a-f]{40}", release.get("commit", "")):
+                  raise SystemExit("published release commit must be 40-hex")
+              if release.get("draft") is not False or release.get("prerelease") is not False:
+                  raise SystemExit("baseline-released requires a final, non-prerelease publication")
+              if not release.get("published_at"):
+                  raise SystemExit("baseline-released requires a publication timestamp")
 
           if migration.get("source_file_count") != 146:
               raise SystemExit("test migration manifest must cover exactly 146 source files")
