@@ -1,7 +1,7 @@
 """Read v0.1.0 Life saves with a newly installed pre-v1 engine build.
 
 This is a *candidate reader compatibility test*, not a stable 1.x API.
-It imports only the installed engine implementation, reads immutable public
+It imports the installed preview reader facade, reads immutable public
 synthetic goldens and never writes to the original source tree.
 """
 
@@ -19,11 +19,9 @@ from engine.life.correction import apply_correction_overlays
 from engine.life.errors import ErrorCode, LifeEngineError
 from engine.life.history import collect_ledger_events
 from engine.life.operator_action import load_operator_ledger
-from engine.life.runtime_bundle import RuntimeReferenceSets
-from engine.life.runtime_persistence import (
-    load_runtime_persistent_snapshot,
-    snapshot_tree_bytes,
-)
+from snowfall_life.runtime import RuntimeReferenceSets
+from snowfall_life.persistence import load_runtime_persistent_snapshot
+from engine.life.runtime_persistence import snapshot_tree_bytes  # test-only SHA evidence
 from engine.life.schema import validate_instance
 
 GOLDEN = (

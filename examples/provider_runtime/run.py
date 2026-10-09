@@ -2,7 +2,7 @@
 
 No test-builder imports, private character data, network access, Git writes, or
 real production activation. Intended as a pre-v1 interface/conformance probe,
-not a declaration that implementation imports are a stable v1 public facade.
+not a declaration that these preview canonical imports are stable v1 APIs.
 
 Run from the repository checkout:
     python -m examples.provider_runtime.run
@@ -19,20 +19,22 @@ from engine.life.activity_materialization import RuntimeMaterializationContext
 from engine.life.checkpoint import empty_checkpoint
 from engine.life.derived import default_synthetic_sleep_profile
 from engine.life.policy import load_policy
-from engine.life.runtime_bundle import RuntimeBundle, RuntimeReferenceSets
-from engine.life.runtime_decision import RuntimeDecisionFacts, RuntimeDecisionFrame, RuntimeDecisionTrigger
-from engine.life.runtime_fact_provider import (
+from snowfall_life.runtime import (
+    RuntimeBundle,
+    RuntimeReferenceSets,
     RuntimeDecisionProviderResult,
     RuntimeFactRequestContext,
     RuntimeTargetRequest,
 )
-from engine.life.social_runtime import SocialResponseState
-from engine.life.runtime_persistence import (
+from snowfall_life.persistence import (
     build_runtime_candidate_tree_with_provider_factory,
     load_runtime_persistent_snapshot,
-    snapshot_tree_bytes,
-    write_runtime_json,
 )
+from engine.life.runtime_decision import RuntimeDecisionFacts, RuntimeDecisionFrame, RuntimeDecisionTrigger
+from engine.life.social_runtime import SocialResponseState
+# Fixture setup and private test-assertion utilities are deliberately not
+# part of the proposed stable public facade.
+from engine.life.runtime_persistence import snapshot_tree_bytes, write_runtime_json
 from engine.life.schedule_state import build_schedule_state
 from engine.life.social_runtime import build_social_response_state
 from engine.life.wakeups import FutureCandidate, build_v2_decision_wakeup_event

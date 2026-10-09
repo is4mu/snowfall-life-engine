@@ -55,6 +55,16 @@ The canonical `snowfall_life` import and `snowfall-life` CLI are under review in
 
 See [the standalone synthetic foundation sandbox consumer](examples/foundation_sandbox/README.md) for a full offline example of installing this prototype, creating and advancing a synthetic checkpoint, verifying it, and testing idempotent NOOP behavior. This is **not** the separate full provider-driven RuntimeBundle consumer gate.
 
+## Canonical full-runtime preview (Draft; not stable v1)
+
+The **unreleased** `snowfall_life.runtime` and `snowfall_life.persistence`
+facades re-export only reviewed-candidate types and provider-driven runtime
+operations. The [synthetic full RuntimeBundle consumer](examples/provider_runtime/README.md)
+now uses these canonical imports for verification and candidate staging;
+synthetic bootstrap helpers remain implementation-only. These imports are
+**not** yet a frozen public API. See
+[the exact proposed export/ownership contract](docs/P1_CANONICAL_RUNTIME_FACADE_PREVIEW.md).
+
 ## Synthetic full RuntimeBundle consumer (pre-v1)
 
 The [provider-driven synthetic consumer](examples/provider_runtime/README.md) exercises a complete **RuntimeBundle** persistent candidate using an injected four-method fact provider, two deterministic replays, verified candidate reload, and byte-for-byte baseline immutability. It is **not** the foundation sandbox CLI, a production-character launcher, a migration path, or a declaration that the current implementation imports are stable v1 APIs.

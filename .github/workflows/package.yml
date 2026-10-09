@@ -44,7 +44,9 @@ jobs:
               for required in ("engine/life/schema.py",
                                "engine/life/__init__.py",
                                "snowfall_life/__init__.py",
-                               "snowfall_life/cli.py"):
+                               "snowfall_life/cli.py",
+                               "snowfall_life/runtime.py",
+                               "snowfall_life/persistence.py"):
                   assert required in paths, required
               private = ("runtime_production_authority.py",
                          "runtime_production_composition.py",
@@ -80,7 +82,28 @@ jobs:
           import engine.life.schema as legacy_schema
           from snowfall_life import ErrorCode, LifeEngineError, canonical_hash
           from snowfall_life.schema import load_schema_document, validate_instance
+          from snowfall_life.runtime import (
+              RuntimeReferenceSets, RuntimeTargetRequest, RuntimeFactProvider,
+              advance_runtime_to_target_with_provider,
+          )
+          from snowfall_life.persistence import (
+              RuntimePersistentSnapshot, load_runtime_persistent_snapshot,
+              build_runtime_candidate_tree_with_provider_factory,
+          )
+          from engine.life.runtime_bundle import RuntimeReferenceSets as ImplRefs
+          from engine.life.runtime_persistence import (
+              load_runtime_persistent_snapshot as impl_read,
+              build_runtime_candidate_tree_with_provider_factory as impl_build,
+          )
+          from engine.life.runtime_fact_provider import RuntimeFactProvider as ImplProvider
 
+          assert RuntimeReferenceSets is ImplRefs
+          assert RuntimeFactProvider is ImplProvider
+          assert load_runtime_persistent_snapshot is impl_read
+          assert build_runtime_candidate_tree_with_provider_factory is impl_build
+          assert callable(advance_runtime_to_target_with_provider)
+          assert RuntimePersistentSnapshot.__dataclass_fields__
+          assert RuntimeTargetRequest.__dataclass_fields__
           assert importlib.metadata.version("snowfall-life-engine") == "0.2.0.dev0"
           assert engine.life.ENGINE_VERSION == "0.1.0-foundation"
           assert issubclass(LifeEngineError, Exception)
