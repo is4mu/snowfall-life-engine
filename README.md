@@ -70,6 +70,10 @@ also exposes **sealed spatial data projection** and a **host-injected
 read-only compatibility probe**. Neither performs production publication
 or promises a stable 1.x API.
 
+The [pre-v1 CLI behavior/1.0 RC review checklist](docs/P1_CLI_RC_REVIEW.md)
+distinguishes the seven Foundation sandbox commands from the full provider
+runtime. It is a **candidate error/exit contract**, not a 1.0 release.
+
 ## Synthetic full RuntimeBundle consumer (pre-v1)
 
 The [provider-driven synthetic consumer](examples/provider_runtime/README.md) exercises a complete **RuntimeBundle** persistent candidate using an injected four-method fact provider, two deterministic replays, verified candidate reload, and byte-for-byte baseline immutability. It is **not** the foundation sandbox CLI, a production-character launcher, a migration path, or a declaration that the current implementation imports are stable v1 APIs.
