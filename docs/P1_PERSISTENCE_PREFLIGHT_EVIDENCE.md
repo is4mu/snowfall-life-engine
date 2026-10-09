@@ -76,7 +76,9 @@ an atomic snapshot or protection against arbitrary concurrent writers.
 
 The follow-up [P1 v1 persisted-data compatibility decision RFC](P1_V1_PERSISTENCE_DECISION_RFC.md) offers explicit alternatives for v0.1.0 reads and the first v1 writer. The separate [migration transaction protocol](P1_MIGRATION_TRANSACTION_RFC.md) identifies local staging/validation, Git authority/CAS and publication/recovery responsibilities. **Both are unapproved designs**; none is a registered migration or proof that a different schema version can be written safely.
 
-**Remaining approval gates:** decide v0.1.0 readability under v1, per-family
+**Owner direction:** v1 must read verified v0.1.0 data safely, maintain the narrow legacy OperatorHistory exception, and establish an early durable format-evolution scheme. See [the evolution design](P1_PERSISTENCE_EVOLUTION_DESIGN.md) and [decision record](P1_V1_PERSISTENCE_DECISION_RFC.md). These goals are **not yet implemented in a stable 1.0 reader**.
+
+**Remaining implementation/approval gates:** prove v0.1.0 readability under actual v1 binaries, choose first-writer format, per-family
 oldest reader/newest writer, exact target and staged migration algorithm,
 verified commit/rollback semantics and public migration facade. There is no
 supported old->new transition to test yet. Copy replay is inspection evidence,

@@ -1,6 +1,8 @@
 # P1 RFC — Safe migration transaction and publication/recovery boundary
 
-**Status: REVIEW PROPOSAL, not an implemented migration, publication adapter, rollback command or stable API.** Target engine/schema versions and legacy-readability policy remain unset; see [Persistence Decision RFC](P1_V1_PERSISTENCE_DECISION_RFC.md), [Issue #9](https://github.com/is4mu/snowfall-life-engine/issues/9) and the [PR #13 preflight evidence](P1_PERSISTENCE_PREFLIGHT_EVIDENCE.md).
+**Status: REVIEW PROPOSAL, not an implemented migration, publication adapter, rollback command or stable API.** v0.1.0 read-compatibility and the narrow OperatorHistory legacy-read direction are accepted requirements; exact target engine/schema versions, initial writer format and implementation remain unset; see [Persistence Decision RFC](P1_V1_PERSISTENCE_DECISION_RFC.md), [Issue #9](https://github.com/is4mu/snowfall-life-engine/issues/9) and the [PR #13 preflight evidence](P1_PERSISTENCE_PREFLIGHT_EVIDENCE.md).
+
+See also the [Persistence Evolution Design](P1_PERSISTENCE_EVOLUTION_DESIGN.md) for a future-proof format-version strategy. **Read compatibility is not the same as an automatic format rewrite:** when the reader can understand the old saved data, merely loading it must not enter the staged-migration state machine.
 
 ## Ground truth: existing authority boundaries
 
@@ -51,7 +53,7 @@ Every deterministic phase must be exercised with the 0/1/8675309 × UTC/Asia-Tok
 
 ## Deliberate exclusions and implementation order
 
-1. First obtain owner approval on v1 legacy-reader and first-writer choices (R1/R2/R3 in the decision RFC).
+1. Apply owner direction: R1 accepts v0.1.0 readable history, R3 retains the narrow legacy exception; independently approve the *still undecided* W1/W2 first-writer format after evaluating the evolution design.
 2. Define per-family target schema/version and migration identity **only if** the chosen writer requires a format change. Preserve old goldens as frozen origin evidence.
 3. Implement pure target transformation and separately review the staged candidate creator, with failpoint tests; **not** as implicit `load_checkpoint()` mutation.
 4. Add a minimal, documented and installed `snowfall_life` migration facade only after error, type and input/output review; the existing experimental `tools.persistence_preflight` is not that facade.
