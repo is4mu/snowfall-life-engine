@@ -65,3 +65,11 @@ Initially all **future 1.x** reader/writer values in the existing manifest remai
 ## Release hard stop
 
 No `main` merge, actual Life-ref publication, release tag, stable Python API designation, mass schema-version bump, new persisted format declaration, or migration target selection is authorized by this evolution proposal. Source Draft PRs remain separate; the 1.0 release and any irreversible decisions require explicit review.
+
+## Experimental baseline implementation evidence
+
+The stacked [versioned capability evidence](P1_VERSIONED_CAPABILITY_EVIDENCE.md)
+adds the current-only 16-family reader/serializer table, explicit-target read-only
+planning, byte-identical copy conformance and executable W1/W2 constraint probes.
+Future v1 fields and first-writer selection remain unset. This advances E3 without
+claiming E4's old-to-new migration or E6's actual stable release-candidate proof.
