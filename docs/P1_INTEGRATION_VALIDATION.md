@@ -25,3 +25,7 @@ No `main` merge, package publish, release tag, schema format migration, stable 1
 ## Review checkpoint
 
 The source PRs #7/#8/#10/#11 are independent; review their net effects and resolve overlapping README edits when deliberately integrating to main. After any approved merges, regenerate this validation evidence on the resulting main/release-candidate SHA. Do **not** use a green temporary integration branch as a shortcut to an unreviewed 1.0 tag.
+
+## Complete-matrix validation trigger
+
+This temporary PR's normal Draft CI checks only Fast and publication/import integrity. To validate the combined tree with **Full plus the six hashseed/timezone cells**, briefly mark this integration PR ready, synchronize this review-only documentation, then immediately restore Draft. This is a CI trigger operation only, **not** consent to merge or release. Compare the run's exact head commit SHA to the documented integration head before interpreting results.
