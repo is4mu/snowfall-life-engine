@@ -53,6 +53,8 @@ The canonical `snowfall_life` import and `snowfall-life` CLI are under review in
 
 `snowfall-life advance` currently delegates to the **foundation sandbox** workflow; full provider-driven runtime and persistent candidate operations are separate. The package build must include the exact 37 public JSON Schemas. See the packaging CI job for isolated wheel/sdist checks.
 
+See [the standalone synthetic foundation sandbox consumer](examples/foundation_sandbox/README.md) for a full offline example of installing this prototype, creating and advancing a synthetic checkpoint, verifying it, and testing idempotent NOOP behavior. This is **not** the separate full provider-driven RuntimeBundle consumer gate.
+
 ## Local development
 
 The public baseline is validated on **Python 3.12**. A clean local setup is:
