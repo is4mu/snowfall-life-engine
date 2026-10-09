@@ -11,7 +11,7 @@ become stable* is a different decision. Parent: Issue #3; persistence: #9/#16.
 | --- | --- | --- |
 | `snowfall_life` | `ErrorCode`, `LifeEngineError`, `canonical_bytes`, `canonical_hash`, `canonical_json` | Existing small root; no runtime internals re-exported here |
 | `snowfall_life.schema` | `load_schema_document`, `validate_instance` | Existing 37 included schema resources |
-| `snowfall_life.runtime` | `RuntimeReferenceSets`, `RuntimeBundle`, `RuntimeTargetRequest`, `RuntimeFactRequestContext`, `RuntimeFactProvider`, `RuntimeDecisionProviderResult`, `RuntimeTargetAdvanceResult`, `parse_runtime_target_request`, `advance_runtime_to_target_with_provider` | Inject host-approved, call-local deterministic facts; advance an **in-memory** runtime bundle |
+| `snowfall_life.runtime` | `RuntimeReferenceSets`, `RuntimeBundle`, `RuntimeTargetRequest`, `RuntimeFactRequestContext`, `RuntimeFactProvider`, `RuntimeDecisionProviderResult`, `RuntimeTargetAdvanceResult`, `RuntimeDecisionFacts`, `RuntimeDecisionFrame`, `RuntimeDecisionTrigger`, `RuntimeMaterializationContext`, `RuntimeActivityMaterializationFacts`, `RuntimeWakeupProjectionFacts`, `SocialResponseState`, `parse_runtime_target_request`, `advance_runtime_to_target_with_provider` | Inject host-approved, call-local deterministic facts; expose **annotation types used by all four callbacks** without forcing downstream use of engine.life; advance an **in-memory** runtime bundle |
 | `snowfall_life.persistence` | `RuntimePersistentSnapshot`, `RuntimePersistenceResult`, `load_runtime_persistent_snapshot`, `build_runtime_candidate_tree_with_provider_factory` | **Read/verify** existing W1 snapshots; **stage** a deterministic provider-backed runtime candidate in a disjoint caller-owned directory |
 
 The new modules are **direct identity aliases** of the existing implementation
@@ -44,6 +44,8 @@ build_runtime_candidate_tree_with_provider_factory(
     executing_engine_commit_sha: str, life_base_sha: str,
 ) -> RuntimePersistenceResult
 ```
+
+The preview also exposes the callback's argument/result annotation types under the **same canonical runtime namespace**, so a downstream typed provider need not import `engine.life.runtime_decision`, `engine.life.activity_lifecycle`, `engine.life.activity_materialization`, or `engine.life.social_runtime` just to describe its signatures. These objects are identity aliases, not new copies.
 
 `RuntimeFactProvider` has exactly four keyword-only callbacks:
 `decision_inputs`, `materialization_facts`, `wakeup_facts`,

@@ -14,6 +14,17 @@ from pathlib import Path
 import pytest
 
 from engine.life import ErrorCode, LifeEngineError
+from engine.life.activity_lifecycle import RuntimeWakeupProjectionFacts as ImplWakeupFacts
+from engine.life.activity_materialization import (
+    RuntimeActivityMaterializationFacts as ImplMaterializationFacts,
+    RuntimeMaterializationContext as ImplMaterializationContext,
+)
+from engine.life.runtime_decision import (
+    RuntimeDecisionFacts as ImplDecisionFacts,
+    RuntimeDecisionFrame as ImplDecisionFrame,
+    RuntimeDecisionTrigger as ImplDecisionTrigger,
+)
+from engine.life.social_runtime import SocialResponseState as ImplSocial
 from engine.life.runtime_bundle import RuntimeBundle as ImplBundle, RuntimeReferenceSets as ImplReferences
 from engine.life.runtime_fact_provider import (
     RuntimeDecisionProviderResult as ImplProviderResult,
@@ -63,6 +74,13 @@ def test_exact_runtime_facade_export_and_signature_identity() -> None:
         "RuntimeFactProvider": ImplProvider,
         "RuntimeDecisionProviderResult": ImplProviderResult,
         "RuntimeTargetAdvanceResult": ImplAdvanceResult,
+        "RuntimeDecisionFacts": ImplDecisionFacts,
+        "RuntimeDecisionFrame": ImplDecisionFrame,
+        "RuntimeDecisionTrigger": ImplDecisionTrigger,
+        "RuntimeMaterializationContext": ImplMaterializationContext,
+        "RuntimeActivityMaterializationFacts": ImplMaterializationFacts,
+        "RuntimeWakeupProjectionFacts": ImplWakeupFacts,
+        "SocialResponseState": ImplSocial,
         "parse_runtime_target_request": impl_parse,
         "advance_runtime_to_target_with_provider": impl_advance,
     }

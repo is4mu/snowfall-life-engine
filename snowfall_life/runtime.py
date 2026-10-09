@@ -8,7 +8,18 @@ provided by this module. The names and types need a v1 compatibility review.
 
 from __future__ import annotations
 
+from engine.life.activity_lifecycle import RuntimeWakeupProjectionFacts
+from engine.life.activity_materialization import (
+    RuntimeActivityMaterializationFacts,
+    RuntimeMaterializationContext,
+)
 from engine.life.runtime_bundle import RuntimeBundle, RuntimeReferenceSets
+from engine.life.runtime_decision import (
+    RuntimeDecisionFacts,
+    RuntimeDecisionFrame,
+    RuntimeDecisionTrigger,
+)
+from engine.life.social_runtime import SocialResponseState
 from engine.life.runtime_fact_provider import (
     RuntimeDecisionProviderResult,
     RuntimeFactProvider,
@@ -29,6 +40,13 @@ __all__ = [
     "RuntimeFactProvider",
     "RuntimeDecisionProviderResult",
     "RuntimeTargetAdvanceResult",
+    "RuntimeDecisionFacts",
+    "RuntimeDecisionFrame",
+    "RuntimeDecisionTrigger",
+    "RuntimeMaterializationContext",
+    "RuntimeActivityMaterializationFacts",
+    "RuntimeWakeupProjectionFacts",
+    "SocialResponseState",
     "parse_runtime_target_request",
     "advance_runtime_to_target_with_provider",
 ]

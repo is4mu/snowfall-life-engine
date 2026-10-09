@@ -15,7 +15,6 @@ from pathlib import Path
 from tempfile import TemporaryDirectory
 from typing import Any, Mapping, Sequence
 
-from engine.life.activity_materialization import RuntimeMaterializationContext
 from engine.life.checkpoint import empty_checkpoint
 from engine.life.derived import default_synthetic_sleep_profile
 from engine.life.policy import load_policy
@@ -25,13 +24,16 @@ from snowfall_life.runtime import (
     RuntimeDecisionProviderResult,
     RuntimeFactRequestContext,
     RuntimeTargetRequest,
+    RuntimeMaterializationContext,
+    RuntimeDecisionFacts,
+    RuntimeDecisionFrame,
+    RuntimeDecisionTrigger,
+    SocialResponseState,
 )
 from snowfall_life.persistence import (
     build_runtime_candidate_tree_with_provider_factory,
     load_runtime_persistent_snapshot,
 )
-from engine.life.runtime_decision import RuntimeDecisionFacts, RuntimeDecisionFrame, RuntimeDecisionTrigger
-from engine.life.social_runtime import SocialResponseState
 # Fixture setup and private test-assertion utilities are deliberately not
 # part of the proposed stable public facade.
 from engine.life.runtime_persistence import snapshot_tree_bytes, write_runtime_json
