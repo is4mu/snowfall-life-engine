@@ -47,6 +47,10 @@ Current baseline:
 
 The clean public history does not expose private project Git history. The v1 boundary defines which responsibilities and contracts will become stable before 1.0.
 
+## Synthetic full RuntimeBundle consumer (pre-v1)
+
+The [provider-driven synthetic consumer](examples/provider_runtime/README.md) exercises a complete **RuntimeBundle** persistent candidate using an injected four-method fact provider, two deterministic replays, verified candidate reload, and byte-for-byte baseline immutability. It is **not** the foundation sandbox CLI, a production-character launcher, a migration path, or a declaration that the current implementation imports are stable v1 APIs.
+
 ## Local development
 
 The public baseline is validated on **Python 3.12**. A clean local setup is:
