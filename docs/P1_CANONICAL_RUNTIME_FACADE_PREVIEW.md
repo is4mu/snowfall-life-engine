@@ -108,9 +108,10 @@ stable wire-format outputs.
 ## Explicit next review gates
 
 1. Approve exact export whitelist/signatures and which typed results should
-   be public. Choose whether operator correction, spatial projection and
-   upgrade adapters need separately reviewed subfacades; **do not expose**
-   the mutable migration registry.
+   be public. Spatial data and narrow upgrade-host probe now have a **separate
+   experimental preview** ([review](P1_SPATIAL_UPGRADE_FACADE_PREVIEW.md));
+   operator correction/persistent Git candidate exports remain unapproved.
+   **Do not expose** the mutable migration registry.
 2. Finalize `engine.life` deprecation/alias window and Python support matrix.
 3. Document per-command canonical CLI stdout/stderr/error/exit semantics;
    current `snowfall-life advance` is the **Foundation sandbox**, *not*
