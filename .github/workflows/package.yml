@@ -99,6 +99,20 @@ jobs:
           PY
               "$TEST_DIR/venv/bin/snowfall-life" self-check
               "$TEST_DIR/venv/bin/python" -I -m snowfall_life self-check
+              # Prove the *installed* candidate reader preserves frozen
+              # v0.1.0 saves in each hashseed/timezone environment, and that
+              # wheel/sdist results agree without consulting source imports.
+              for seed in 0 1 8675309; do
+                for timezone in UTC Asia/Tokyo; do
+                  legacy_output="$(PYTHONHASHSEED="$seed" TZ="$timezone" "$TEST_DIR/venv/bin/python" -I "$GITHUB_WORKSPACE/examples/legacy_v010_reader/run.py")"
+                  printf '%s\n' "$legacy_output"
+                  if [ -z "${expected_legacy_output:-}" ]; then
+                    expected_legacy_output="$legacy_output"
+                  else
+                    test "$legacy_output" = "$expected_legacy_output"
+                  fi
+                done
+              done
               # Validate the full provider-backed candidate through installed
               # wheel/sdist runtime code, while supplying only public source
               # example and synthetic policy inputs.
