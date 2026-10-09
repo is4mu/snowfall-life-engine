@@ -41,7 +41,7 @@ Current invocation: `python -m engine.life.cli` (also `python -m engine.life`). 
 
 The current CLI returns 0 on success, 2 for caught `LifeEngineError` (and `argparse` uses exit 2 for argument errors). stdout is **not uniformly JSON**: `advance` prints JSON, while hash/validation/self-check commands print text. Neither diagnostic prose nor undocumented exceptional exits are stable wire contracts today.
 
-Before v1: document each canonical `snowfall-life` command's required flags, stdout/stderr, error-code meaning and exit status. Keep `bootstrap-propose`/`init-sandbox` synthetic-only. Decide whether the old `engine.life` invocation has a tested alias and a deprecation/removal window. Do not call the foundation `advance` command a full provider-driven life runtime.
+Before v1: **review** each canonical `snowfall-life` command's required flags, stdout/stderr, error-code meaning and exit status using [the executable current-CLI inventory and RC checklist](P1_CLI_RC_REVIEW.md). Keep `bootstrap-propose`/`init-sandbox` synthetic-only. Decide whether the old `engine.life` invocation has a tested alias and a deprecation/removal window. Do not call the foundation `advance` command a full provider-driven life runtime.
 
 ## Packaging acceptance gate
 

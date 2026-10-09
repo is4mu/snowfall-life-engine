@@ -113,7 +113,7 @@ stable wire-format outputs.
    operator correction/persistent Git candidate exports remain unapproved.
    **Do not expose** the mutable migration registry.
 2. Finalize `engine.life` deprecation/alias window and Python support matrix.
-3. Document per-command canonical CLI stdout/stderr/error/exit semantics;
+3. Review [current CLI behavior and error gaps](P1_CLI_RC_REVIEW.md) and select the public stdout/stderr/error/exit semantics;
    current `snowfall-life advance` is the **Foundation sandbox**, *not*
    the provider-backed persistent runtime.
 4. Build and install an **actual 1.0 RC** against unchanged v0.1.0 and W1
