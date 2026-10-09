@@ -2,12 +2,16 @@
 
 from __future__ import annotations
 
+import inspect
 import json
 import os
 import subprocess
 import sys
 
 import pytest
+
+from engine.life.runtime_fact_provider import RuntimeFactProvider
+from examples.provider_runtime.run import SyntheticFactProvider
 
 pytestmark = pytest.mark.integration
 
@@ -40,3 +44,21 @@ def test_provider_runtime_consumer_is_deterministic_across_process_environments(
         "wakeup_facts",
         "capture_source_moments",
     }
+
+
+def test_consumer_provider_matches_the_existing_keyword_only_protocol() -> None:
+    """Detect protocol drift before any facade symbol is declared stable."""
+    methods = (
+        "decision_inputs",
+        "materialization_facts",
+        "wakeup_facts",
+        "capture_source_moments",
+    )
+    for name in methods:
+        proposed = inspect.signature(getattr(SyntheticFactProvider, name))
+        protocol = inspect.signature(getattr(RuntimeFactProvider, name))
+        assert list(proposed.parameters) == list(protocol.parameters), name
+        assert all(
+            parameter.kind == list(protocol.parameters.values())[i].kind
+            for i, parameter in enumerate(proposed.parameters.values())
+        ), name

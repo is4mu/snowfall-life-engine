@@ -15,15 +15,18 @@ from pathlib import Path
 from tempfile import TemporaryDirectory
 from typing import Any, Mapping, Sequence
 
+from engine.life.activity_materialization import RuntimeMaterializationContext
 from engine.life.checkpoint import empty_checkpoint
 from engine.life.derived import default_synthetic_sleep_profile
 from engine.life.policy import load_policy
-from engine.life.runtime_bundle import RuntimeReferenceSets
+from engine.life.runtime_bundle import RuntimeBundle, RuntimeReferenceSets
+from engine.life.runtime_decision import RuntimeDecisionFacts, RuntimeDecisionFrame, RuntimeDecisionTrigger
 from engine.life.runtime_fact_provider import (
     RuntimeDecisionProviderResult,
     RuntimeFactRequestContext,
     RuntimeTargetRequest,
 )
+from engine.life.social_runtime import SocialResponseState
 from engine.life.runtime_persistence import (
     build_runtime_candidate_tree_with_provider_factory,
     load_runtime_persistent_snapshot,
@@ -214,7 +217,15 @@ class SyntheticFactProvider:
             raise AssertionError("this synthetic one-trigger example has no finalized history")
 
     def decision_inputs(
-        self, *, request_context: RuntimeFactRequestContext, **kwargs: Any
+        self,
+        *,
+        bundle: RuntimeBundle,
+        social_response_state: SocialResponseState,
+        trigger: RuntimeDecisionTrigger,
+        behavior_policy: Mapping[str, Any],
+        reference_sets: RuntimeReferenceSets,
+        target_request: RuntimeTargetRequest,
+        request_context: RuntimeFactRequestContext,
     ) -> RuntimeDecisionProviderResult:
         self._record("decision_inputs", request_context)
         return RuntimeDecisionProviderResult(
@@ -231,13 +242,25 @@ class SyntheticFactProvider:
         )
 
     def materialization_facts(
-        self, *, frame: Any, request_context: RuntimeFactRequestContext, **kwargs: Any
+        self,
+        *,
+        bundle: RuntimeBundle,
+        social_response_state: SocialResponseState,
+        frame: RuntimeDecisionFrame,
+        context: RuntimeMaterializationContext,
+        decision_facts: RuntimeDecisionFacts | Mapping[str, Any],
+        behavior_policy: Mapping[str, Any],
+        reference_sets: RuntimeReferenceSets,
+        target_request: RuntimeTargetRequest,
+        request_context: RuntimeFactRequestContext,
     ) -> Mapping[str, Any]:
         self._record("materialization_facts", request_context)
         if frame.selected_candidate is None:
             raise AssertionError("expected one selected household candidate")
         if frame.selected_candidate.action_kind != "HOUSEHOLD":
             raise AssertionError("synthetic input should select HOUSEHOLD")
+        if context.pending_immediate_accept is not None:
+            raise AssertionError("synthetic household path cannot accept social invitation")
         return {
             "selected_candidate_id": frame.selected_candidate.candidate_id,
             "base_activity_class": "LIGHT_ACTIVE",
@@ -249,7 +272,15 @@ class SyntheticFactProvider:
         }
 
     def wakeup_facts(
-        self, *, request_context: RuntimeFactRequestContext, **kwargs: Any
+        self,
+        *,
+        bundle: RuntimeBundle,
+        active_activity: Mapping[str, Any],
+        as_of: str,
+        behavior_policy: Mapping[str, Any],
+        reference_sets: RuntimeReferenceSets,
+        target_request: RuntimeTargetRequest,
+        request_context: RuntimeFactRequestContext,
     ) -> Mapping[str, Any]:
         self._record("wakeup_facts", request_context)
         return {
@@ -264,7 +295,14 @@ class SyntheticFactProvider:
         }
 
     def capture_source_moments(
-        self, **kwargs: Any
+        self,
+        *,
+        bundle: RuntimeBundle,
+        active_activity: Mapping[str, Any],
+        from_time: str,
+        target_time: str,
+        character_source_sha: str,
+        target_request: RuntimeTargetRequest,
     ) -> Sequence[Mapping[str, Any]]:
         self.calls.append("capture_source_moments")
         return ()
