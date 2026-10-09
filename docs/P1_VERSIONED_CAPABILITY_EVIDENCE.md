@@ -146,3 +146,12 @@ needed; define public errors/facade and support policy; then run the **actual 1.
 release candidate** through installed backward-read/target-write/restart/long-horizon
 and six-environment gates. No merge, release, live saved-data change, P0 or
 Character Creator work is included.
+
+## Subsequent authorized experiments
+
+[W1 actual save/reload evidence](P1_W1_WRITE_RELOAD_EVIDENCE.md) exercises a
+real correction writer against unchanged historical synthetic source.
+[W1/W2 comparison and RC gates](P1_W1_W2_COMPARISON_AND_RC_GATES.md) records
+the detached synthetic W2 transaction/recovery laboratory and remaining
+production-format, facade and actual-v1 approval gates. The original capability
+table, null stable-v1 fields and empty migration registry remain unchanged.
