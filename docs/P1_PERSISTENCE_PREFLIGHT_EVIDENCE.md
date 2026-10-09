@@ -72,6 +72,10 @@ an atomic snapshot or protection against arbitrary concurrent writers.
   with branch coverage once, including 72h restart equivalence, 28d structural
   and 90d invariant suites. Existing package/provider CI continues independently.
 
+## Next review: v1 policy and transaction protocol
+
+The follow-up [P1 v1 persisted-data compatibility decision RFC](P1_V1_PERSISTENCE_DECISION_RFC.md) offers explicit alternatives for v0.1.0 reads and the first v1 writer. The separate [migration transaction protocol](P1_MIGRATION_TRANSACTION_RFC.md) identifies local staging/validation, Git authority/CAS and publication/recovery responsibilities. **Both are unapproved designs**; none is a registered migration or proof that a different schema version can be written safely.
+
 **Remaining approval gates:** decide v0.1.0 readability under v1, per-family
 oldest reader/newest writer, exact target and staged migration algorithm,
 verified commit/rollback semantics and public migration facade. There is no
