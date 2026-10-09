@@ -1,0 +1,58 @@
+{
+  "status": "VERIFIED_CURRENT_FORMAT",
+  "source_engine": "0.1.0-foundation",
+  "target_engine": "0.1.0-foundation",
+  "migration_available": false,
+  "file_sha256": {
+    "camera-roll/records/2026-03.json": "6b92d8138883427da82c47ceca96c57f9cbb30b5523fdf94ab8182bed0ccd50e",
+    "consumables/state.json": "4dd6d4b6ebdf74b1d42dc11ca75d1708ab98f0d2dfa7f66e4e99c47ad31b6741",
+    "finance/state.json": "379b395cabfe700b27d8e560d9af86b00782a9c2bf96a342370cd31810f72fd9",
+    "home/state.json": "95f319078fe27df785557bcdffef413b6619974ef4d0e2ad4cbe1bba93faa8d2",
+    "operator/actions/4ef4c1a327d11946c391ec182c7aa4a31c22a0fff1ff49f057ff61c56853b7c8.json": "ea0ff31327831c8b08cde332630587d7eb8814c20dd9490948eb2d7c403c1e85",
+    "operator/actions/5e0c30099d7dacd53aa5a122d658c4652e4f1220f693151b2594edd12b2dfa2b.json": "3741022b2ca8b33e7f10205140db8328009923b7b8483bf22e65db01f75f6f70",
+    "relations/state.json": "8e9b7b9a972e691cd3a3ef2edbe4540c9094452c9cacc7396ccdfc1e094e8082",
+    "schedule/state.json": "51ccf5ec74e3cdb913fd3cf6b251d38b26ea14cb3efb14c862562063b9fb594a",
+    "state/current.json": "aab74d238467f5bc08a217e8a7e5925aa25e6a28280c6864608814461c860ff8",
+    "state/last-operator-action.json": "40edc8cc33138e1484a18a5da21229021635e791b7260f445d2763dcdbf206b5",
+    "state/last-run.json": "b8aabf5e9aa52ab5616f64e3e7b8d4930a43709d448c5e99f0d416bad241c7dd",
+    "state/operator-history.json": "4599d4ee92c4850a556cf4a2e578d869445d2463597107f7688527d143c091b4",
+    "state/social-responses.json": "6b4b04cb58741b63311f43bf3749b69eeb25e1de424d2f02600e7e44de2a9561",
+    "timeline/2026-03-15.json": "341c34997260ab9da502ec573502ab561c71e0fd2e634ec1b87ed6e6e526a2e0",
+    "wardrobe/state.json": "92e70e73592302328bb5f52d6bf0a0db9977bb2e3d2689f75cff9315ed9d9d36"
+  },
+  "semantic_tree_hash": "6746b4c016a932fc670a0935df06abd501f27422288e6fed04f6c66053e38177",
+  "history": {
+    "head_event_id": "actual-event:cb7c3346be03802cc974648dd6f028be",
+    "history_hash": "37fb01dcdaa7826dd24fd91dca4be8ef1935ac5573bb062160cdcfa9b277b5b4",
+    "event_count": 1
+  },
+  "operator_history": {
+    "schema_version": 1,
+    "head_action_id": "5e0c30099d7dacd53aa5a122d658c4652e4f1220f693151b2594edd12b2dfa2b",
+    "operator_history_hash": "25005b157d87b660637a7073aed0d7117e41ed735be748e1abb8bdb13e23114b",
+    "action_count": 2
+  },
+  "event_ids": [
+    "actual-event:cb7c3346be03802cc974648dd6f028be"
+  ],
+  "effective_events_hash": "b57494422d898c8bd16d5168e814b2a63361bdd019696481687dd6d26a73932e",
+  "capture_ids": [
+    "capture:4ae04969c66566f51b163660b75730a4"
+  ],
+  "action_ids": [
+    "4ef4c1a327d11946c391ec182c7aa4a31c22a0fff1ff49f057ff61c56853b7c8",
+    "5e0c30099d7dacd53aa5a122d658c4652e4f1220f693151b2594edd12b2dfa2b"
+  ],
+  "correction_lineage": [
+    {
+      "action_id": "4ef4c1a327d11946c391ec182c7aa4a31c22a0fff1ff49f057ff61c56853b7c8",
+      "target_event_id": "actual-event:cb7c3346be03802cc974648dd6f028be",
+      "supersedes_action_id": null
+    },
+    {
+      "action_id": "5e0c30099d7dacd53aa5a122d658c4652e4f1220f693151b2594edd12b2dfa2b",
+      "target_event_id": "actual-event:cb7c3346be03802cc974648dd6f028be",
+      "supersedes_action_id": "4ef4c1a327d11946c391ec182c7aa4a31c22a0fff1ff49f057ff61c56853b7c8"
+    }
+  ]
+}

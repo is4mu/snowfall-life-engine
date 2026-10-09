@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "domain": "wardrobe",
+  "character_id": "fixture-character",
+  "as_of": "2026-04-15T12:00:00+09:00",
+  "provenance": {
+    "origin": "SIMULATION_BOOTSTRAP",
+    "notes": "public-synthetic-runtime-bundle"
+  },
+  "revision": "4eb366902289c269388a2f7744eb99458c4397c1266b85bead98e21279eae11d",
+  "state_hash": "4eb366902289c269388a2f7744eb99458c4397c1266b85bead98e21279eae11d",
+  "items": [
+    {
+      "item_id": "item-tee",
+      "lifecycle_state": "CLEAN_AVAILABLE",
+      "last_worn_at": null,
+      "wear_count_since_clean": 0,
+      "location_ref": null
+    }
+  ]
+}

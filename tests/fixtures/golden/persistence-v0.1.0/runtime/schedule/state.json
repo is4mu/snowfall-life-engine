@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "character_id": "fixture-character",
+  "as_of": "2026-04-15T12:00:00+09:00",
+  "commitments": [],
+  "obligation_tasks": [],
+  "revision": "6150a94c9b3519ff6b90e6d66df28559ea50623694f77daa4972802fab264506",
+  "state_hash": "6150a94c9b3519ff6b90e6d66df28559ea50623694f77daa4972802fab264506"
+}

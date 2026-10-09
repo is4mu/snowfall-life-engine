@@ -34,3 +34,12 @@ These tests intentionally **do not** register migrations, change persistent sche
 ## Explicit boundary
 
 All data and tests are generic, synthetic and source-backed. No production authority, private canon, Character Creator, LLM/media behavior or remote GitHub Life-ref publisher enters this repository. This proposal remains a Draft until the compatibility guarantees are agreed, implemented and tested; no merge/release/API stability decision is implied.
+
+## Current-format golden/preflight evidence
+
+The stacked [P1 preflight evidence](P1_PERSISTENCE_PREFLIGHT_EVIDENCE.md) adds
+frozen synthetic records and digests for all 16 families, a read-only
+current-to-current inspection tool, six-environment copy replay and failure
+injection. It does not fill the unresolved v1 fields or implement an old-to-new
+migration. R3's upgrade/commit algorithm and the compatibility decisions remain
+open; the current-format subset of R4 now has concrete golden vectors.
