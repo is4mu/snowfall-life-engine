@@ -10,8 +10,22 @@ import sys
 
 import pytest
 
-from engine.life.runtime_fact_provider import RuntimeFactProvider
-from examples.provider_runtime.run import SyntheticFactProvider
+from engine.life.errors import ErrorCode, LifeEngineError
+from engine.life.policy import load_policy
+from engine.life.runtime_fact_provider import RuntimeFactProvider, RuntimeTargetRequest
+from engine.life.runtime_persistence import (
+    build_runtime_candidate_tree_with_provider_factory,
+    snapshot_tree_bytes,
+)
+from examples.provider_runtime.run import (
+    AS_OF,
+    ENGINE_SHA,
+    LIFE_BASE_SHA,
+    POLICY_FILE,
+    SyntheticFactProvider,
+    _reference_sets,
+    _write_baseline,
+)
 
 pytestmark = pytest.mark.integration
 
@@ -62,3 +76,40 @@ def test_consumer_provider_matches_the_existing_keyword_only_protocol() -> None:
             parameter.kind == list(protocol.parameters.values())[i].kind
             for i, parameter in enumerate(proposed.parameters.values())
         ), name
+
+
+def test_unexpected_provider_return_fails_closed_without_baseline_writes(tmp_path) -> None:
+    """Malformed host output is rejected before any source-tree commit."""
+    policy = load_policy(POLICY_FILE)
+    baseline = tmp_path / "baseline"
+    _write_baseline(baseline, policy["behavior_policy_version"])
+    before = snapshot_tree_bytes(baseline)
+    requested: list[object] = []
+
+    class InvalidProvider(SyntheticFactProvider):
+        def decision_inputs(self, **kwargs):
+            requested.append(kwargs["request_context"].history_context_hash)
+            return {"decision_facts": {}, "social_facts": {}}  # not the required result type
+
+    def factory(snapshot):
+        assert snapshot.bundle.current_state["character_id"] == "fixture-character"
+        return InvalidProvider()
+
+    with pytest.raises(LifeEngineError) as caught:
+        build_runtime_candidate_tree_with_provider_factory(
+            baseline_root=baseline,
+            candidate_root=tmp_path / "rejected-candidate",
+            reference_sets=_reference_sets(),
+            behavior_policy=policy,
+            target_request=RuntimeTargetRequest(
+                target_time=AS_OF,
+                event_budget=20,
+                character_source_sha="synthetic-character-source-id",
+            ),
+            fact_provider_factory=factory,
+            executing_engine_commit_sha=ENGINE_SHA,
+            life_base_sha=LIFE_BASE_SHA,
+        )
+    assert caught.value.code is ErrorCode.INVALID_STATE
+    assert len(requested) == 1
+    assert snapshot_tree_bytes(baseline) == before
