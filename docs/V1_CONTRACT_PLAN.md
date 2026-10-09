@@ -4,6 +4,8 @@ Status: **review proposal**, 2026-10-08. This document is **not** a stable API d
 
 Authority: [V1_BOUNDARY.md](V1_BOUNDARY.md) (frozen responsibility boundary); [Issue #3](https://github.com/is4mu/snowfall-life-engine/issues/3) (remaining readiness work). The `v0.1.0` release is the semantic reference baseline, not a promise that all importable `engine.life.*` modules are public API.
 
+For pending 1.0 approval decisions, CI evidence and Draft PR merge dependencies, see [P1 v1 Readiness Decision Matrix](P1_V1_READINESS_DECISION_MATRIX.md). It records review options, not accepted API promises.
+
 ## Detailed contract reviews
 
 - [Minimal Python/CLI facade proposal](V1_PUBLIC_API_PROPOSAL.md)
