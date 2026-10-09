@@ -66,7 +66,8 @@ jobs:
           test -n "$WHEEL" && test -n "$SDIST"
           # A single temporary reference binds results across both archive forms.
           LEGACY_EXPECTED="$(mktemp)"
-          trap 'rm -f "$LEGACY_EXPECTED"' EXIT
+          W1_EXPECTED="$(mktemp)"
+          trap 'rm -f "$LEGACY_EXPECTED" "$W1_EXPECTED"' EXIT
           for artifact in "$WHEEL" "$SDIST"; do
             TEST_DIR="$(mktemp -d)"
             python -m venv "$TEST_DIR/venv"
@@ -114,6 +115,17 @@ jobs:
                   else
                     test "$legacy_output" = "$(cat "$LEGACY_EXPECTED")"
                   fi
+                  w1_output="$(PYTHONHASHSEED="$seed" TZ="$timezone" "$TEST_DIR/venv/bin/python" -I "$GITHUB_WORKSPACE/examples/w1_persistence/run.py")"
+                  if [ ! -s "$W1_EXPECTED" ]; then
+                    printf '%s\n' "$w1_output" > "$W1_EXPECTED"
+                  else
+                    test "$w1_output" = "$(cat "$W1_EXPECTED")"
+                  fi
+                  "$TEST_DIR/venv/bin/python" - "$W1_EXPECTED" "$GITHUB_WORKSPACE/tests/fixtures/golden/w1-write-reload.experimental.json" <<'PYW1'
+          import json, sys
+          from pathlib import Path
+          assert json.loads(Path(sys.argv[1]).read_text()) == json.loads(Path(sys.argv[2]).read_text())
+          PYW1
                 done
               done
               # Validate the full provider-backed candidate through installed
