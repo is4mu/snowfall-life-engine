@@ -1,0 +1,230 @@
+name: P1 private 1.0 RC install rehearsal
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  isolated-rc:
+    name: Ephemeral 1.0.0rc1 wheel/sdist W1 compatibility
+    # Expensive isolated RC check only for a deliberately named Draft branch.
+    if: startsWith(github.head_ref, 'p1/v1-rc-')
+    runs-on: ubuntu-latest
+    env:
+      RC_VERSION: "1.0.0rc1"
+      SOURCE_HEAD: ${{ github.event.pull_request.head.sha }}
+      PYTHONDONTWRITEBYTECODE: "1"
+    steps:
+      - name: Checkout exact PR head without credentials
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
+
+      - name: Setup Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Isolate source and patch ONLY temporary package metadata
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$SOURCE_HEAD"
+          test -z "$(git status --porcelain=v1 -uno)"
+          test "$(grep -c '^version = "0.2.0.dev0"$' pyproject.toml)" = 1
+          SRC="$RUNNER_TEMP/snowfall-rc-source"
+          mkdir -p "$SRC"
+          git archive --format=tar HEAD | tar -x -C "$SRC"
+          RC_SOURCE="$SRC" python - <<'PY'
+          import os
+          from pathlib import Path
+          source = Path(os.environ["GITHUB_WORKSPACE"])
+          scratch = Path(os.environ["RC_SOURCE"])
+          original = (source / "pyproject.toml").read_text()
+          assert original.count('version = "0.2.0.dev0"') == 1
+          assert (scratch / "pyproject.toml").read_text() == original
+          for item in scratch.rglob("*"):
+              if item.is_file() and item.name != "pyproject.toml":
+                  assert item.read_bytes() == (source / item.relative_to(scratch)).read_bytes()
+          (scratch / "pyproject.toml").write_text(
+              original.replace('version = "0.2.0.dev0"', 'version = "1.0.0rc1"')
+          )
+          assert (source / "pyproject.toml").read_text() == original
+          print("verified: source SHA unchanged, only temporary pyproject version differs")
+          PY
+          grep -F 'version = "0.2.0.dev0"' pyproject.toml
+          grep -F 'version = "1.0.0rc1"' "$SRC/pyproject.toml"
+
+      - name: Build candidate wheel and sdist in scratch (NEVER publish)
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check build
+          mkdir -p "$RUNNER_TEMP/snowfall-rc-dist"
+          (
+            cd "$RUNNER_TEMP/snowfall-rc-source"
+            python -m build --wheel --sdist --outdir "$RUNNER_TEMP/snowfall-rc-dist"
+          )
+          RC_DIST="$RUNNER_TEMP/snowfall-rc-dist" python - <<'PY'
+          import os
+          from pathlib import Path
+          import zipfile
+          import tarfile
+          dist = Path(os.environ["RC_DIST"])
+          wheel, = tuple(dist.glob("*.whl"))
+          sdist, = tuple(dist.glob("*.tar.gz"))
+          forbidden = (
+              "runtime_production_authority.py",
+              "runtime_production_composition.py",
+              "runtime_production_fact_provider.py",
+              "runtime_production_fact_sources.py",
+              "runtime_production_launcher.py",
+              "runtime_operator_launcher.py",
+              "runtime_remote_publisher.py",
+          )
+          with zipfile.ZipFile(wheel) as archive:
+              names = archive.namelist()
+              required = (
+                  "snowfall_life/__init__.py", "snowfall_life/schema.py",
+                  "snowfall_life/runtime.py", "snowfall_life/persistence.py",
+                  "snowfall_life/spatial.py", "engine/life/runtime_persistence.py",
+              )
+              assert all(name in names for name in required)
+              schemas = [name for name in names if name.startswith(
+                  "engine/life/_schemas/") and name.endswith(".schema.json")]
+              assert len(schemas) == 37
+              assert not any(name.endswith(bad) for name in names for bad in forbidden)
+              metadata, = [name for name in names if name.endswith(".dist-info/METADATA")]
+              text = archive.read(metadata).decode("utf-8").replace("\r\n", "\n")
+              assert "Version: 1.0.0rc1\n" in text
+          with tarfile.open(sdist, "r:gz") as archive:
+              names = archive.getnames()
+              assert not any(name.endswith(bad) for name in names for bad in forbidden)
+              pyproject, = [name for name in names if name.endswith("/pyproject.toml")]
+              handle = archive.extractfile(pyproject)
+              assert handle is not None
+              assert 'version = "1.0.0rc1"' in handle.read().decode("utf-8")
+          print("private RC archives verified: 1 wheel, 1 sdist, 37 schemas")
+          PY
+          sha256sum "$RUNNER_TEMP"/snowfall-rc-dist/*
+
+      - name: Install both RC archives in clean environments and check W1
+        shell: bash
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
+          WHEELS=("$RUNNER_TEMP"/snowfall-rc-dist/*.whl)
+          SDISTS=("$RUNNER_TEMP"/snowfall-rc-dist/*.tar.gz)
+          test "${#WHEELS[@]}" -eq 1
+          test "${#SDISTS[@]}" -eq 1
+          GOLDEN_OUTPUT="$RUNNER_TEMP/legacy-rc-output.json"
+          PROVIDER_OUTPUT="$RUNNER_TEMP/provider-rc-output.json"
+          for archive in "${WHEELS[0]}" "${SDISTS[0]}"; do
+            RUN_DIR="$(mktemp -d "$RUNNER_TEMP/rc-installed.XXXXXX")"
+            python -m venv "$RUN_DIR/venv"
+            "$RUN_DIR/venv/bin/python" -m pip install --disable-pip-version-check "$archive"
+            (
+              cd "$RUN_DIR"
+              RC_SCOPE="$GITHUB_WORKSPACE/oss/p1-v1-basic-api-scope.json" \
+                "$RUN_DIR/venv/bin/python" -I - <<'PY'
+          import importlib
+          import importlib.metadata
+          import json
+          import os
+          from pathlib import Path
+          from engine.life import ENGINE_VERSION
+          from engine.life.schema import SCHEMA_NAMES
+          from snowfall_life import ErrorCode, LifeEngineError
+          from snowfall_life.schema import load_schema_document, validate_instance
+          assert importlib.metadata.version("snowfall-life-engine") == "1.0.0rc1"
+          assert ENGINE_VERSION == "0.1.0-foundation"
+          record = json.loads(Path(os.environ["RC_SCOPE"]).read_text())
+          assert record["intended_first_v1_writer"] == "W1"
+          assert record["exact_public_signatures_approved"] is False
+          assert record["release_candidate_passed"] is False
+          modules = record["candidate_public_python_modules"]
+          assert set(modules) == {
+              "snowfall_life", "snowfall_life.schema", "snowfall_life.runtime",
+              "snowfall_life.persistence", "snowfall_life.spatial",
+          }
+          for name, symbols in modules.items():
+              module = importlib.import_module(name)
+              assert set(module.__all__) == set(symbols), name
+              assert "site-packages" in str(Path(module.__file__).resolve()), name
+          assert "snowfall_life.upgrade" in record["excluded_from_initial_stability"]
+          assert len(SCHEMA_NAMES) == 37
+          for schema_name in SCHEMA_NAMES:
+              assert load_schema_document(schema_name)["$id"].startswith(
+                  "https://snowfall-life-engine.invalid/schemas/life/"
+              )
+          try:
+              validate_instance({}, "current_state")
+          except LifeEngineError as exc:
+              assert exc.code is ErrorCode.SCHEMA_INVALID
+          else:
+              raise AssertionError("invalid save unexpectedly validated")
+          print("isolated installed 1.0.0rc1: five core modules and 37 schemas OK")
+          PY
+              "$RUN_DIR/venv/bin/snowfall-life" self-check
+              "$RUN_DIR/venv/bin/python" -I -m snowfall_life self-check
+
+              # 3 hash seeds x 2 timezones, for wheel and sdist (12 runs).
+              # Legacy probe also runs W1 correction writer + restart golden.
+              for seed in 0 1 8675309; do
+                for timezone in UTC Asia/Tokyo; do
+                  result="$(
+                    PYTHONHASHSEED="$seed" TZ="$timezone" \
+                      "$RUN_DIR/venv/bin/python" -I \
+                      "$GITHUB_WORKSPACE/examples/legacy_v010_reader/run.py"
+                  )"
+                  echo "$result"
+                  if [ ! -f "$GOLDEN_OUTPUT" ]; then
+                    printf '%s\n' "$result" > "$GOLDEN_OUTPUT"
+                  else
+                    test "$result" = "$(cat "$GOLDEN_OUTPUT")"
+                  fi
+                done
+              done
+
+              provider="$(
+                PYTHONHASHSEED=0 TZ=UTC \
+                  "$RUN_DIR/venv/bin/python" -I \
+                  "$GITHUB_WORKSPACE/examples/provider_runtime/run.py"
+              )"
+              if [ ! -f "$PROVIDER_OUTPUT" ]; then
+                printf '%s\n' "$provider" > "$PROVIDER_OUTPUT"
+              else
+                test "$provider" = "$(cat "$PROVIDER_OUTPUT")"
+              fi
+              PROVIDER_JSON="$PROVIDER_OUTPUT" "$RUN_DIR/venv/bin/python" -I - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+          data = json.loads(Path(os.environ["PROVIDER_JSON"]).read_text())
+          assert data["status"] == "PASS" and data["result"] == "CHANGE"
+          assert data["engine_version"] == "0.1.0-foundation"
+          assert data["baseline_unchanged"] and data["byte_identical_replay"]
+          assert len(set(data["callback_sequence"])) == 4
+          assert len(data["semantic_tree_hash"]) == 64
+          PY
+            )
+          done
+          test -f "$GOLDEN_OUTPUT"
+          test -f "$PROVIDER_OUTPUT"
+          echo "Both private RC archives pass legacy/W1 and full Provider replay"
+
+      - name: Verify checkout unchanged and record private artifact digests
+        shell: bash
+        run: |
+          set -euo pipefail
+          git diff --exit-code -- pyproject.toml engine/life snowfall_life
+          grep -F 'version = "0.2.0.dev0"' pyproject.toml
+          echo "### Unpublished 1.0.0rc1 rehearsal — no tag or artifact upload" >> "$GITHUB_STEP_SUMMARY"
+          echo "Source SHA: $SOURCE_HEAD; installed Python: 3.12" >> "$GITHUB_STEP_SUMMARY"
+          echo "Persisted epoch: 0.1.0-foundation (W1, 16 family schema-v1)" >> "$GITHUB_STEP_SUMMARY"
+          echo "Both RC archives: 12 legacy/W1 replays, Provider, 37 schemas" >> "$GITHUB_STEP_SUMMARY"
+          echo "Runner-only artifact SHA256:" >> "$GITHUB_STEP_SUMMARY"
+          sha256sum "$RUNNER_TEMP"/snowfall-rc-dist/* >> "$GITHUB_STEP_SUMMARY"

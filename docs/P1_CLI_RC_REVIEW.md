@@ -81,7 +81,9 @@ symbol stable.
    authorization for `main` merge, stable contract designation, tag/release
    and any production publication. Each authorization is distinct.
 
-**Today no actual 1.0 RC archive exists in this Draft.** A green
-`0.2.0.dev0` pre-v1 wheel/sdist cannot be relabeled as validated 1.0.
+**Follow-up:** An [ephemeral 1.0.0rc1 rehearsal](P1_PRIVATE_RC_REHEARSAL.md)
+now builds actual 1.0rc1-versioned wheel/sdist **only in CI scratch** and tests
+their installed behavior. This is not a final reviewed stable RC nor permission
+to publish. A green `0.2.0.dev0` wheel cannot simply be relabeled 1.0.
 No private Snowfall/Character Creator data, live refs, current schemas or
 original W1/legacy goldens are modified.

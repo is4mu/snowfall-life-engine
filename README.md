@@ -74,7 +74,7 @@ The [pre-v1 CLI behavior/1.0 RC review checklist](docs/P1_CLI_RC_REVIEW.md)
 distinguishes the seven Foundation sandbox commands from the full provider
 runtime. It is a **candidate error/exit contract**, not a 1.0 release.
 
-**First-1.0 scope:** The owner selected [basic stable-functionality first](docs/P1_V1_BASIC_API_SCOPE.md): deterministic provider runtime, safe W1 read/stage and sealed spatial validation. Complex upgrade/recovery stays experimental. This selects **functional scope**, not exact public ABI or a released 1.0 binary.
+**First-1.0 scope:** The owner selected [basic stable-functionality first](docs/P1_V1_BASIC_API_SCOPE.md): deterministic provider runtime, safe W1 read/stage and sealed spatial validation. Complex upgrade/recovery stays experimental. The [private 1.0.0rc1 rehearsal](docs/P1_PRIVATE_RC_REHEARSAL.md) tests ephemeral package artifacts without publishing them. This selects **functional scope**, not exact public ABI or a released 1.0 binary.
 
 ## Synthetic full RuntimeBundle consumer (pre-v1)
 
