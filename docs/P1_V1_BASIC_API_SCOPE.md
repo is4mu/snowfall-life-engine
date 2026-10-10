@@ -63,7 +63,7 @@ renumbering, no new on-disk envelope. Existing 16 schema-v1 families and
    candidate stable module set **merely because it remains importable**.
 3. Preserve the 16-family W1 identity, immutable v0.1.0 goldens, full
    four-callback Provider consumer and strict spatial authority.
-4. Probe actual installed **non-published 1.0.0rc1 wheel and sdist**, using
+4. Probe [actual installed **non-published 1.0.0rc1 wheel and sdist**](P1_PRIVATE_RC_REHEARSAL.md), using
    the reviewed candidate canonical imports and fresh Python 3.12 venvs.
    Do not rename/freeze `engine_version`; do not regenerate goldens.
 5. Re-run Fast, Full/coverage + 72h/28d/90d and all six determinism matrix
