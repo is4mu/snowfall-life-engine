@@ -1,0 +1,82 @@
+{
+  "record_version": 1,
+  "status": "owner-approved-scope; exact-API-ABI-and-release-unapproved",
+  "approved_on": "2026-10-10",
+  "principle": "stable-1.0-essentials-only; defer-complex-upgrade-and-recovery",
+  "intended_first_v1_writer": "W1",
+  "persisted_engine_epoch": "0.1.0-foundation",
+  "stored_family_schema_version": 1,
+  "stored_family_count": 16,
+  "candidate_public_python_modules": {
+    "snowfall_life": [
+      "ErrorCode",
+      "LifeEngineError",
+      "canonical_bytes",
+      "canonical_hash",
+      "canonical_json"
+    ],
+    "snowfall_life.schema": [
+      "load_schema_document",
+      "validate_instance"
+    ],
+    "snowfall_life.runtime": [
+      "RuntimeBundle",
+      "RuntimeReferenceSets",
+      "RuntimeTargetRequest",
+      "RuntimeFactRequestContext",
+      "RuntimeFactProvider",
+      "RuntimeDecisionProviderResult",
+      "RuntimeTargetAdvanceResult",
+      "RuntimeDecisionFacts",
+      "RuntimeDecisionFrame",
+      "RuntimeDecisionTrigger",
+      "RuntimeMaterializationContext",
+      "RuntimeActivityMaterializationFacts",
+      "RuntimeWakeupProjectionFacts",
+      "SocialResponseState",
+      "parse_runtime_target_request",
+      "advance_runtime_to_target_with_provider"
+    ],
+    "snowfall_life.persistence": [
+      "RuntimePersistentSnapshot",
+      "RuntimePersistenceResult",
+      "load_runtime_persistent_snapshot",
+      "build_runtime_candidate_tree_with_provider_factory"
+    ],
+    "snowfall_life.spatial": [
+      "build_spatial_context",
+      "validate_spatial_context",
+      "project_spatial_runtime_decision_facts",
+      "project_spatial_runtime_target_inputs"
+    ]
+  },
+  "candidate_basic_cli": [
+    "self-check",
+    "validate",
+    "canonical-hash"
+  ],
+  "preview_or_sandbox_only_cli": [
+    "init-sandbox",
+    "bootstrap-propose",
+    "advance",
+    "verify-workspace"
+  ],
+  "excluded_from_initial_stability": [
+    "snowfall_life.upgrade",
+    "engine.life.operator_git_transaction",
+    "engine.life.operator_upgrade",
+    "engine.life.versioning.register_migration",
+    "direct-Git-CAS-publication",
+    "automatic-W2-migration",
+    "private-production-application-connectors"
+  ],
+  "old_engine_life_import": "keep-functional-for-v0.1.0-consumers; explicit-support-window-awaits-review",
+  "python_release_candidate_interpreter": "3.12",
+  "exact_public_signatures_approved": false,
+  "stable_cli_error_contract_approved": false,
+  "release_candidate_passed": false,
+  "stable_v1_published": false,
+  "merge_main_authorized": false,
+  "release_tag_authorized": false,
+  "private_life_ref_publication_authorized": false
+}

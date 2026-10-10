@@ -1,6 +1,6 @@
 # P1 pre-v1 canonical CLI + actual 1.0 release-candidate review gates
 
-**Status: behavior inventory and reversible regression tests — not a stable
+**Owner scope direction: only `self-check`, `validate`, `canonical-hash` are basic initial-1.0 CLI candidates; remaining Foundation sandbox commands are not stable-provider-runtime APIs.** See [scope](P1_V1_BASIC_API_SCOPE.md). The following is still a behavior inventory and reversible regression tests — not a stable
 wire protocol, approved deprecation window, actual 1.0 RC or release.**
 Source: existing `engine.life.cli`, delegated by `snowfall_life.cli`
 in the unreleased `0.2.0.dev0` preview. P1 parent: Issue #3.

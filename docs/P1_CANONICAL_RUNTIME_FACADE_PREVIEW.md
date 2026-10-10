@@ -1,6 +1,6 @@
 # P1 canonical RuntimeBundle facade — pre-1.0 preview
 
-**Status:** reversible Draft implementation proposal only. Neither `snowfall_life.runtime`
+**Status:** owner-approved **basic feature scope**, but reversible Draft implementation / exact API whitelist/signatures **still review-only**. See [v1 scope decision](P1_V1_BASIC_API_SCOPE.md). Neither `snowfall_life.runtime`
 nor `snowfall_life.persistence` is yet a **stable 1.x Python API**. The first
 v1 writer **format W1 is already owner-selected**; *which Python symbols/signatures
 become stable* is a different decision. Parent: Issue #3; persistence: #9/#16.

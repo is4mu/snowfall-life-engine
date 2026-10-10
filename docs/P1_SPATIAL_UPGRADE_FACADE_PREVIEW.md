@@ -1,6 +1,6 @@
 # P1 SpatialContext and upgrade-host facades (pre-v1 review)
 
-This Draft adds two **small identity-alias subfacades** on top of the
+**Owner scope choice (2026-10-10):** spatial data validation/projection is part of the initial 1.0 basic API target; the upgrade-host probe remains **experimental/importable but not stable in 1.0**. This Draft adds two **small identity-alias subfacades** on top of the
 [canonical runtime/persistence preview](P1_CANONICAL_RUNTIME_FACADE_PREVIEW.md).
 Neither is an approved stable v1 API, a live host adapter, or an authorization
 to publish/write the production Life ref. All inputs are synthetic in tests.

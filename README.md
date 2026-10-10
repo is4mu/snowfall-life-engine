@@ -74,6 +74,8 @@ The [pre-v1 CLI behavior/1.0 RC review checklist](docs/P1_CLI_RC_REVIEW.md)
 distinguishes the seven Foundation sandbox commands from the full provider
 runtime. It is a **candidate error/exit contract**, not a 1.0 release.
 
+**First-1.0 scope:** The owner selected [basic stable-functionality first](docs/P1_V1_BASIC_API_SCOPE.md): deterministic provider runtime, safe W1 read/stage and sealed spatial validation. Complex upgrade/recovery stays experimental. This selects **functional scope**, not exact public ABI or a released 1.0 binary.
+
 ## Synthetic full RuntimeBundle consumer (pre-v1)
 
 The [provider-driven synthetic consumer](examples/provider_runtime/README.md) exercises a complete **RuntimeBundle** persistent candidate using an injected four-method fact provider, two deterministic replays, verified candidate reload, and byte-for-byte baseline immutability. It is **not** the foundation sandbox CLI, a production-character launcher, a migration path, or a declaration that the current implementation imports are stable v1 APIs.
