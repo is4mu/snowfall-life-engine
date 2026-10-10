@@ -1,6 +1,6 @@
 # v1 Public API and CLI Proposal
 
-Status: **review proposal**, not a stable v1 declaration. This elaborates [V1_BOUNDARY.md](V1_BOUNDARY.md) and [V1_CONTRACT_PLAN.md](V1_CONTRACT_PLAN.md).
+Status: **owner-approved small-core FUNCTIONAL SCOPE (2026-10-10)**; exact Python/CLI exports, error ABI and release remain proposals, **not yet stable v1 contracts**. See [scope record](P1_V1_BASIC_API_SCOPE.md). This elaborates [V1_BOUNDARY.md](V1_BOUNDARY.md) and [V1_CONTRACT_PLAN.md](V1_CONTRACT_PLAN.md).
 
 ## Decisions grounded in the current implementation
 
@@ -31,7 +31,7 @@ windows or stable 1.0 behavior; those gates remain open.
 | `snowfall_life.runtime` | **Preview implemented:** `RuntimeReferenceSets`, `RuntimeBundle`, `RuntimeTargetRequest`, `RuntimeFactRequestContext`, `RuntimeFactProvider`, `RuntimeDecisionProviderResult`, `RuntimeTargetAdvanceResult`, `RuntimeDecisionFacts`, `RuntimeDecisionFrame`, `RuntimeDecisionTrigger`, `RuntimeMaterializationContext`, `RuntimeActivityMaterializationFacts`, `RuntimeWakeupProjectionFacts`, `SocialResponseState`, `parse_runtime_target_request`, `advance_runtime_to_target_with_provider` | Exact aliases to runtime/provider/context/decision/materialization/social classes; makes all four Provider callback annotations importable via canonical namespace |
 | `snowfall_life.persistence` | **Preview implemented:** `RuntimePersistentSnapshot`, `RuntimePersistenceResult`, `load_runtime_persistent_snapshot`, `build_runtime_candidate_tree_with_provider_factory` | Exact aliases to `runtime_persistence.py`; reader verifies source, builder stages disjoint candidate only |
 | `snowfall_life.spatial` | **Preview implemented:** `build_spatial_context`, `validate_spatial_context`, `project_spatial_runtime_decision_facts`, `project_spatial_runtime_target_inputs` (data boundary, not protocol) | `spatial_context.py`, `runtime_spatial.py` |
-| `snowfall_life.upgrade` | **Preview implemented (narrower):** `UpgradeEnvironmentAdapter`, `CheckoutPolicyMaterial`, `CompatibilityProbeResult`, `run_target_compatibility_probe`. No local upgrade candidate writer or ref-publish facade yet. | `operator_upgrade.py` |
+| `snowfall_life.upgrade` | **Pre-v1 experimental only, excluded from initial stable 1.0 scope**: `UpgradeEnvironmentAdapter`, `CheckoutPolicyMaterial`, `CompatibilityProbeResult`, `run_target_compatibility_probe`. Remains importable but is **not a promised stable facade**. No migration/ref-publish facade. | `operator_upgrade.py` |
 
 **Recommendation:** keep root exports small and separate runtime, persistence, spatial, and optional operator facades. See [the runtime/persistence preview contract](P1_CANONICAL_RUNTIME_FACADE_PREVIEW.md) for currently implemented (not stabilized) symbols, errors and authority limits. Define a reviewed whitelist of signatures/return types before any 1.0 declaration. Do **not** stabilize all ~66 implementation modules, private workflow wiring, or the unrestricted mutable `versioning.register_migration` registry.
 
