@@ -107,7 +107,7 @@ def inspect_proposal(spec: Mapping[str, Any], scope: Mapping[str, Any]) -> dict:
         classes[symbol] = fields
 
     from engine.life import ENGINE_VERSION, ErrorCode, LifeEngineError
-    if ENGINE_VERSION != spec["storage_epoch"] != scope["persisted_engine_epoch"]:
+    if ENGINE_VERSION != spec["storage_epoch"] or ENGINE_VERSION != scope["persisted_engine_epoch"]:
         raise AssertionError("stored engine epoch changed")
     if spec["storage_writer"] != "W1" or spec["schema_families"] != 16:
         raise AssertionError("initial writer W1 changed")
