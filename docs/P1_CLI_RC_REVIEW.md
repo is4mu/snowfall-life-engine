@@ -1,7 +1,6 @@
 # P1 pre-v1 canonical CLI + actual 1.0 release-candidate review gates
 
-**Owner scope direction: only `self-check`, `validate`, `canonical-hash` are basic initial-1.0 CLI candidates; remaining Foundation sandbox commands are not stable-provider-runtime APIs.** See [scope](P1_V1_BASIC_API_SCOPE.md). The following is still a behavior inventory and reversible regression tests — not a stable
-wire protocol, approved deprecation window, actual 1.0 RC or release.**
+**Owner scope direction:** only `self-check`, `validate`, `canonical-hash` are initial-1.0 basic CLI candidates; other Foundation sandbox commands are not stable provider-driven runtime APIs. This is a behavior inventory and a reversible Draft, **not an approved stable wire protocol, deprecation policy or release**. See [scope](P1_V1_BASIC_API_SCOPE.md) and [diagnostic input-error preview](P1_CLI_INPUT_ERROR_COMPATIBILITY.md).
 Source: existing `engine.life.cli`, delegated by `snowfall_life.cli`
 in the unreleased `0.2.0.dev0` preview. P1 parent: Issue #3.
 
@@ -32,10 +31,13 @@ authority. `init-sandbox` and `bootstrap-propose` are fixture tooling.
   empty for the exercised schema-error path.
 - The CLI does **not** uniformly produce JSON. Do **not** treat free-form
   diagnostic strings as canonical machine-readable output.
-- Current handler catches only `LifeEngineError`: file I/O, malformed JSON
-  and unexpected Python exceptions can propagate. **This is an identified
-  error-contract gap before v1**, not an approved behavior to freeze. Do not
-  silently invent an error-code mapping without independent review.
+- The legacy `engine.life.cli` catches only `LifeEngineError`: malformed
+  JSON, text decoding and I/O errors can propagate. In the **new canonical
+  `snowfall_life.cli` only**, the basic `validate` and `canonical-hash`
+  commands now use a **candidate-only** typed stderr/exit-2 mapping for those
+  input errors. Other sandbox commands and the Python API remain unchanged.
+  See the [tested review proposal](P1_CLI_INPUT_ERROR_COMPATIBILITY.md).
+  **This mapping is not yet approved as a stable 1.x CLI contract.**
 - Optional argument defaults are presently intended for **synthetic
   bootstrap**, not application-owned production data. No live Git ref
   publication, private character sources or remote side effects.
