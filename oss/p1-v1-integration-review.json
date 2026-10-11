@@ -1,0 +1,65 @@
+{
+  "record_version": 1,
+  "status": "draft-stacked-integration-candidate-NOT-stable-or-releasable",
+  "reviewed_main_baseline_sha": "025773712c3a3b85652b9eea5434a5c3ddef3ad1",
+  "accumulated_source_pr_head": "f34fb7bc13d5d3ad12e93b2628328e6a782ed0b6",
+  "source_pr_numbers": [
+    7,
+    8,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27
+  ],
+  "owner_approved_direction": {
+    "persistence_writer": "W1",
+    "persisted_engine_epoch": "0.1.0-foundation",
+    "persisted_families": 16,
+    "schema_version": 1,
+    "initial_functional_scope": "essentials-only",
+    "deferred": [
+      "W2 migration",
+      "host upgrade/recovery",
+      "Git ref publication",
+      "private character inputs"
+    ]
+  },
+  "packaged_release_version_not_changed": "0.2.0.dev0",
+  "unpublished_private_rc_metadata": "1.0.0rc1",
+  "verified_candidate_modules": [
+    "snowfall_life",
+    "snowfall_life.schema",
+    "snowfall_life.runtime",
+    "snowfall_life.persistence",
+    "snowfall_life.spatial"
+  ],
+  "excluded_from_stable_initial_api": [
+    "snowfall_life.upgrade",
+    "engine.life.versioning.register_migration",
+    "host Git CAS updater"
+  ],
+  "candidate_python_window": "3.12.x",
+  "historical_legacy_import_root_preserved": true,
+  "api_abi_signatures_approved": false,
+  "cli_error_contract_approved": false,
+  "python_support_promise_approved": false,
+  "legacy_root_1x_support_window_approved": false,
+  "reconciled_integration_head_approved": false,
+  "final_exact_head_rc_validated": false,
+  "main_merge_authorized": false,
+  "package_release_authorized": false,
+  "production_life_ref_publish_authorized": false
+}

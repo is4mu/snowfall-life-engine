@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "result": "SUCCESS",
+  "action_id": "5e0c30099d7dacd53aa5a122d658c4652e4f1220f693151b2594edd12b2dfa2b",
+  "request_id": "418c762c3d5a1851de32201b79c3bde7928e2cbe997f684f4d324f5f4cc6ebb3",
+  "action_type": "CORRECTION",
+  "life_base_sha": "2222222222222222222222222222222222222222",
+  "engine_commit_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "behavior_policy_version": "fixture-policy-1",
+  "state_revision_before": 1,
+  "state_revision_after": 2,
+  "state_before_hash": "5e4aa12f64960462f7a63eb7daa37cc9a0ba09b96647d92c1a5f625a88f298d5",
+  "state_after_hash": "6746b4c016a932fc670a0935df06abd501f27422288e6fed04f6c66053e38177",
+  "operator_history_hash_before": "718a8cb838eb5dd4944af9aab182059a4991a9060f86b8ee2f962538cfb83475",
+  "operator_history_hash_after": "25005b157d87b660637a7073aed0d7117e41ed735be748e1abb8bdb13e23114b",
+  "processed_through_before": "2026-04-15T12:00:00+09:00",
+  "processed_through_after": "2026-04-15T12:00:00+09:00",
+  "files_changed": [
+    "operator/actions/5e0c30099d7dacd53aa5a122d658c4652e4f1220f693151b2594edd12b2dfa2b.json",
+    "state/current.json",
+    "state/last-operator-action.json",
+    "state/operator-history.json"
+  ]
+}

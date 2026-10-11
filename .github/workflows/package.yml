@@ -1,0 +1,177 @@
+name: Pre-v1 package installation
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  installed-package:
+    name: Wheel and sdist isolation (Python 3.12)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Build artifacts
+        run: |
+          python -m pip install --upgrade build
+          python -m build --sdist --wheel
+
+      - name: Verify wheel contents and publication exclusions
+        run: |
+          python - <<'PY'
+          import glob
+          import zipfile
+
+          wheels = glob.glob("dist/*.whl")
+          assert len(wheels) == 1, wheels
+          with zipfile.ZipFile(wheels[0]) as archive:
+              paths = archive.namelist()
+              schemas = [p for p in paths
+                         if p.startswith("engine/life/_schemas/")
+                         and p.endswith(".schema.json")]
+              assert len(schemas) == 37, schemas
+              for required in ("engine/life/schema.py",
+                               "engine/life/__init__.py",
+                               "snowfall_life/__init__.py",
+                               "snowfall_life/cli.py",
+                               "snowfall_life/runtime.py",
+                               "snowfall_life/persistence.py",
+                               "snowfall_life/spatial.py",
+                               "snowfall_life/upgrade.py"):
+                  assert required in paths, required
+              private = ("runtime_production_authority.py",
+                         "runtime_production_composition.py",
+                         "runtime_production_fact_provider.py",
+                         "runtime_production_fact_sources.py",
+                         "runtime_production_launcher.py",
+                         "runtime_operator_launcher.py",
+                         "runtime_remote_publisher.py")
+              assert not any(p.endswith(name) for p in paths for name in private)
+              print(f"wheel includes {len(schemas)} schemas and no private launchers")
+          PY
+
+      - name: Verify clean wheel and sdist installs outside checkout
+        shell: bash
+        run: |
+          set -euo pipefail
+          WHEEL="$(realpath "$(find dist -maxdepth 1 -name '*.whl' -print -quit)")"
+          SDIST="$(realpath "$(find dist -maxdepth 1 -name '*.tar.gz' -print -quit)")"
+          test -n "$WHEEL" && test -n "$SDIST"
+          # A single temporary reference binds results across both archive forms.
+          LEGACY_EXPECTED="$(mktemp)"
+          trap 'rm -f "$LEGACY_EXPECTED"' EXIT
+          for artifact in "$WHEEL" "$SDIST"; do
+            TEST_DIR="$(mktemp -d)"
+            python -m venv "$TEST_DIR/venv"
+            "$TEST_DIR/venv/bin/python" -m pip install "$artifact"
+            (
+              cd "$TEST_DIR"
+              "$TEST_DIR/venv/bin/python" -I - <<'PY'
+          import importlib.metadata
+
+          import engine.life
+          import engine.life.schema as legacy_schema
+          from snowfall_life import ErrorCode, LifeEngineError, canonical_hash
+          from snowfall_life.schema import load_schema_document, validate_instance
+          from snowfall_life.runtime import (
+              RuntimeReferenceSets, RuntimeTargetRequest, RuntimeFactProvider,
+              advance_runtime_to_target_with_provider,
+          )
+          from snowfall_life.persistence import (
+              RuntimePersistentSnapshot, load_runtime_persistent_snapshot,
+              build_runtime_candidate_tree_with_provider_factory,
+          )
+          from engine.life.runtime_bundle import RuntimeReferenceSets as ImplRefs
+          from engine.life.runtime_persistence import (
+              load_runtime_persistent_snapshot as impl_read,
+              build_runtime_candidate_tree_with_provider_factory as impl_build,
+          )
+          from engine.life.runtime_fact_provider import RuntimeFactProvider as ImplProvider
+          from snowfall_life.spatial import build_spatial_context, validate_spatial_context
+          from snowfall_life.upgrade import (
+              UpgradeEnvironmentAdapter, run_target_compatibility_probe,
+          )
+          from engine.life.operator_upgrade import UpgradeEnvironmentAdapter as ImplUpgrade
+
+          assert UpgradeEnvironmentAdapter is ImplUpgrade
+          sealed = build_spatial_context(
+              character_id="fixture-character", spatial_context_version="fixture-v1",
+          )
+          assert validate_spatial_context(sealed) == sealed
+          assert callable(run_target_compatibility_probe)
+          assert RuntimeReferenceSets is ImplRefs
+          assert RuntimeFactProvider is ImplProvider
+          assert load_runtime_persistent_snapshot is impl_read
+          assert build_runtime_candidate_tree_with_provider_factory is impl_build
+          assert callable(advance_runtime_to_target_with_provider)
+          assert RuntimePersistentSnapshot.__dataclass_fields__
+          assert RuntimeTargetRequest.__dataclass_fields__
+          assert importlib.metadata.version("snowfall-life-engine") == "0.2.0.dev0"
+          assert engine.life.ENGINE_VERSION == "0.1.0-foundation"
+          assert issubclass(LifeEngineError, Exception)
+          assert ErrorCode.UNSUPPORTED_VERSION.value == "UNSUPPORTED_VERSION"
+          assert len(legacy_schema.SCHEMA_NAMES) == 37
+          assert legacy_schema.SCHEMA_DIR.name == "_schemas"
+          for name in legacy_schema.SCHEMA_NAMES:
+              doc = load_schema_document(name)
+              assert doc["$id"].startswith("https://snowfall-life-engine.invalid/schemas/life/")
+          # Exercise the installed JSON Schema validator, not only loading.
+          try:
+              validate_instance({}, "current_state")
+          except LifeEngineError as exc:
+              assert exc.code is ErrorCode.SCHEMA_INVALID
+          else:
+              raise AssertionError("invalid current_state unexpectedly accepted")
+          assert canonical_hash({"x": 1}) == canonical_hash({"x": 1})
+          print("isolated distribution: facade + 37 schemas OK")
+          PY
+              "$TEST_DIR/venv/bin/snowfall-life" self-check
+              "$TEST_DIR/venv/bin/python" -I -m snowfall_life self-check
+              # Prove the *installed* candidate reader preserves frozen
+              # v0.1.0 saves in each hashseed/timezone environment, and that
+              # wheel/sdist results agree without consulting source imports.
+              for seed in 0 1 8675309; do
+                for timezone in UTC Asia/Tokyo; do
+                  legacy_output="$(PYTHONHASHSEED="$seed" TZ="$timezone" "$TEST_DIR/venv/bin/python" -I "$GITHUB_WORKSPACE/examples/legacy_v010_reader/run.py")"
+                  printf '%s\n' "$legacy_output"
+                  if [ ! -s "$LEGACY_EXPECTED" ]; then
+                    printf '%s\n' "$legacy_output" > "$LEGACY_EXPECTED"
+                  else
+                    test "$legacy_output" = "$(cat "$LEGACY_EXPECTED")"
+                  fi
+                done
+              done
+              # Validate the full provider-backed candidate through installed
+              # wheel/sdist runtime code, while supplying only public source
+              # example and synthetic policy inputs.
+              "$TEST_DIR/venv/bin/python" -I "$GITHUB_WORKSPACE/examples/provider_runtime/run.py" > "$TEST_DIR/provider-output.json"
+              "$TEST_DIR/venv/bin/python" - <<'PY'
+          import json
+          from pathlib import Path
+          report = json.loads(Path("provider-output.json").read_text(encoding="utf-8"))
+          assert report["status"] == "PASS", report
+          assert report["result"] == "CHANGE", report
+          assert report["baseline_unchanged"] and report["byte_identical_replay"], report
+          PY
+            )
+            # Execute the standalone synthetic consumer with each installed
+            # distribution, with no source-checkout imports in the subprocess.
+            sample_output="$("$TEST_DIR/venv/bin/python" "$GITHUB_WORKSPACE/examples/foundation_sandbox/run.py")"
+            printf '%s\\n' "$sample_output"
+            if [ -z "${expected_sample_output:-}" ]; then
+              expected_sample_output="$sample_output"
+            else
+              test "$sample_output" = "$expected_sample_output"
+            fi
+          done

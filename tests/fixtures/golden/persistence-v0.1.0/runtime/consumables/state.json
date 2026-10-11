@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "domain": "consumables",
+  "character_id": "fixture-character",
+  "as_of": "2026-04-15T12:00:00+09:00",
+  "provenance": {
+    "origin": "SIMULATION_BOOTSTRAP",
+    "notes": "public-synthetic-runtime-bundle"
+  },
+  "revision": "2b761eacd0d7b2a1974477ed49b59cf261bf3c046a0d39d9c281f2ccc1d80051",
+  "state_hash": "2b761eacd0d7b2a1974477ed49b59cf261bf3c046a0d39d9c281f2ccc1d80051",
+  "stocks": [
+    {
+      "consumable_id": "food-staple",
+      "status": "AVAILABLE"
+    }
+  ]
+}
