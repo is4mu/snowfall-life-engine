@@ -70,12 +70,13 @@ caught `LifeEngineError` return/exit 2. The other four Foundation
 commands remain **synthetic sandbox tools** and must not be marketed as
 the full Provider runtime.
 
-**Explicit unresolved issue:** malformed JSON and ordinary filesystem
-errors are not consistently caught/formatted by the existing CLI. Recommend
-implementing and contract-testing clear stderr/exit behavior **before**
-promising a stable CLI error ABI; alternatively keep diagnostics
-experimental until that improvement. Do not declare this resolved based
-only on currently green CLI smoke tests.
+**Follow-up review candidate:** the [canonical basic CLI input-error
+wrapper](P1_CLI_INPUT_ERROR_COMPATIBILITY.md) now maps malformed JSON/UTF-8
+and OSError from `validate` and `canonical-hash` to typed stderr and
+exit 2. Existing Foundation `engine.life.cli` and synthetic commands
+retain their original behavior. This addresses **a narrow CLI input gap
+in Draft code only**, not the full Python API exception policy and **not
+an owner-approved stable CLI error contract**.
 
 ## Python-version and legacy import recommendations
 

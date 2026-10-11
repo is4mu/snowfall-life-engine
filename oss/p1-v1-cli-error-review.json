@@ -1,0 +1,72 @@
+{
+  "record_version": 1,
+  "status": "implementation-review-candidate-NOT-stable",
+  "initial_python_floor_candidate": "3.12.x",
+  "legacy_engine_life_root": "functional-v0.1.0-root-alias-through-1.x-candidate",
+  "old_root_exports": [
+    "ENGINE_VERSION",
+    "SUPPORTED_ENGINE_VERSIONS",
+    "SUPPORTED_SCHEMA_VERSION",
+    "ErrorCode",
+    "LifeEngineError",
+    "canonical_bytes",
+    "canonical_hash",
+    "canonical_json"
+  ],
+  "no_legacy_cli_change": true,
+  "normalized_only": [
+    "validate",
+    "canonical-hash"
+  ],
+  "cases": {
+    "validate_malformed_json": {
+      "exit": 2,
+      "code": "SCHEMA_INVALID",
+      "detail": "invalid JSON or UTF-8 input"
+    },
+    "validate_invalid_utf8": {
+      "exit": 2,
+      "code": "SCHEMA_INVALID",
+      "detail": "invalid JSON or UTF-8 input"
+    },
+    "hash_malformed_json": {
+      "exit": 2,
+      "code": "INVALID_STATE",
+      "detail": "invalid JSON or UTF-8 input"
+    },
+    "hash_invalid_utf8": {
+      "exit": 2,
+      "code": "INVALID_STATE",
+      "detail": "invalid JSON or UTF-8 input"
+    },
+    "validate_missing_file": {
+      "exit": 2,
+      "code": "INVALID_STATE",
+      "detail": "unable to read JSON input"
+    },
+    "hash_missing_file": {
+      "exit": 2,
+      "code": "INVALID_STATE",
+      "detail": "unable to read JSON input"
+    },
+    "validate_directory": {
+      "exit": 2,
+      "code": "INVALID_STATE",
+      "detail": "unable to read JSON input"
+    }
+  },
+  "source_reads_only": true,
+  "stdout_on_caught_error": "",
+  "stdout_error_codes_not_json": true,
+  "error_detail_machine_stable": false,
+  "parser_argparse_error_unchanged": true,
+  "life_engine_error_handling_unchanged": true,
+  "legacy_foundation_cli_unmodified": true,
+  "python_persistence_native_io_exceptions_still_possible": true,
+  "exact_cli_contract_approved": false,
+  "python_3_12_support_approved": false,
+  "old_import_1x_support_approved": false,
+  "final_v1_rc_approved": false,
+  "merge_main_authorized": false,
+  "release_authorized": false
+}
