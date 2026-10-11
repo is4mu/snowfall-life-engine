@@ -1,6 +1,6 @@
 # v1 Public API and CLI Proposal
 
-Status: **owner-approved small-core FUNCTIONAL SCOPE (2026-10-10)**; exact Python/CLI exports, error ABI and release remain proposals, **not yet stable v1 contracts**. See [scope record](P1_V1_BASIC_API_SCOPE.md). This elaborates [V1_BOUNDARY.md](V1_BOUNDARY.md) and [V1_CONTRACT_PLAN.md](V1_CONTRACT_PLAN.md).
+Status: **owner-approved small-core FUNCTIONAL SCOPE (2026-10-10)**; exact Python/CLI exports, error ABI and release remain proposals, **not yet stable v1 contracts**. See [scope record](P1_V1_BASIC_API_SCOPE.md) and the [signature/compatibility final-review proposal](P1_V1_PUBLIC_ABI_FINAL_REVIEW.md). This elaborates [V1_BOUNDARY.md](V1_BOUNDARY.md) and [V1_CONTRACT_PLAN.md](V1_CONTRACT_PLAN.md).
 
 ## Decisions grounded in the current implementation
 

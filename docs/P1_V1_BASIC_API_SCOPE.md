@@ -70,6 +70,8 @@ renumbering, no new on-disk envelope. Existing 16 schema-v1 families and
    cells on the same reviewed commit; document remaining CLI/deprecation
    decisions and request separate approval for final ABI/merge/release.
 
+**ABI review follow-up:** [minimum stable-v1 ABI candidate](P1_V1_PUBLIC_ABI_FINAL_REVIEW.md) pins proposed function signatures and Provider callback shapes, still pending owner sign-off. It is a candidate, not a frozen stable v1 contract.
+
 This record explicitly distinguishes **approved feature scope** from the
 pending **exact API/ABI/CLI error-contract approval**. The machine-readable
 record keeps `exact_public_signatures_approved=false` and
