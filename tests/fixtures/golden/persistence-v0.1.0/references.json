@@ -1,0 +1,14 @@
+{
+  "known_person_ids": [
+    "person-a"
+  ],
+  "known_home_entity_ids": [
+    "entity-lamp"
+  ],
+  "approved_wardrobe_item_ids": [
+    "item-tee"
+  ],
+  "approved_consumable_ids": [
+    "food-staple"
+  ]
+}

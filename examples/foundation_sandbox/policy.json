@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "behavior_policy_version": "fixture-policy-1",
+  "policy_mode": "TEST_FIXTURE",
+  "character_id": "fixture-character",
+  "timezone": "Asia/Tokyo",
+  "description": "Artificial TEST_FIXTURE rates/thresholds for Foundation tests only.",
+  "rates": {
+    "hunger_per_hour": 50,
+    "physical_fatigue_per_hour": 20,
+    "stress_per_hour": 10
+  },
+  "thresholds": {
+    "hunger_wakeup": 400,
+    "fatigue_wakeup": 500,
+    "stress_wakeup": 600
+  },
+  "idle_reassessment": {
+    "interval_min": 120,
+    "max_events_per_advance": 10000
+  }
+}

@@ -4,6 +4,8 @@ Status: **frozen for v1 planning**
 
 Tracking issue: #3
 
+Contract inventory and unresolved compatibility decisions: [V1_CONTRACT_PLAN.md](V1_CONTRACT_PLAN.md). The responsibility boundary here is frozen for planning; the separate contract plan is a proposal and does not confer stable API status on v0.1.0 implementation imports.
+
 This document defines the functional and compatibility boundary for the first stable public major version of Snowfall Life Engine.
 
 The `v0.1.0` release is the clean OSS semantic baseline. The v1 boundary answers a different question: **what does the engine promise to own and stabilize for downstream consumers?**

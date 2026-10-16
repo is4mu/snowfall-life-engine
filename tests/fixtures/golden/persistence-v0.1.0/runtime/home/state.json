@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "domain": "home",
+  "character_id": "fixture-character",
+  "as_of": "2026-04-15T12:00:00+09:00",
+  "provenance": {
+    "origin": "SIMULATION_BOOTSTRAP",
+    "notes": "public-synthetic-runtime-bundle"
+  },
+  "revision": "e98911decbc03645d357305f639e27879fc05f664e841c017db5d81a6bc6ccc7",
+  "state_hash": "e98911decbc03645d357305f639e27879fc05f664e841c017db5d81a6bc6ccc7",
+  "entities": [
+    {
+      "entity_id": "entity-lamp",
+      "status": "NORMAL"
+    }
+  ]
+}

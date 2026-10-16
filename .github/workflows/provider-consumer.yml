@@ -1,0 +1,44 @@
+name: Pre-v1 synthetic provider consumer
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  provider-consumer:
+    name: Full RuntimeBundle synthetic replay
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install runtime dependencies
+        run: python -m pip install -r engine/life/requirements.txt
+      - name: Run provider-backed candidate on UTC/hashseed 0
+        run: python -m examples.provider_runtime.run > /tmp/provider-utc.json
+        env:
+          PYTHONHASHSEED: "0"
+          TZ: UTC
+      - name: Run provider-backed candidate on Tokyo/hashseed 8675309
+        run: python -m examples.provider_runtime.run > /tmp/provider-tokyo.json
+        env:
+          PYTHONHASHSEED: "8675309"
+          TZ: Asia/Tokyo
+      - name: Verify cross-environment byte-stable semantic replay
+        run: |
+          cmp /tmp/provider-utc.json /tmp/provider-tokyo.json
+          python - <<'PY'
+          import json
+          with open("/tmp/provider-utc.json", encoding="utf-8") as stream:
+              report = json.load(stream)
+          assert report["status"] == "PASS", report
+          assert report["result"] == "CHANGE", report
+          assert report["baseline_unchanged"] and report["byte_identical_replay"], report
+          assert len(report["semantic_tree_hash"]) == 64, report
+          print(report)
+          PY

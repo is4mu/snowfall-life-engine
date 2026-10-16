@@ -133,9 +133,9 @@ def cmd_init_sandbox(args: argparse.Namespace) -> int:
     return 0
 
 
-def build_parser() -> argparse.ArgumentParser:
+def build_parser(*, prog: str = "python3 -m engine.life.cli") -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        prog="python3 -m engine.life.cli",
+        prog=prog,
         description="Life Engine v2 Slice 1 Foundation CLI (no production life start)",
     )
     sub = parser.add_subparsers(dest="command", required=True)
@@ -214,8 +214,8 @@ def build_parser() -> argparse.ArgumentParser:
     return parser
 
 
-def main(argv: list[str] | None = None) -> int:
-    parser = build_parser()
+def main(argv: list[str] | None = None, *, prog: str = "python3 -m engine.life.cli") -> int:
+    parser = build_parser(prog=prog)
     args = parser.parse_args(argv)
     try:
         return int(args.func(args))

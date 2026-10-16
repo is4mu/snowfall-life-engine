@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "action_id": "4ef4c1a327d11946c391ec182c7aa4a31c22a0fff1ff49f057ff61c56853b7c8",
+  "action_type": "CORRECTION",
+  "previous_action_id": null,
+  "life_base_sha": "1111111111111111111111111111111111111111",
+  "request_id": "cfe22ac63f8727815fbbbbeb755739c97581f6990ddfdb84182ee98c8900d42e",
+  "request_hash": "cfe22ac63f8727815fbbbbeb755739c97581f6990ddfdb84182ee98c8900d42e",
+  "approval_ref": "fixture:synthetic-review-1",
+  "effective_at": "2026-04-15T12:00:00+09:00",
+  "correction": {
+    "target_event_id": "actual-event:cb7c3346be03802cc974648dd6f028be",
+    "target_event_hash": "906c13374545e24082cd8aed3d904bb6c33b3eb7717ae30b0d6a2e3e158478bc",
+    "supersedes_action_id": null,
+    "corrected_event": {
+      "activity_instance_id": "activity:5c1-fixture-1",
+      "actual_end": "2026-03-15T11:00:00+09:00",
+      "actual_start": "2026-03-15T10:00:00+09:00",
+      "captures": [
+        {
+          "schema_version": 1,
+          "capture_id": "capture:4ae04969c66566f51b163660b75730a4",
+          "occurrence_key": "capture-occurrence:b0dec0fb98355181c038a503065b283c",
+          "activity_instance_id": "activity:5c1-fixture-1",
+          "captured_at": "2026-03-15T10:30:00+09:00",
+          "capture_kind": "DAILY_LIFE",
+          "subject_refs": [],
+          "visual_context": {
+            "character_id": "fixture-character",
+            "character_source_sha": "public-persistence-character-sha",
+            "engine_commit_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "behavior_policy_version": "public-fixture-v2-candidate-1",
+            "location_id": "fixture-home",
+            "appearance": {
+              "outfit_state_id": null,
+              "outfit_item_ids": [],
+              "makeup_level": null,
+              "hair_state_id": null
+            },
+            "home_revision": null,
+            "wardrobe_revision": null,
+            "photographer_ref": null,
+            "companion_refs": [],
+            "lighting_context": "NATURAL"
+          },
+          "capture_context_hash": "f58734b1be06788df53502fb81e5d9e83f7aefbd36af69a62676b72b14c8fb84",
+          "capture_decision_evidence": {
+            "schema_version": 1,
+            "decision_type": "CAPTURE_OPPORTUNITY",
+            "policy_version": "public-fixture-v2-candidate-1",
+            "source_key": "source:decision:photo:5c1-1",
+            "opportunity_key": "capture-opportunity:0b17b1ddc8771e679703f5c0b709f6c2",
+            "activation_permille": 500,
+            "rule_ids": [
+              "test.synthetic.capture"
+            ],
+            "input_state_refs": [
+              "state:test"
+            ],
+            "random_key": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "selected_result": "TAKE_CAPTURE"
+          }
+        }
+      ],
+      "causes": [],
+      "decision_evidence": null,
+      "effects": [],
+      "event_id": "actual-event:cb7c3346be03802cc974648dd6f028be",
+      "event_type": "LEISURE",
+      "finalized_at": "2026-03-15T11:00:00+09:00",
+      "location_id": "fixture-home",
+      "participants": [],
+      "provenance": {
+        "origin": "ACTUAL_EVENT"
+      },
+      "schema_version": 1,
+      "summary": "synthetic correction 1"
+    }
+  }
+}

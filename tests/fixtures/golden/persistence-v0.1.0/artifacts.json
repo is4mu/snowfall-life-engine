@@ -1,0 +1,118 @@
+{
+  "status": "current-format-evidence-only",
+  "v1_compatibility_guarantee": false,
+  "artifacts": [
+    {
+      "family": "current_state",
+      "schema_name": "current_state",
+      "path": "state/current.json",
+      "pointer": null,
+      "canonical_hash": "434374dd624d60f5a8c49dc634d468836a22ec667f0eee787cbfc3e2e9984a57"
+    },
+    {
+      "family": "schedule_state",
+      "schema_name": "schedule_state",
+      "path": "schedule/state.json",
+      "pointer": null,
+      "canonical_hash": "577116f3785fe8cf1ab8eafa5846f4b9335dae2087f848b762b5de0c04545aaf"
+    },
+    {
+      "family": "relation_state",
+      "schema_name": "relation_state",
+      "path": "relations/state.json",
+      "pointer": null,
+      "canonical_hash": "e01fe4ab6c02f04fa74f813e7a4ee94771da0132e67959ad9d7eaea6ebccc91c"
+    },
+    {
+      "family": "home_state",
+      "schema_name": "home_state",
+      "path": "home/state.json",
+      "pointer": null,
+      "canonical_hash": "515eea068228a9195f9cf1a36a2763e713e43a228fae038fa001530ec2edccd6"
+    },
+    {
+      "family": "consumables_state",
+      "schema_name": "consumables_state",
+      "path": "consumables/state.json",
+      "pointer": null,
+      "canonical_hash": "6b8baff93c00d8bd8653913baa3c77ed6509c490e0eafe80f73167422d2ad0fa"
+    },
+    {
+      "family": "wardrobe_state",
+      "schema_name": "wardrobe_state",
+      "path": "wardrobe/state.json",
+      "pointer": null,
+      "canonical_hash": "27d62e92793fedbf607c9eb3da2d6fc0f420dc944192a9991ae806ed61a01233"
+    },
+    {
+      "family": "finance_state",
+      "schema_name": "finance_state",
+      "path": "finance/state.json",
+      "pointer": null,
+      "canonical_hash": "7a072a6ddfead7612ab189820310e35fa61de97cb12540e4e060a65252e356a5"
+    },
+    {
+      "family": "social_response_state",
+      "schema_name": "social_response_state",
+      "path": "state/social-responses.json",
+      "pointer": null,
+      "canonical_hash": "83053212f747fbb95ecb17e83f5a2f7b6c21030291dde0292f19ea612bc61e92"
+    },
+    {
+      "family": "timeline_day",
+      "schema_name": "timeline_day",
+      "path": "timeline/2026-03-15.json",
+      "pointer": null,
+      "canonical_hash": "d73e92699ddce804bbf6fa9d07d3d497027bb38cad2648f86c946c18e225cec7"
+    },
+    {
+      "family": "actual_event",
+      "schema_name": "actual_event",
+      "path": "timeline/2026-03-15.json",
+      "pointer": "/actual_events/0",
+      "canonical_hash": "906c13374545e24082cd8aed3d904bb6c33b3eb7717ae30b0d6a2e3e158478bc"
+    },
+    {
+      "family": "camera_roll_shard",
+      "schema_name": "camera_roll_shard",
+      "path": "camera-roll/records/2026-03.json",
+      "pointer": null,
+      "canonical_hash": "c5ee8aa7d113f92dafa03acfb4df7353591b8ff5e952ad1145b432f16f93ea11"
+    },
+    {
+      "family": "camera_roll_record",
+      "schema_name": "camera_roll_record",
+      "path": "camera-roll/records/2026-03.json",
+      "pointer": "/records/0",
+      "canonical_hash": "a7e183b40395176eb7a8a0b20a5f6c5e745a5046d96fcedc256f868e248184a9"
+    },
+    {
+      "family": "operator_history",
+      "schema_name": "operator_history",
+      "path": "state/operator-history.json",
+      "pointer": null,
+      "canonical_hash": "8dc7df81a926ca5c565925d5c5e5cccc14fe66f029de55ba2994eec9e81ca845"
+    },
+    {
+      "family": "operator_action",
+      "schema_name": "operator_action",
+      "path": "operator/actions/4ef4c1a327d11946c391ec182c7aa4a31c22a0fff1ff49f057ff61c56853b7c8.json",
+      "pointer": null,
+      "canonical_hash": "80c18002672a319fcc6b3cbd6e3a11f39fed85caac6be2d732521cd1d339a10e"
+    },
+    {
+      "family": "runtime_last_run",
+      "schema_name": "runtime_last_run",
+      "path": "state/last-run.json",
+      "pointer": null,
+      "canonical_hash": "6f2757b85ef03762f5e61382fe6d794e804763e5f72041dd92f87005129b2f14"
+    },
+    {
+      "family": "last_operator_action",
+      "schema_name": "last_operator_action",
+      "path": "state/last-operator-action.json",
+      "pointer": null,
+      "canonical_hash": "61af8d7fd5b93b9f9313dc1f52a907fcd8574abcabd434fc2fb529bf93f5eed7"
+    }
+  ]
+}

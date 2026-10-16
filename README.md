@@ -45,7 +45,46 @@ Current baseline:
 - CI Python: `3.12`
 - planned canonical v1 package/CLI identity: `snowfall_life` / `snowfall-life`
 
-The clean public history does not expose private project Git history. The v1 boundary defines which responsibilities and contracts will become stable before 1.0.
+The clean public history does not expose private project Git history. The frozen v1 responsibility boundary is defined in [docs/V1_BOUNDARY.md](docs/V1_BOUNDARY.md). The concrete contract inventory, compatibility proposal, and remaining implementation gates are tracked in [docs/V1_CONTRACT_PLAN.md](docs/V1_CONTRACT_PLAN.md); they are not yet shipped as stable APIs.
+
+## Pre-v1 package prototype (unreleased)
+
+The canonical `snowfall_life` import and `snowfall-life` CLI are under review in a **0.2.0.dev0 development build**, not in the published v0.1.0 release. From a checkout of the prototype branch, `python -m pip install .` creates both entry points; the existing `engine.life` import and `python -m engine.life` command remain functional. This proposal does not change persisted `ENGINE_VERSION = "0.1.0-foundation"` or claim stable v1 API compatibility.
+
+`snowfall-life advance` currently delegates to the **foundation sandbox** workflow; full provider-driven runtime and persistent candidate operations are separate. The package build must include the exact 37 public JSON Schemas. See the packaging CI job for isolated wheel/sdist checks.
+
+See [the standalone synthetic foundation sandbox consumer](examples/foundation_sandbox/README.md) for a full offline example of installing this prototype, creating and advancing a synthetic checkpoint, verifying it, and testing idempotent NOOP behavior. This is **not** the separate full provider-driven RuntimeBundle consumer gate.
+
+## Canonical full-runtime preview (Draft; not stable v1)
+
+The **unreleased** `snowfall_life.runtime` and `snowfall_life.persistence`
+facades re-export only reviewed-candidate types and provider-driven runtime
+operations. The [synthetic full RuntimeBundle consumer](examples/provider_runtime/README.md)
+now uses these canonical imports for verification and candidate staging;
+synthetic bootstrap helpers remain implementation-only. These imports are
+**not** yet a frozen public API. See
+[the exact proposed export/ownership contract](docs/P1_CANONICAL_RUNTIME_FACADE_PREVIEW.md).
+
+The proposed [spatial and upgrade-host preview](docs/P1_SPATIAL_UPGRADE_FACADE_PREVIEW.md)
+also exposes **sealed spatial data projection** and a **host-injected
+read-only compatibility probe**. Neither performs production publication
+or promises a stable 1.x API.
+
+The [pre-v1 CLI behavior/1.0 RC review checklist](docs/P1_CLI_RC_REVIEW.md)
+distinguishes the seven Foundation sandbox commands from the full provider
+runtime. The [basic CLI error/legacy import proposal](docs/P1_CLI_INPUT_ERROR_COMPATIBILITY.md)
+also tests malformed JSON and filesystem errors without changing historical
+`engine.life` command behavior. These are **candidate contracts**, not a 1.0 release.
+
+The full [P1 integrated 1.0 Draft review](docs/P1_V1_INTEGRATED_DRAFT_REVIEW.md)
+provides one cumulative main-based diff and exact-head private RC test gate.
+It is **not approved for merge/release** and does not declare a stable API.
+
+**First-1.0 scope:** The owner selected [basic stable-functionality first](docs/P1_V1_BASIC_API_SCOPE.md): deterministic provider runtime, safe W1 read/stage and sealed spatial validation. The [public ABI final-review proposal](docs/P1_V1_PUBLIC_ABI_FINAL_REVIEW.md) tracks exact candidate signatures and outstanding CLI/deprecation decisions. Complex upgrade/recovery stays experimental. The [private 1.0.0rc1 rehearsal](docs/P1_PRIVATE_RC_REHEARSAL.md) tests ephemeral package artifacts without publishing them. This selects **functional scope**, not exact public ABI or a released 1.0 binary.
+
+## Synthetic full RuntimeBundle consumer (pre-v1)
+
+The [provider-driven synthetic consumer](examples/provider_runtime/README.md) exercises a complete **RuntimeBundle** persistent candidate using an injected four-method fact provider, two deterministic replays, verified candidate reload, and byte-for-byte baseline immutability. It is **not** the foundation sandbox CLI, a production-character launcher, a migration path, or a declaration that the current implementation imports are stable v1 APIs.
 
 ## Local development
 
@@ -89,7 +128,8 @@ It **does not** contain:
 
 See:
 
-- [docs/V1_BOUNDARY.md](docs/V1_BOUNDARY.md) for the frozen public v1 responsibility/compatibility boundary;
+- [docs/V1_BOUNDARY.md](docs/V1_BOUNDARY.md) for the frozen public v1 responsibility boundary;
+- [docs/V1_CONTRACT_PLAN.md](docs/V1_CONTRACT_PLAN.md) for contract candidates, compatibility decisions, and remaining v1 acceptance gates;
 - [docs/EXPORT_BOUNDARY.md](docs/EXPORT_BOUNDARY.md) for the publication contract;
 - [docs/TESTING.md](docs/TESTING.md) for the normative public test architecture;
 - [docs/TEST_MIGRATION_MATRIX.md](docs/TEST_MIGRATION_MATRIX.md) for historical-suite dispositions;
@@ -146,7 +186,7 @@ Please see [SECURITY.md](SECURITY.md).
 
 ## Contributing
 
-Contribution guidelines will evolve as the first engine baseline is published. See [CONTRIBUTING.md](CONTRIBUTING.md).
+For the current pre-v1 review, testing, and compatibility requirements, see [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## License
 

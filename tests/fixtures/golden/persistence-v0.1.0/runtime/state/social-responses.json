@@ -1,0 +1,8 @@
+{
+  "schema_version": 1,
+  "character_id": "fixture-character",
+  "as_of": "2026-04-15T12:00:00+09:00",
+  "revision": "012cbe592ccc699a9bee1b1c6abb9f43025ab6286ea341d808631b255c98ff17",
+  "state_hash": "012cbe592ccc699a9bee1b1c6abb9f43025ab6286ea341d808631b255c98ff17",
+  "responses": []
+}

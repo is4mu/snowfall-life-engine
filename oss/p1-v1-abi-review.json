@@ -1,0 +1,334 @@
+{
+  "record_version": 1,
+  "status": "review-proposal-exact-ABI-NOT-APPROVED",
+  "owner_approved_scope_ref": "oss/p1-v1-basic-api-scope.json",
+  "package_identity": "snowfall-life-engine",
+  "python_package": "snowfall_life",
+  "supported_python_candidate": "3.12.x",
+  "legacy_engine_life_root_candidate": "keep-v0.1.0-root-imports-through-1.x;no-internal-module-promise",
+  "storage_epoch": "0.1.0-foundation",
+  "storage_writer": "W1",
+  "schema_families": 16,
+  "function_parameter_candidates": {
+    "snowfall_life.canonical_json": [
+      {
+        "name": "obj",
+        "kind": "POSITIONAL_OR_KEYWORD",
+        "default": "required"
+      }
+    ],
+    "snowfall_life.canonical_bytes": [
+      {
+        "name": "obj",
+        "kind": "POSITIONAL_OR_KEYWORD",
+        "default": "required"
+      }
+    ],
+    "snowfall_life.canonical_hash": [
+      {
+        "name": "obj",
+        "kind": "POSITIONAL_OR_KEYWORD",
+        "default": "required"
+      }
+    ],
+    "snowfall_life.schema.load_schema_document": [
+      {
+        "name": "name",
+        "kind": "POSITIONAL_OR_KEYWORD",
+        "default": "required"
+      }
+    ],
+    "snowfall_life.schema.validate_instance": [
+      {
+        "name": "instance",
+        "kind": "POSITIONAL_OR_KEYWORD",
+        "default": "required"
+      },
+      {
+        "name": "schema_name",
+        "kind": "POSITIONAL_OR_KEYWORD",
+        "default": "required"
+      }
+    ],
+    "snowfall_life.runtime.parse_runtime_target_request": [
+      {
+        "name": "raw",
+        "kind": "POSITIONAL_OR_KEYWORD",
+        "default": "required"
+      }
+    ],
+    "snowfall_life.runtime.advance_runtime_to_target_with_provider": [
+      {
+        "name": "bundle",
+        "kind": "KEYWORD_ONLY",
+        "default": "required"
+      },
+      {
+        "name": "reference_sets",
+        "kind": "KEYWORD_ONLY",
+        "default": "required"
+      },
+      {
+        "name": "behavior_policy",
+        "kind": "KEYWORD_ONLY",
+        "default": "required"
+      },
+      {
+        "name": "social_response_state",
+        "kind": "KEYWORD_ONLY",
+        "default": "required"
+      },
+      {
+        "name": "target_request",
+        "kind": "KEYWORD_ONLY",
+        "default": "required"
+      },
+      {
+        "name": "fact_provider",
+        "kind": "KEYWORD_ONLY",
+        "default": "required"
+      }
+    ],
+    "snowfall_life.persistence.load_runtime_persistent_snapshot": [
+      {
+        "name": "root",
+        "kind": "POSITIONAL_OR_KEYWORD",
+        "default": "required"
+      },
+      {
+        "name": "reference_sets",
+        "kind": "KEYWORD_ONLY",
+        "default": "required"
+      }
+    ],
+    "snowfall_life.persistence.build_runtime_candidate_tree_with_provider_factory": [
+      {
+        "name": "baseline_root",
+        "kind": "KEYWORD_ONLY",
+        "default": "required"
+      },
+      {
+        "name": "candidate_root",
+        "kind": "KEYWORD_ONLY",
+        "default": "required"
+      },
+      {
+        "name": "reference_sets",
+        "kind": "KEYWORD_ONLY",
+        "default": "required"
+      },
+      {
+        "name": "behavior_policy",
+        "kind": "KEYWORD_ONLY",
+        "default": "required"
+      },
+      {
+        "name": "target_request",
+        "kind": "KEYWORD_ONLY",
+        "default": "required"
+      },
+      {
+        "name": "fact_provider_factory",
+        "kind": "KEYWORD_ONLY",
+        "default": "required"
+      },
+      {
+        "name": "executing_engine_commit_sha",
+        "kind": "KEYWORD_ONLY",
+        "default": "required"
+      },
+      {
+        "name": "life_base_sha",
+        "kind": "KEYWORD_ONLY",
+        "default": "required"
+      }
+    ],
+    "snowfall_life.spatial.build_spatial_context": [
+      {
+        "name": "character_id",
+        "kind": "KEYWORD_ONLY",
+        "default": "required"
+      },
+      {
+        "name": "spatial_context_version",
+        "kind": "KEYWORD_ONLY",
+        "default": "required"
+      },
+      {
+        "name": "locations",
+        "kind": "KEYWORD_ONLY",
+        "default": "optional"
+      },
+      {
+        "name": "route_profiles",
+        "kind": "KEYWORD_ONLY",
+        "default": "optional"
+      }
+    ],
+    "snowfall_life.spatial.validate_spatial_context": [
+      {
+        "name": "data",
+        "kind": "POSITIONAL_OR_KEYWORD",
+        "default": "required"
+      }
+    ],
+    "snowfall_life.spatial.project_spatial_runtime_decision_facts": [
+      {
+        "name": "spatial_context",
+        "kind": "KEYWORD_ONLY",
+        "default": "required"
+      },
+      {
+        "name": "character_id",
+        "kind": "KEYWORD_ONLY",
+        "default": "required"
+      },
+      {
+        "name": "facts_without_routes",
+        "kind": "KEYWORD_ONLY",
+        "default": "required"
+      },
+      {
+        "name": "now",
+        "kind": "KEYWORD_ONLY",
+        "default": "optional"
+      }
+    ],
+    "snowfall_life.spatial.project_spatial_runtime_target_inputs": [
+      {
+        "name": "spatial_context",
+        "kind": "KEYWORD_ONLY",
+        "default": "required"
+      },
+      {
+        "name": "character_id",
+        "kind": "KEYWORD_ONLY",
+        "default": "required"
+      },
+      {
+        "name": "target_inputs_without_routes",
+        "kind": "KEYWORD_ONLY",
+        "default": "required"
+      }
+    ]
+  },
+  "provider_protocol_keyword_only_candidates": {
+    "decision_inputs": [
+      "bundle",
+      "social_response_state",
+      "trigger",
+      "behavior_policy",
+      "reference_sets",
+      "target_request",
+      "request_context"
+    ],
+    "materialization_facts": [
+      "bundle",
+      "social_response_state",
+      "frame",
+      "context",
+      "decision_facts",
+      "behavior_policy",
+      "reference_sets",
+      "target_request",
+      "request_context"
+    ],
+    "wakeup_facts": [
+      "bundle",
+      "active_activity",
+      "as_of",
+      "behavior_policy",
+      "reference_sets",
+      "target_request",
+      "request_context"
+    ],
+    "capture_source_moments": [
+      "bundle",
+      "active_activity",
+      "from_time",
+      "target_time",
+      "character_source_sha",
+      "target_request"
+    ]
+  },
+  "frozen_dataclass_field_candidates": {
+    "snowfall_life.runtime.RuntimeReferenceSets": [
+      "known_person_ids",
+      "known_home_entity_ids",
+      "approved_wardrobe_item_ids",
+      "approved_consumable_ids"
+    ],
+    "snowfall_life.runtime.RuntimeTargetRequest": [
+      "target_time",
+      "event_budget",
+      "character_source_sha"
+    ],
+    "snowfall_life.runtime.RuntimeBundle": [
+      "current_state",
+      "schedule_state",
+      "relation_state",
+      "home_state",
+      "consumables_state",
+      "wardrobe_state",
+      "finance_state"
+    ],
+    "snowfall_life.runtime.RuntimeDecisionProviderResult": [
+      "decision_facts",
+      "social_facts"
+    ],
+    "snowfall_life.runtime.RuntimeTargetAdvanceResult": [
+      "bundle",
+      "social_response_state",
+      "actual_events",
+      "camera_roll_records",
+      "camera_roll_records_by_shard_path",
+      "consumed_source_keys",
+      "consumed_trigger_ids",
+      "decision_frames",
+      "microsteps_used"
+    ],
+    "snowfall_life.persistence.RuntimePersistentSnapshot": [
+      "root",
+      "bundle",
+      "social_response_state",
+      "timeline_days",
+      "camera_roll_shards",
+      "last_run",
+      "semantic_tree_hash",
+      "operator_history",
+      "operator_actions",
+      "last_operator_action"
+    ],
+    "snowfall_life.persistence.RuntimePersistenceResult": [
+      "status",
+      "baseline_snapshot",
+      "candidate_snapshot",
+      "runtime_result",
+      "life_base_sha",
+      "state_before_hash",
+      "state_after_hash",
+      "files_changed",
+      "last_run"
+    ]
+  },
+  "cli_stability_candidates": [
+    "self-check",
+    "validate",
+    "canonical-hash"
+  ],
+  "cli_failure_policy": "unapproved;current-argparse-errors-and-LifeEngineError-only-are-incomplete",
+  "python_error_policy": "LifeEngineError.code-typed;detail-diagnostic;IO-and-JSON-failure-policy-remains-review",
+  "excluded_stable_imports": [
+    "snowfall_life.upgrade",
+    "engine.life.versioning",
+    "engine.life.operator_git_transaction",
+    "host-cas-publisher"
+  ],
+  "exact_signatures_approved": false,
+  "cli_error_contract_approved": false,
+  "python_support_window_approved": false,
+  "legacy_import_support_window_approved": false,
+  "final_rc_approved": false,
+  "main_merge_authorized": false,
+  "release_authorized": false
+}

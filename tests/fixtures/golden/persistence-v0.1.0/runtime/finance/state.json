@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "domain": "finance",
+  "character_id": "fixture-character",
+  "as_of": "2026-04-15T12:00:00+09:00",
+  "provenance": {
+    "origin": "SIMULATION_BOOTSTRAP",
+    "notes": "public-synthetic-runtime-bundle"
+  },
+  "revision": "23b6fc548565b15de8c1ce47648f12858975687442da72b3ce5de404464f0815",
+  "state_hash": "23b6fc548565b15de8c1ce47648f12858975687442da72b3ce5de404464f0815",
+  "currency": "JPY",
+  "balance_minor": null
+}

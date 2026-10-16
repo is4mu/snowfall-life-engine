@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "result": "SUCCESS",
+  "run_id": "runtime-run:14843820ab779ff78cf0e02a34d69496",
+  "character_id": "fixture-character",
+  "engine_commit_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "behavior_policy_version": "fixture-policy-1",
+  "behavior_policy_hash": "68591524feb7189402a8f00cd585f7b1a2becc4e7755293adae31f83325631f0",
+  "life_base_sha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "target_time": "2026-04-15T12:00:00+09:00",
+  "previous_processed_through": "2026-04-15T12:00:00+09:00",
+  "processed_through": "2026-04-15T12:00:00+09:00",
+  "state_revision_before": 1,
+  "state_revision_after": 2,
+  "state_before_hash": "6746b4c016a932fc670a0935df06abd501f27422288e6fed04f6c66053e38177",
+  "state_after_hash": "6746b4c016a932fc670a0935df06abd501f27422288e6fed04f6c66053e38177",
+  "history_head_before": "actual-event:cb7c3346be03802cc974648dd6f028be",
+  "history_head_after": "actual-event:cb7c3346be03802cc974648dd6f028be",
+  "scheduler_events_processed_count": 0,
+  "finalized_actual_events_count": 0,
+  "capture_records_added_count": 0,
+  "microsteps_used": 0,
+  "files_changed": [
+    "state/last-run.json"
+  ]
+}
