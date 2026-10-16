@@ -61,9 +61,9 @@ def test_canonical_invalid_json_and_utf8_fail_without_traceback_or_write(
         if command == "validate" else ["canonical-hash", str(path)]
     )
     assert canonical_main(args) == 2
-    result = capsys.readouterr()
-    assert result.stdout == ""
-    assert result.stderr == f"ERROR {expected_code.value}: invalid JSON or UTF-8 input\n"
+    captured = capsys.readouterr()
+    assert captured.out == ""
+    assert captured.err == f"ERROR {expected_code.value}: invalid JSON or UTF-8 input\n"
     assert path.read_bytes() == old
 
 
@@ -77,17 +77,17 @@ def test_canonical_missing_file_reports_typed_error_without_creating_path(
         if command == "validate" else ["canonical-hash", str(absent)]
     )
     assert canonical_main(args) == 2
-    text = capsys.readouterr()
-    assert text.stdout == ""
-    assert text.stderr == "ERROR INVALID_STATE: unable to read JSON input\n"
+    captured = capsys.readouterr()
+    assert captured.out == ""
+    assert captured.err == "ERROR INVALID_STATE: unable to read JSON input\n"
     assert not absent.exists()
 
 
 def test_canonical_directory_input_is_not_a_valid_file(tmp_path: Path, capsys) -> None:
     assert canonical_main(["validate", str(tmp_path), "--schema", "current_state"]) == 2
-    out = capsys.readouterr()
-    assert out.stdout == ""
-    assert out.stderr == "ERROR INVALID_STATE: unable to read JSON input\n"
+    captured = capsys.readouterr()
+    assert captured.out == ""
+    assert captured.err == "ERROR INVALID_STATE: unable to read JSON input\n"
 
 
 def test_old_legacy_cli_does_not_gain_canonical_error_translation(tmp_path: Path) -> None:
@@ -119,7 +119,7 @@ def test_old_engine_life_root_exports_alias_current_canonical_basics() -> None:
 def test_canonical_w1_schema_validation_success_is_read_only(capsys) -> None:
     before = GOLDEN.read_bytes()
     assert canonical_main(["validate", str(GOLDEN), "--schema", "current_state"]) == 0
-    out = capsys.readouterr()
-    assert out.stdout.strip() == "OK schema=current_state"
-    assert out.stderr == ""
+    captured = capsys.readouterr()
+    assert captured.out.strip() == "OK schema=current_state"
+    assert captured.err == ""
     assert GOLDEN.read_bytes() == before
