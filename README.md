@@ -72,7 +72,9 @@ or promises a stable 1.x API.
 
 The [pre-v1 CLI behavior/1.0 RC review checklist](docs/P1_CLI_RC_REVIEW.md)
 distinguishes the seven Foundation sandbox commands from the full provider
-runtime. It is a **candidate error/exit contract**, not a 1.0 release.
+runtime. The [basic CLI error/legacy import proposal](docs/P1_CLI_INPUT_ERROR_COMPATIBILITY.md)
+also tests malformed JSON and filesystem errors without changing historical
+`engine.life` command behavior. These are **candidate contracts**, not a 1.0 release.
 
 **First-1.0 scope:** The owner selected [basic stable-functionality first](docs/P1_V1_BASIC_API_SCOPE.md): deterministic provider runtime, safe W1 read/stage and sealed spatial validation. The [public ABI final-review proposal](docs/P1_V1_PUBLIC_ABI_FINAL_REVIEW.md) tracks exact candidate signatures and outstanding CLI/deprecation decisions. Complex upgrade/recovery stays experimental. The [private 1.0.0rc1 rehearsal](docs/P1_PRIVATE_RC_REHEARSAL.md) tests ephemeral package artifacts without publishing them. This selects **functional scope**, not exact public ABI or a released 1.0 binary.
 

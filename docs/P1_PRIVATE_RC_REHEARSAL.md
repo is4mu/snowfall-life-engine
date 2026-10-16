@@ -45,7 +45,7 @@ Only wheel/sdist SHA-256 values are printed in the workflow job summary.
   P1 CI supplies Fast/Full/72h/28d/90d, six persistence environments,
   private-export tests, Provider replay and coverage on the same PR head.
 
-**API follow-up:** the [ABI candidate review](P1_V1_PUBLIC_ABI_FINAL_REVIEW.md) also compares the proposed function/Provider/data-shape signatures across installed wheel and sdist. A matching digest is evidence only, not approval.
+**API follow-up:** the [ABI candidate review](P1_V1_PUBLIC_ABI_FINAL_REVIEW.md) compares the function/Provider/data-shape signatures across installed wheel and sdist. The [CLI error/legacy review](P1_CLI_INPUT_ERROR_COMPATIBILITY.md) additionally checks the canonical basic JSON input error envelope and legacy eight root exports on **both** installed RC archives. Matching reports are evidence only, not approval.
 
 ## What passing this private RC does *not* authorize
 
